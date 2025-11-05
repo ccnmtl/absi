@@ -1,0 +1,16 @@
+# flake8: noqa
+from absi.settings_shared import *
+from ctlsettings.compose import common
+
+locals().update(
+    common(
+        project=project,
+        base=base,
+        STATIC_ROOT=STATIC_ROOT,
+        INSTALLED_APPS=INSTALLED_APPS,
+    ))
+
+try:
+    from absi.local_settings import *
+except ImportError:
+    pass
