@@ -6,7 +6,6 @@ httplib2==0.31.0
 Markdown==3.10 # pyup: < 3
 psycopg[binary]==3.2.12
 versiontools==1.9.1
-statsd==4.0.1
 pep8==1.7.1
 pyflakes==3.4.0
 mccabe==0.7.0
@@ -54,9 +53,8 @@ python-dateutil==2.9.0.post0
 https://github.com/python-cas/python-cas/releases/download/v1.7.1/python_cas-1.7.1-py3-none-any.whl
 https://github.com/django-cas-ng/django-cas-ng/releases/download/v5.1.0/django_cas_ng-5.1.0-py3-none-any.whl
 django-appconf==1.1.0
-django-statsd-mozilla==0.4.0
 sentry-sdk==2.43.0
-django-bootstrap4==25.2
+django-bootstrap5==25.2
 
 django-debug-toolbar==6.1.0
 

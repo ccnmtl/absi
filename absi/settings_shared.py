@@ -22,7 +22,7 @@ if DEBUG:  # noqa
     ]
 
 INSTALLED_APPS += [  # noqa
-    'bootstrap4',
+    'django_bootstrap5',
     'django_extensions',
     'markdownify.apps.MarkdownifyConfig',
 
