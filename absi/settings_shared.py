@@ -1,5 +1,7 @@
 # Django settings for absi project.
+import os
 import os.path
+import sys
 from ctlsettings.shared import common
 
 project = 'absi'
@@ -12,6 +14,18 @@ PROJECT_APPS = [
 ]
 
 USE_TZ = True
+
+if 'test' not in sys.argv and 'jenkins' not in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DATABASE_NAME'),
+            'USER': os.environ.get('DATABASE_USER'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+            'HOST': os.environ.get('DATABASE_HOST'),
+            'PORT': os.environ.get('DATABASE_PORT'),
+        }
+    }
 
 if DEBUG:  # noqa
     INSTALLED_APPS += [  # noqa
