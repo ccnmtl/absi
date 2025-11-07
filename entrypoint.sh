@@ -5,4 +5,6 @@
 python manage.py migrate --noinput --settings=absi.settings_docker
 
 # Start the Django application
-python manage.py runserver 0.0.0.0:8000 --settings=absi.settings_docker
+gunicorn absi.wsgi:application \
+         --env DJANGO_SETTINGS_MODULE=absi.settings_docker \
+         -b 0.0.0.0:8000
