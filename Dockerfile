@@ -26,7 +26,7 @@ RUN rm -rf .env
 RUN rm -rf .dockerignore
 
 # Expose the default Django port (change if necessary)
-EXPOSE 8000
+EXPOSE 80
 
 RUN chmod u+x entrypoint.sh
 # Run the Django development server
