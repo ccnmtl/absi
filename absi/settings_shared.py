@@ -35,6 +35,10 @@ INSTALLED_APPS += [  # noqa
     'absi.main',
 ]
 
+ALLOWED_HOSTS += [  # noqa
+    '172.31.0.0/16',
+]
+
 THUMBNAIL_SUBDIR = "thumbs"
 LOGIN_REDIRECT_URL = "/"
 
