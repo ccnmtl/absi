@@ -36,7 +36,7 @@ INSTALLED_APPS += [  # noqa
 ]
 
 ALLOWED_HOSTS += [  # noqa
-    '172.31.0.0/16',
+    '*',
 ]
 
 THUMBNAIL_SUBDIR = "thumbs"
