@@ -27,14 +27,6 @@ if 'test' not in sys.argv and 'jenkins' not in sys.argv:
         }
     }
 
-if DEBUG:  # noqa
-    INSTALLED_APPS += [  # noqa
-        'debug_toolbar',
-    ]
-    MIDDLEWARE += [  # noqa
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    ]
-
 INSTALLED_APPS += [  # noqa
     'django_bootstrap5',
     'django_extensions',

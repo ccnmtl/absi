@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# TODO: Maybe call the Salt Pillar Data to populate the environment variables into .env locally instead of using ECS task definition environment variables??
+# TODO: Maybe call the Salt Pillar Data to populate the environment
+# variables into .env locally instead of using ECS task definition
+# environment variables??
 # Apply Django migrations
 python manage.py migrate --noinput --settings=absi.settings_docker
 
