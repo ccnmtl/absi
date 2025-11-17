@@ -1,6 +1,7 @@
+from absi.settings_shared import *  # noqa: F401,F403
+import os
 from django.conf import settings
 from ctlsettings.staging import common, init_sentry
-from absi.settings_shared import *  # noqa: F401,F403
 
 
 locals().update(
@@ -11,6 +12,18 @@ locals().update(
         INSTALLED_APPS=INSTALLED_APPS,  # noqa: F405
         s3static=False,
     ))
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT'),
+    }
+}
 
 
 ALLOWED_HOSTS += [  # noqa
