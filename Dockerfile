@@ -24,6 +24,7 @@ RUN rm -rf data/
 RUN rm -rf *.dev.yml
 RUN rm -rf .env
 RUN rm -rf .dockerignore
+RUN mkdir -p /var/log/django
 
 # Expose the default Django port (change if necessary)
 EXPOSE 80
