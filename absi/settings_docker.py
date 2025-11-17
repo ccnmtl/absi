@@ -13,6 +13,11 @@ locals().update(
     ))
 
 
+ALLOWED_HOSTS += [  # noqa
+    '*',
+]
+
+
 try:
     from absi.local_settings import *  # noqa: F403
 except ImportError:
