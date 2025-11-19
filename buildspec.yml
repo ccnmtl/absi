@@ -30,14 +30,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Replace robots.txt with environment version
-      - |
-        if [ "$ECS_CLUSTER_NAME" = "ProductionCluster" ]; then
-          cp aws_ecs_app/templates/robots.prod aws_ecs_app/templates/robots.txt
-        else
-          cp aws_ecs_app/templates/robots.staging aws_ecs_app/templates/robots.txt
-        fi
-        cat aws_ecs_app/templates/robots.txt
+      - echo $COMMIT_HASH
       - echo Start cloud defense vulnerability scan on codebase
       - echo cdefense online --api-key=$CLOUD_DEFENSE_API --tag=$COMMIT_HASH --repository-url=$CODEBUILD_SOURCE_REPO_URL --type=GITHUB
       - |
@@ -56,14 +49,6 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Replace robots.txt with environment version
-      - |
-        if [ "$ECS_CLUSTER_NAME" = "ProductionCluster" ]; then
-          cp aws_ecs_app/templates/robots.prod aws_ecs_app/templates/robots.txt
-        else
-          cp aws_ecs_app/templates/robots.staging aws_ecs_app/templates/robots.txt
-        fi
-        cat aws_ecs_app/templates/robots.txt
       - echo Start Running tests
       - docker run --rm -e DEBUG=True -e SECRET_KEY=secret_test_key $REPOSITORY_URI:latest python manage.py test
       - echo Pushing the Docker images...

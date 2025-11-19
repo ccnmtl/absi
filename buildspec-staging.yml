@@ -31,14 +31,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Replace robots.txt with environment version
-      - |
-        if [ "$ECS_CLUSTER_NAME" = "ProductionCluster" ]; then
-          cp aws_ecs_app/templates/robots.prod aws_ecs_app/templates/robots.txt
-        else
-          cp aws_ecs_app/templates/robots.staging aws_ecs_app/templates/robots.txt
-        fi
-        cat aws_ecs_app/templates/robots.txt
+      - echo $COMMIT_HASH
       - echo Start cloud defense vulnerability scan on codebase
       - cdefense --version
       - cdefense online --help
