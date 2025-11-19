@@ -1,6 +1,4 @@
-define([
-    'jquery'
-], function(_) {
+define([], function() {
     var utils = {
 
         /**

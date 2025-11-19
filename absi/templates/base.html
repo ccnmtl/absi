@@ -171,9 +171,8 @@
                                 {{ login_form.password }}
                             </div><!-- form-group -->
                         </div>      
-                        <input class="btn btn-primary" type="button" value="Guest Log In" {% if login_form.errors %}style="display: none"{% endif %}
-                            onclick="jQuery('.login-local-form').show(); jQuery(this).hide(); return false;"/>
-                        <input class="btn btn-primary login-local-form" type="submit" value="Log In" {% if not login_form.errors %}style="display: none;"{% endif %} />                        
+                        <input class="btn btn-primary" type="button" value="Guest Log In" {% if login_form.errors %}style="display: none"{% endif %} />
+                        <input class="btn btn-primary login-local-form" type="submit" value="Log In" {% if not login_form.errors %}style="display: none;"{% endif %} />
                         <input type="hidden" name="next" value="{{ request.get_full_path }}" />
                     </form>
                     <p class="mt-2"><a href="/registration/register/" title="Create your new project account">Need a new account?</a></p>
@@ -221,7 +220,6 @@
 
 </footer>
 
-<script src="{{STATIC_URL}}js/lib/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 
