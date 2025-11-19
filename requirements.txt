@@ -50,8 +50,8 @@ boto3>=1.9.198,<1.41.0
 
 python-dateutil==2.9.0.post0
 
-https://github.com/python-cas/python-cas/releases/download/v1.7.1/python_cas-1.7.1-py3-none-any.whl
-https://github.com/django-cas-ng/django-cas-ng/releases/download/v5.1.0/django_cas_ng-5.1.0-py3-none-any.whl
+python-cas==1.7.1
+django-cas-ng==5.1.0
 django-appconf==1.1.0
 sentry-sdk==2.43.0
 django-bootstrap5==25.2
