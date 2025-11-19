@@ -27,6 +27,10 @@ if 'test' not in sys.argv and 'jenkins' not in sys.argv:
         }
     }
 
+MIDDLEWARE += [  # noqa
+    'django.middleware.csrf.CsrfViewMiddleware',
+]
+
 INSTALLED_APPS += [  # noqa
     'django_bootstrap5',
     'django_extensions',
