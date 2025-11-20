@@ -13,13 +13,14 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT
+
       - REPOSITORY_URI=$ECR_REPOSITORY_URI
-      #- COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - GITHUB_REPO_URL="https://${GITHUB_PERSONAL_ACCESS_TOKEN}@${CODEBUILD_SOURCE_REPO_URL#https://}"
       - echo $GITHUB_REPO_URL
       - echo ${CODEBUILD_SOURCE_REPO_URL}
-      - COMMIT_HASH=$(git ls-remote ${GITHUB_REPO_URL} refs/heads/main | cut -c 1-7)
-      - IMAGE_TAG=prod_${COMMIT_HASH:=latest}
+
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=prod_${COMMIT_HASH}
       - echo $IMAGE_TAG
       - echo end of pre_build phase
   build:
@@ -50,7 +51,7 @@ phases:
       - echo Start Running tests
       - docker run --rm -e DEBUG=True -e SECRET_KEY=secret_test_key $REPOSITORY_URI:latest python manage.py test
       - echo Pushing the Docker images...
-      - echo docker image git tag - $REPOSITORY_URI:$IMAGE_TAG 
+      - echo docker image git tag - $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"$ECS_CONTAINER_NAME","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
@@ -64,7 +65,7 @@ phases:
       - echo Below jq command to remove the warnings from github because the properties are not needed for the ECS deploy...
       - jq 'del(.compatibilities, .taskDefinitionArn, .requiresAttributes, .revision, .status, .registeredAt, .registeredBy)' previous-task-definition.json > tmpfile && mv tmpfile previous-task-definition.json
       - echo Modify the JSON to update the image...
-      - jq --arg image "$REPOSITORY_URI:$IMAGE_TAG" '.containerDefinitions[0].image = $image' previous-task-definition.json > task-definition.json      
+      - jq --arg image "$REPOSITORY_URI:$IMAGE_TAG" '.containerDefinitions[0].image = $image' previous-task-definition.json > task-definition.json
       - echo Run aws ecs register task definition...
       - TASK_DEFINITION_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json --query "taskDefinition.taskDefinitionArn" --output text)
       - echo Registered new task definition - $TASK_DEFINITION_ARN
