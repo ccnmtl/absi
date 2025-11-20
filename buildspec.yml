@@ -3,8 +3,6 @@ version: 0.2
 env:
   parameter-store:
     GITHUB_PERSONAL_ACCESS_TOKEN: /clouddefense/git_private_token
-    CLOUD_DEFENSE_API: /clouddefense/personal_api_key
-    CLOUD_DEFENSE_VERSION_DOWNLOAD_URL: /clouddefense/cli_release_version_url
 phases:
   pre_build:
     commands:
