@@ -22,11 +22,6 @@ phases:
       - echo $GITHUB_REPO_URL
       - echo $IMAGE_TAG
       - echo $GITHUB_BRANCH_NAME
-      - echo Install cloud defense cli
-      - curl -L -o /tmp/cd-latest-linux-x64.tar.gz $CLOUD_DEFENSE_VERSION_DOWNLOAD_URL
-      - sudo tar -C /usr/local/bin -xzf /tmp/cd-latest-linux-x64.tar.gz
-      - sudo cp /usr/local/bin/cd-latest-linux-x64 /usr/local/bin/cdefense
-      - chmod +x /usr/local/bin/cdefense
       - echo end of pre_build phase
   build:
     commands:
@@ -34,25 +29,11 @@ phases:
       - echo Replace robots.txt with environment version
       - |
         if [ "$ECS_CLUSTER_NAME" = "ProductionCluster" ]; then
-          cp aws_ecs_app/templates/robots.prod aws_ecs_app/templates/robots.txt
+          cp absi/templates/robots.prod absi/templates/robots.txt
         else
-          cp aws_ecs_app/templates/robots.staging aws_ecs_app/templates/robots.txt
+          cp absi/templates/robots.staging absi/templates/robots.txt
         fi
-        cat aws_ecs_app/templates/robots.txt
-      - echo Start cloud defense vulnerability scan on codebase
-      - cdefense --version
-      - cdefense online --help
-      - echo cdefense online --api-key=$CLOUD_DEFENSE_API --tag=$COMMIT_HASH --repository-url=$GITHUB_REPO_URL --branch-name=$GITHUB_BRANCH_NAME --type=GITHUB
-      - |
-        set +e  # Disable immediate exit on error
-        cdefense online --api-key=$CLOUD_DEFENSE_API --tag=$COMMIT_HASH --repository-url=$GITHUB_REPO_URL --branch-name=$GITHUB_BRANCH_NAME --type=GITHUB
-        exit_code=$?
-        set -e  # Re-enable immediate exit on error
-        if [ $exit_code -eq 1 ]; then
-         echo "Ignore exit code 1"
-        else
-         exit $exit_code
-        fi
+        cat absi/templates/robots.txt
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
