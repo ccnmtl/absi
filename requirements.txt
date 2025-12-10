@@ -54,7 +54,7 @@ python-cas==1.7.1
 django-cas-ng==5.1.0
 django-appconf==1.1.0
 sentry-sdk==2.43.0
-django-bootstrap5==25.2
+django-bootstrap5==25.3
 
 django-debug-toolbar==6.1.0
 
