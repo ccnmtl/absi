@@ -1,6 +1,6 @@
+import os
 from absi.settings_shared import *  # noqa: F403
 from ctlsettings.production import common, init_sentry
-from django.conf import settings
 
 
 locals().update(
@@ -17,10 +17,11 @@ locals().update(
 
 
 try:
-    from absi.local_settings import *  # noqa: F403
+    from absi.local_settings import *  # noqa: F403, F401
 except ImportError:
     pass
 
 
-if hasattr(settings, 'SENTRY_DSN'):
-    init_sentry(SENTRY_DSN)  # noqa F405
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
+if SENTRY_DSN:
+    init_sentry(SENTRY_DSN)

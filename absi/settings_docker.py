@@ -1,6 +1,5 @@
-from absi.settings_shared import *  # noqa: F401,F403
 import os
-from django.conf import settings
+from absi.settings_shared import *  # noqa: F401,F403
 from ctlsettings.staging import common, init_sentry
 
 
@@ -32,10 +31,11 @@ ALLOWED_HOSTS += [  # noqa
 
 
 try:
-    from absi.local_settings import *  # noqa: F403
+    from absi.local_settings import *  # noqa: F403, F401
 except ImportError:
     pass
 
 
-if hasattr(settings, 'SENTRY_DSN'):
-    init_sentry(SENTRY_DSN)  # noqa F405
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
+if SENTRY_DSN:
+    init_sentry(SENTRY_DSN)
