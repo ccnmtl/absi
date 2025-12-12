@@ -9,7 +9,7 @@ locals().update(
         base=base,  # noqa: F405
         STATIC_ROOT=STATIC_ROOT,  # noqa: F405
         INSTALLED_APPS=INSTALLED_APPS,  # noqa: F405
-        s3static=False,
+        s3static=True,
     ))
 
 
