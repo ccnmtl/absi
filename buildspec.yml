@@ -30,6 +30,7 @@ phases:
       - |
         if [ "$ECS_CLUSTER_NAME" = "ProductionCluster" ]; then
           cp absi/templates/robots.prod absi/templates/robots.txt
+          cp absi/settings_docker_production.py absi/settings_docker.py
         else
           cp absi/templates/robots.staging absi/templates/robots.txt
         fi
@@ -44,6 +45,7 @@ phases:
       - |
         if [ "$ECS_CLUSTER_NAME" = "ProductionCluster" ]; then
           cp absi/templates/robots.prod absi/templates/robots.txt
+          cp absi/settings_docker_production.py absi/settings_docker.py
         else
           cp absi/templates/robots.staging absi/templates/robots.txt
         fi
