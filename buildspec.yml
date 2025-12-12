@@ -3,6 +3,8 @@ version: 0.2
 env:
   parameter-store:
     GITHUB_PERSONAL_ACCESS_TOKEN: /clouddefense/git_private_token
+  variables:
+    ENVIRONMENT: "production"
 phases:
   pre_build:
     commands:
