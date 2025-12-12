@@ -15,7 +15,6 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 
 # Install dependencies
-RUN pip install psycopg
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
