@@ -29,6 +29,4 @@ RUN mkdir -p /var/log/django
 EXPOSE 80
 
 RUN chmod u+x entrypoint.sh
-# Run the Django development server
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 CMD ["./entrypoint.sh"]
