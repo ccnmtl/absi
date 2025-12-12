@@ -9,6 +9,10 @@ from absi.main import views
 admin.autodiscover()
 
 
+def trigger_error(request):
+    division_by_zero = 1 / 0  # noqa: F841
+
+
 urlpatterns = [
     path('', views.IndexView.as_view()),
     path('admin/', admin.site.urls),
@@ -26,4 +30,6 @@ urlpatterns = [
 
     path('transcribe/', views.TranscribeView.as_view(),
          name='transcribe_view'),
+
+    path('sentry-debug/', trigger_error),
 ]
