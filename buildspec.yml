@@ -46,34 +46,34 @@ phases:
           cp absi/templates/robots.staging absi/templates/robots.txt
         fi
         cat absi/templates/robots.txt
-      - echo Start Running tests
+      - echo "Start Running tests"
       - docker run --rm -e DEBUG=True -e SECRET_KEY=secret_test_key $REPOSITORY_URI:latest python manage.py test
-      - echo Pushing the Docker images...
+      - echo "Pushing the Docker images..."
       - echo docker image git tag - $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Writing image definitions file...
+      - echo "Writing image definitions file..."
       - printf '[{"name":"$ECS_CONTAINER_NAME","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo "Retrieve the latest task definition ARN..."
       - |
         latest_arn=$(aws ecs list-task-definitions \
-            --family-prefix "$ECS_TASK_DEFINITION_FAMILY" \
+            --family-prefix $ECS_TASK_DEFINITION_FAMILY \
             --status ACTIVE \
             --sort DESC \
-            --max-items 1 \
+            --no-paginate \
             --query 'taskDefinitionArns[0]' \
             --output text)
 
       - echo "Latest ARN:" $latest_arn
       - echo "Describe the latest task definition and save the JSON to a file..."
       - aws ecs describe-task-definition --task-definition $latest_arn --query 'taskDefinition' --output json > previous-task-definition.json
-      - echo Below jq command to remove the warnings from github because the properties are not needed for the ECS deploy...
+      - echo "Below jq command to remove the warnings from github because the properties are not needed for the ECS deploy..."
       - jq 'del(.compatibilities, .taskDefinitionArn, .requiresAttributes, .revision, .status, .registeredAt, .registeredBy)' previous-task-definition.json > tmpfile && mv tmpfile previous-task-definition.json
-      - echo Modify the JSON to update the image...
+      - echo "Modify the JSON to update the image..."
       - jq --arg image "$REPOSITORY_URI:$IMAGE_TAG" '.containerDefinitions[0].image = $image' previous-task-definition.json > task-definition.json
-      - echo Run aws ecs register task definition...
+      - echo "Run aws ecs register task definition..."
       - TASK_DEFINITION_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json --query "taskDefinition.taskDefinitionArn" --output text)
-      - echo Registered new task definition - $TASK_DEFINITION_ARN
-      - echo Updating Production ECS service
+      - echo "Registered new task definition - $TASK_DEFINITION_ARN"
+      - echo "Updating Production ECS service"
       - aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --task-definition $TASK_DEFINITION_ARN
 artifacts:
     files: imagedefinitions.json
