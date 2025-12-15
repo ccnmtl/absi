@@ -5,8 +5,9 @@ if [[ "$ENVIRONMENT" == "production" ]]; then
     SETTINGS=absi.settings_docker_production
 fi
 
-# Apply Django migrations
 python manage.py migrate --noinput --settings=$SETTINGS
+
+python manage.py collectstatic --noinput --clear --settings=$SETTINGS
 
 # Start the Django application
 gunicorn absi.wsgi:application \
