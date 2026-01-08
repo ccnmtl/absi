@@ -7,4 +7,4 @@ class IndexView(TemplateView):
 
 
 class TranscribeView(LoginRequiredMixin, TemplateView):
-    template_name = 'main/index.html'
+    template_name = 'main/transcribe.html'
