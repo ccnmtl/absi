@@ -1,20 +1,20 @@
 // Set up basic variables for app
-const record = document.querySelector(".record");
-const stop = document.querySelector(".stop");
-const soundClips = document.querySelector(".sound-clips");
-const canvas = document.querySelector(".visualizer");
-const mainSection = document.querySelector(".main-controls");
+const record = document.querySelector('.record');
+const stop = document.querySelector('.stop');
+const soundClips = document.querySelector('.sound-clips');
+const canvas = document.querySelector('.visualizer');
+const mainSection = document.querySelector('.main-controls');
 
 // Disable stop button while not recording
 stop.disabled = true;
 
 // Visualiser setup - create web audio api context and canvas
 let audioCtx;
-const canvasCtx = canvas.getContext("2d");
+const canvasCtx = canvas.getContext('2d');
 
 // Main block for doing the audio recording
 if (navigator.mediaDevices.getUserMedia) {
-    console.log("The mediaDevices.getUserMedia() method is supported.");
+    console.log('The mediaDevices.getUserMedia() method is supported.');
 
     const constraints = { audio: true };
     let chunks = [];
@@ -27,8 +27,8 @@ if (navigator.mediaDevices.getUserMedia) {
         record.onclick = function () {
             mediaRecorder.start();
             console.log(mediaRecorder.state);
-            console.log("Recorder started.");
-            record.style.background = "red";
+            console.log('Recorder started.');
+            record.style.background = 'red';
 
             stop.disabled = false;
             record.disabled = true;
@@ -37,34 +37,34 @@ if (navigator.mediaDevices.getUserMedia) {
         stop.onclick = function () {
             mediaRecorder.stop();
             console.log(mediaRecorder.state);
-            console.log("Recorder stopped.");
-            record.style.background = "";
-            record.style.color = "";
+            console.log('Recorder stopped.');
+            record.style.background = '';
+            record.style.color = '';
 
             stop.disabled = true;
             record.disabled = false;
         };
 
         mediaRecorder.onstop = function (e) {
-            console.log("Last data to read (after MediaRecorder.stop() called).");
+            console.log('Last data to read (after MediaRecorder.stop() called).');
 
             const clipName = prompt(
-                "Enter a name for your sound clip?",
-                "My unnamed clip"
+                'Enter a name for your sound clip?',
+                'My unnamed clip'
             );
 
-            const clipContainer = document.createElement("article");
-            const clipLabel = document.createElement("p");
-            const audio = document.createElement("audio");
-            const deleteButton = document.createElement("button");
+            const clipContainer = document.createElement('article');
+            const clipLabel = document.createElement('p');
+            const audio = document.createElement('audio');
+            const deleteButton = document.createElement('button');
 
-            clipContainer.classList.add("clip");
-            audio.setAttribute("controls", "");
-            deleteButton.textContent = "Delete";
-            deleteButton.className = "delete";
+            clipContainer.classList.add('clip');
+            audio.setAttribute('controls', '');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'delete';
 
             if (clipName === null) {
-                clipLabel.textContent = "My unnamed clip";
+                clipLabel.textContent = 'My unnamed clip';
             } else {
                 clipLabel.textContent = clipName;
             }
@@ -79,15 +79,15 @@ if (navigator.mediaDevices.getUserMedia) {
             chunks = [];
             const audioURL = window.URL.createObjectURL(blob);
             audio.src = audioURL;
-            console.log("recorder stopped");
+            console.log('recorder stopped');
 
             deleteButton.onclick = function (e) {
-                e.target.closest(".clip").remove();
+                e.target.closest('.clip').remove();
             };
 
             clipLabel.onclick = function () {
                 const existingName = clipLabel.textContent;
-                const newClipName = prompt("Enter a new name for your sound clip?");
+                const newClipName = prompt('Enter a new name for your sound clip?');
                 if (newClipName === null) {
                     clipLabel.textContent = existingName;
                 } else {
@@ -102,12 +102,12 @@ if (navigator.mediaDevices.getUserMedia) {
     };
 
     let onError = function (err) {
-        console.log("The following error occured: " + err);
+        console.log('The following error occured: ' + err);
     };
 
     navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
 } else {
-    console.log("MediaDevices.getUserMedia() not supported on your browser!");
+    console.log('MediaDevices.getUserMedia() not supported on your browser!');
 }
 
 function visualize(stream) {
@@ -134,11 +134,11 @@ function visualize(stream) {
 
         analyser.getByteTimeDomainData(dataArray);
 
-        canvasCtx.fillStyle = "rgb(200, 200, 200)";
+        canvasCtx.fillStyle = 'rgb(200, 200, 200)';
         canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
         canvasCtx.lineWidth = 2;
-        canvasCtx.strokeStyle = "rgb(0, 0, 0)";
+        canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
 
         canvasCtx.beginPath();
 
