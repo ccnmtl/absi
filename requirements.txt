@@ -56,8 +56,6 @@ django-bootstrap5==26.1
 
 django-debug-toolbar==6.1.0
 
-django-waffle==5.0.0
-
 django-smoketest==1.2.1
 # For django-extensions
 django-extensions==4.1
@@ -65,8 +63,6 @@ django-stagingcontext==0.1.0
 django-ga-context==0.1.0
 django-impersonate==1.9.5
 gunicorn==23.0.0
-
-djangorestframework==3.16.1
 
 django-storages==1.14.6
 ctlsettings==0.4.6
@@ -81,9 +77,6 @@ pyyaml==6.0.3 # bandit
 stevedore==5.6.0  # bandit
 rich==14.2.0 # bandit
 bandit==1.9.2
-
-django-smtp-ssl==1.0
-django-contact-us==1.1.0
 
 entrypoints==0.4
 
