@@ -103,11 +103,6 @@
             {% endif %}
             </span>
         </li>
-        {% if request.user.is_superuser %}
-        <li class="nav-item">
-            <a href="{% url 'impersonate-list' %}" title="Impersonate" class="nav-link">impersonate</a>
-        </li>
-        {% endif %}
     </ul>
     {% endblock %}
 </nav>
@@ -188,14 +183,6 @@ Sentry.setUser({
     <h4 class="alert-heading">Warning: Staging Site</h4>
     <p>You are viewing a staging version of this site, not the production site.</p>
     <p>This site was last updated on: <strong>{{STAGING_DEPLOY_TIME}}</strong></p>
-</div>
-{% endif %}
-
-{% if request.user.is_impersonate %}
-<div class="alert alert-danger alert-dismissible" role="alert" style="position: fixed; left: 0px; top: 75px">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    You are impersonating.<br />
-    <a class="btn" href="{% url 'impersonate-stop' %}" title="Stop impersonate">stop</a>
 </div>
 {% endif %}
 
