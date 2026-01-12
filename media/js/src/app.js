@@ -94,6 +94,8 @@ if (navigator.mediaDevices.getUserMedia) {
                     clipLabel.textContent = newClipName;
                 }
             };
+
+            // TODO: upload audio src to s3, check with AWS Transcribe
         };
 
         mediaRecorder.ondataavailable = function (e) {
