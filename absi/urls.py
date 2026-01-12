@@ -4,6 +4,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from django.views.static import serve
 from django_cas_ng import views as cas_views
+from s3sign.views import SignS3View
 from absi.main import views
 
 admin.autodiscover()
@@ -29,6 +30,8 @@ urlpatterns = [
 
     path('transcribe/', views.TranscribeView.as_view(),
          name='transcribe_view'),
+
+    path('s3sign/', SignS3View.as_view()),
 
     path('sentry-debug/', trigger_error),
 ]
