@@ -35,6 +35,7 @@ INSTALLED_APPS += [  # noqa
     'django_bootstrap5',
     'django_extensions',
     'markdownify.apps.MarkdownifyConfig',
+    's3sign',
 
     'absi.main',
 ]
