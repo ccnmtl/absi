@@ -19,12 +19,12 @@ if (navigator.mediaDevices.getUserMedia) {
     const constraints = { audio: true };
     let chunks = [];
 
-    let onSuccess = function (stream) {
+    let onSuccess = function(stream) {
         const mediaRecorder = new MediaRecorder(stream);
 
         visualize(stream);
 
-        record.onclick = function () {
+        record.onclick = function() {
             mediaRecorder.start();
             console.log(mediaRecorder.state);
             console.log('Recorder started.');
@@ -34,7 +34,7 @@ if (navigator.mediaDevices.getUserMedia) {
             record.disabled = true;
         };
 
-        stop.onclick = function () {
+        stop.onclick = function() {
             mediaRecorder.stop();
             console.log(mediaRecorder.state);
             console.log('Recorder stopped.');
@@ -45,8 +45,9 @@ if (navigator.mediaDevices.getUserMedia) {
             record.disabled = false;
         };
 
-        mediaRecorder.onstop = function (e) {
-            console.log('Last data to read (after MediaRecorder.stop() called).');
+        mediaRecorder.onstop = function(e) {
+            console.log(
+                'Last data to read (after MediaRecorder.stop() called).');
 
             const d = new Date();
             const clipName = d.toISOString();
@@ -79,19 +80,19 @@ if (navigator.mediaDevices.getUserMedia) {
             audio.src = audioURL;
             console.log('recorder stopped');
 
-            deleteButton.onclick = function (e) {
+            deleteButton.onclick = function(e) {
                 e.target.closest('.clip').remove();
             };
 
             // TODO: upload audio src to s3, check with AWS Transcribe
         };
 
-        mediaRecorder.ondataavailable = function (e) {
+        mediaRecorder.ondataavailable = function(e) {
             chunks.push(e.data);
         };
     };
 
-    let onError = function (err) {
+    let onError = function(err) {
         console.log('The following error occured: ' + err);
     };
 
@@ -153,7 +154,7 @@ function visualize(stream) {
     }
 }
 
-window.onresize = function () {
+window.onresize = function() {
     canvas.width = mainSection.offsetWidth;
 };
 
