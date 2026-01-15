@@ -84,7 +84,12 @@ if (navigator.mediaDevices.getUserMedia) {
                 e.target.closest('.clip').remove();
             };
 
-            // TODO: upload audio src to s3, check with AWS Transcribe
+            const s3upload = new S3Upload({
+                file_dom_selector: null,
+                s3_sign_put_url: '/s3sign/'
+            });
+
+            s3upload.uploadFile(blob);
         };
 
         mediaRecorder.ondataavailable = function(e) {
