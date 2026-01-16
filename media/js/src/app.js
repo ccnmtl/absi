@@ -86,7 +86,11 @@ if (navigator.mediaDevices.getUserMedia) {
 
             const s3upload = new S3Upload({
                 file_dom_selector: null,
-                s3_sign_put_url: '/s3sign/'
+                s3_sign_put_url: '/s3sign/',
+                onFinishS3Put: function(public_url) {
+                    console.log('public_url', public_url);
+                    // TODO: submit to django view queueing transcribe job
+                }
             });
 
             s3upload.uploadFile(blob);

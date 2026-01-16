@@ -48,3 +48,9 @@ THUMBNAIL_SUBDIR = "thumbs"
 LOGIN_REDIRECT_URL = "/"
 
 ACCOUNT_ACTIVATION_DAYS = 7
+
+# Celery
+broker_transport_options = {
+    'region': 'us-east-1',
+    'queue_name_prefix': 'celery-absi-',
+}
