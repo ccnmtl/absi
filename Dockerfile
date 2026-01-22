@@ -2,9 +2,7 @@
 # List of public images from AWS can be located here: https://gallery.ecr.aws/docker/library/python
 FROM public.ecr.aws/docker/library/python:3.13-trixie
 
-# Set environment variables
-# ENV PYTHONDONTWRITEBYTECODE 1
-# ENV PYTHONUNBUFFERED 1
+RUN apt-get update && apt-get install -y celery
 
 # Set the working directory in the container
 WORKDIR /app
