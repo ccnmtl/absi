@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y celery
 # Set the working directory in the container
 WORKDIR /app
 
+RUN mkdir -p /tmp && chmod 1777 /tmp
+
 COPY requirements.txt .
 
 # Upgrade pip
