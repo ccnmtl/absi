@@ -15,3 +15,4 @@ if hasattr(settings, 'AWS_ACCESS_KEY') and hasattr(settings, 'AWS_SECRET_KEY'):
     broker_url = 'sqs://{aws_access_key}:{aws_secret_key}@'.format(
         aws_access_key=aws_access_key, aws_secret_key=aws_secret_key
     )
+    CELERY_BROKER_URL = broker_url
