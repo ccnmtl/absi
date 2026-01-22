@@ -10,10 +10,11 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Upgrade pip
-RUN pip install --upgrade pip
+RUN python -m venv ve
+RUN ./ve/bin/pip install --upgrade pip
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN ./ve/bin/pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 RUN rm -rf data/ *.dev.yml .env .dockerignore

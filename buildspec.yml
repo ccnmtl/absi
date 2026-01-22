@@ -51,7 +51,7 @@ phases:
         fi
         cat absi/templates/robots.txt
       - echo "Start Running tests"
-      - docker run --rm -e DEBUG=True -e SECRET_KEY=secret_test_key $REPOSITORY_URI:latest python manage.py test
+      - docker run --rm -e DEBUG=True -e SECRET_KEY=secret_test_key $REPOSITORY_URI:latest ./ve/bin/python manage.py test
       - echo "Pushing the Docker images..."
       - echo docker image git tag - $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:$IMAGE_TAG
