@@ -18,11 +18,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-RUN rm -rf venv/
-RUN rm -rf data/
-RUN rm -rf *.dev.yml
-RUN rm -rf .env
-RUN rm -rf .dockerignore
+RUN rm -rf data/ *.dev.yml .env .dockerignore
 RUN mkdir -p /var/log/django
 
 # Expose the default Django port (change if necessary)
