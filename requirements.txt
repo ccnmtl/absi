@@ -90,4 +90,7 @@ azure-cognitiveservices-speech==1.47.0
 vine==5.1.0  # amqp
 amqp==5.3.1  # kombu
 kombu==5.6.2  # celery
+click==8.3.1  # celery
+billiard==4.2.4  # celery
+tzlocal==5.3.1  # celery
 celery[sqs]==5.6.2
