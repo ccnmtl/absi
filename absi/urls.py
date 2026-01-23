@@ -31,6 +31,9 @@ urlpatterns = [
     path('transcribe/', views.TranscribeView.as_view(),
          name='transcribe_view'),
 
+    path('api/transcribe/', views.QueueTranscribeJobView.as_view(),
+         name='api_transcribe_job_view'),
+
     path('s3sign/', SignS3View.as_view()),
 
     path('sentry-debug/', trigger_error),
