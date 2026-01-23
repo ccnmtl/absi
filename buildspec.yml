@@ -5,6 +5,9 @@ env:
     GITHUB_PERSONAL_ACCESS_TOKEN: /clouddefense/git_private_token
   variables:
     ENVIRONMENT: "production"
+  exported-variables:
+    - REPOSITORY_URI
+    - IMAGE_TAG
 phases:
   pre_build:
     commands:
@@ -12,15 +15,15 @@ phases:
       - docker info
       - echo "Logging in to Amazon ECR..."
       - aws --version
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
 
-      - REPOSITORY_URI=$ECR_REPOSITORY_URI
+      - export REPOSITORY_URI=$ECR_REPOSITORY_URI
       - GITHUB_REPO_URL="https://${GITHUB_PERSONAL_ACCESS_TOKEN}@${CODEBUILD_SOURCE_REPO_URL#https://}"
       - echo $GITHUB_REPO_URL
       - echo ${CODEBUILD_SOURCE_REPO_URL}
 
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=prod_${COMMIT_HASH}
+      - export IMAGE_TAG=prod_${COMMIT_HASH}
       - echo $IMAGE_TAG
       - echo "end of pre_build phase"
   build:
