@@ -25,5 +25,12 @@ RUN mkdir -p /var/log/django
 # Expose the default Django port (change if necessary)
 EXPOSE 80
 
+RUN adduser --system --user-group django
+
+RUN chown -R django:django /app
+RUN chown -R django:django /var/log/django
+
+USER django
+
 RUN chmod u+x entrypoint.sh
 CMD ["./entrypoint.sh"]
