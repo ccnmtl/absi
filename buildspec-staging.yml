@@ -5,6 +5,9 @@ env:
     GITHUB_PERSONAL_ACCESS_TOKEN: /clouddefense/git_private_token
   variables:
     ENVIRONMENT: "staging"
+  exported-variables:
+    - REPOSITORY_URI
+    - IMAGE_TAG
 phases:
   pre_build:
     commands:
@@ -12,10 +15,10 @@ phases:
       - docker info
       - echo "Logging in to Amazon ECR..."
       - aws --version
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT
-      - REPOSITORY_URI=$ECR_REPOSITORY_URI
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
+      - export REPOSITORY_URI=$ECR_REPOSITORY_URI
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=staging_${COMMIT_HASH:=latest}
+      - export IMAGE_TAG=staging_${COMMIT_HASH:=latest}
       - GITHUB_BRANCH_NAME="${CODEBUILD_WEBHOOK_HEAD_REF#refs/heads/}"
       # - GITHUB_REPO_URL="https://${GITHUB_PERSONAL_ACCESS_TOKEN}@${CODEBUILD_SOURCE_REPO_URL#https://}"
       - GITHUB_REPO_URL="${CODEBUILD_SOURCE_REPO_URL}"
