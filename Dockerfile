@@ -21,8 +21,7 @@ COPY . .
 RUN rm -rf data/ *.dev.yml .env .dockerignore
 RUN mkdir -p /var/log/django
 
-# Expose the default Django port (change if necessary)
-EXPOSE 80
+EXPOSE 8000
 
 RUN adduser --system --group django
 
