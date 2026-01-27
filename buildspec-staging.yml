@@ -11,12 +11,19 @@ env:
 phases:
   pre_build:
     commands:
-      - echo "Docker information"
-      - docker info
       - echo "Logging in to Amazon ECR..."
       - aws --version
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
-      - export REPOSITORY_URI=$ECR_REPOSITORY_URI
+
+      - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      - ECR_REGISTRY=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - ECR_REPOSITORY_NAME=absi
+      - export REPOSITORY_URI=$ECR_REGISTRY/$ECR_REPOSITORY_NAME
+
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION
+        | docker login --username AWS --password-stdin $ECR_REGISTRY
+
+      - echo "REPOSITORY_URI=$REPOSITORY_URI"
+
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - export IMAGE_TAG=staging_${COMMIT_HASH:=latest}
       - GITHUB_BRANCH_NAME="${CODEBUILD_WEBHOOK_HEAD_REF#refs/heads/}"
@@ -39,6 +46,7 @@ phases:
         cat absi/templates/robots.txt
       - echo "Building the Docker image..."
       - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $REPOSITORY_URI:$IMAGE_TAG
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
