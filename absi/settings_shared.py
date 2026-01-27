@@ -37,6 +37,9 @@ INSTALLED_APPS += [  # noqa
     'markdownify.apps.MarkdownifyConfig',
     's3sign',
 
+    'rest_framework',
+    'rest_framework.authtoken',
+
     'absi.main',
 ]
 
@@ -49,10 +52,18 @@ LOGIN_REDIRECT_URL = "/"
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
+AWS_REGION = 'us-east-1'
+
 # Celery
 broker_url = 'sqs://'
 CELERY_BROKER_URL = broker_url
 broker_transport_options = {
-    'region': 'us-east-1',
+    'region': AWS_REGION,
     'queue_name_prefix': 'celery-absi-',
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }

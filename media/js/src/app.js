@@ -12,6 +12,20 @@ stop.disabled = true;
 let audioCtx;
 const canvasCtx = canvas.getContext('2d');
 
+const queueTranscribeJob = function(uri) {
+    console.log('queueTranscribeJob', uri);
+    return fetch('/api/transcribe/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            s3_uri: uri
+        })
+    });
+};
+
 // Main block for doing the audio recording
 if (navigator.mediaDevices.getUserMedia) {
     console.log('The mediaDevices.getUserMedia() method is supported.');
@@ -87,9 +101,9 @@ if (navigator.mediaDevices.getUserMedia) {
             const s3upload = new S3Upload({
                 file_dom_selector: null,
                 s3_sign_put_url: '/s3sign/',
-                onFinishS3Put: function(public_url) {
-                    console.log('public_url', public_url);
-                    // TODO: submit to django view queueing transcribe job
+                onFinishS3Put: function(publicUrl) {
+                    // Submit to django view queueing transcribe job
+                    queueTranscribeJob(publicUrl);
                 }
             });
 

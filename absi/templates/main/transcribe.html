@@ -23,6 +23,13 @@
 {% endblock %}
 
 {% block js %}
+
+{% if token and token.key %}
+<script>
+    const token = '{{ token.key }}';
+</script>
+{% endif %}
+
 <script type="module" src="{% static 's3sign/js/s3upload.js' %}"></script>
 <script src="{% static 'js/src/app.js' %}"></script>
 {% endblock %}
