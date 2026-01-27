@@ -28,8 +28,7 @@ EXPOSE 80
 
 RUN adduser --system --group django
 
-RUN chown -R django:django /app
-RUN chown -R django:django /var/log/django
+RUN chown -R django:django /app /var/log/django
 
 USER django
 
