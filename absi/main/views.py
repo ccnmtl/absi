@@ -1,4 +1,5 @@
 import uuid
+import boto3
 from celery import chain
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from s3sign.views import SignS3View
+from s3sign.utils import s3_config
 
 from absi.main.tasks import (
     start_transcribe_job, poll_transcription, fetch_transcript
@@ -55,3 +58,18 @@ class QueueTranscribeJobView(APIView):
             },
             status=status.HTTP_202_ACCEPTED,
         )
+
+
+class SignS3ECSView(SignS3View):
+    """
+    SignS3View that doesn't use access keys. This is how we auth on
+    ECS using task roles.
+    """
+    def get(self, request):
+        if not getattr(self, 's3_client', None):
+            self.s3_client = boto3.client(
+                's3', config=s3_config,
+                region_name=self.aws_region_name,
+            )
+
+        return super().get(request)
