@@ -65,6 +65,21 @@ class SignS3ECSView(SignS3View):
     SignS3View that doesn't use access keys. This is how we auth on
     ECS using task roles.
     """
+    def get_aws_access_key(self):
+        return None
+
+    def get_aws_secret_key(self):
+        return None
+
+    def dispatch(self, request, *args, **kwargs):
+        if not getattr(self, 's3_client', None):
+            self.s3_client = boto3.client(
+                's3', config=s3_config,
+                region_name=self.aws_region_name,
+            )
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         if not getattr(self, 's3_client', None):
             self.s3_client = boto3.client(
