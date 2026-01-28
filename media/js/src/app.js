@@ -17,9 +17,11 @@ const queueTranscribeJob = function(uri) {
     return fetch('/api/transcribe/', {
         method: 'POST',
         headers: {
+            'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Token ${token}`
         },
+        mode: 'same-origin',
         body: JSON.stringify({
             s3_uri: uri
         })
