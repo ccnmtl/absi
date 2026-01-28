@@ -54,6 +54,9 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 AWS_REGION = 'us-east-1'
 
+if os.environ.get('AWS_UPLOAD_BUCKET'):
+    AWS_UPLOAD_BUCKET = os.environ.get('AWS_UPLOAD_BUCKET')
+
 # Celery
 broker_url = 'sqs://'
 CELERY_BROKER_URL = broker_url
