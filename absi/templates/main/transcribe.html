@@ -24,11 +24,14 @@
 
 {% block js %}
 
-{% if token and token.key %}
+{% csrf_token %}
 <script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    {% if token and token.key %}
     const token = '{{ token.key }}';
+    {% endif %}
 </script>
-{% endif %}
 
 <script type="module" src="{% static 's3sign/js/s3upload.js' %}"></script>
 <script src="{% static 'js/src/app.js' %}"></script>
