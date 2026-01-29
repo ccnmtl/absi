@@ -13,6 +13,7 @@ PROJECT_APPS = [
     'absi.main',
 ]
 
+ASGI_APPLICATION = 'absi.asgi.application'
 USE_TZ = True
 
 if 'test' not in sys.argv and 'jenkins' not in sys.argv:
@@ -69,4 +70,23 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
+}
+
+# Redis
+REDIS_HOST = 'localhost'
+if os.environ.get('REDIS_HOST'):
+    REDIS_HOST = os.environ.get('REDIS_HOST')
+
+REDIS_PORT = 6379
+if os.environ.get('REDIS_PORT'):
+    REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(REDIS_HOST, REDIS_PORT)],
+            'prefix': project + ':asgi',
+        },
+    },
 }
