@@ -73,7 +73,7 @@ REST_FRAMEWORK = {
 }
 
 # Redis
-REDIS_HOST = 'localhost'
+REDIS_HOST = '127.0.0.1'
 if os.environ.get('REDIS_HOST'):
     REDIS_HOST = os.environ.get('REDIS_HOST')
 
@@ -81,12 +81,14 @@ REDIS_PORT = 6379
 if os.environ.get('REDIS_PORT'):
     REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
 
+USE_X_FORWARDED_HOST = True
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             'hosts': [(REDIS_HOST, REDIS_PORT)],
             'prefix': project + ':asgi',
+            'serializer_format': 'json',
         },
     },
 }

@@ -2,6 +2,7 @@ import boto3
 import requests
 from celery import shared_task
 from django.conf import settings
+from absi.main.websockets import notify_ws
 
 
 transcribe = boto3.client(
@@ -13,15 +14,22 @@ transcribe = boto3.client(
 @shared_task
 def start_transcribe_job(s3_uri: str, job_name: str) -> str:
     print('queue_transcribe_job', s3_uri)
+    # job = TranscriptionJob.objects.create(
+    #     job_name=job_name,
+    #     status='IN_PROGRESS',
+    #     media_url=s3_uri,
+    # )
 
     print('queueing job', job_name)
-    transcribe.start_transcription_job(
+    job = transcribe.start_transcription_job(
         TranscriptionJobName=job_name,
         LanguageCode='en-US',
         Media={
             'MediaFileUri': s3_uri,
         },
     )
+
+    notify_ws(job)
 
     return job_name
 
@@ -50,4 +58,10 @@ def fetch_transcript(transcript_uri):
     response.raise_for_status()
     data = response.json()
     transcript_text = data['results']['transcripts'][0]['transcript']
+
+    # job = TranscriptionJob.objects.get(aws_job_name=job_name)
+    # job.transcript_text = transcript_text
+    # job.save()
+
+    notify_ws('job')
     return transcript_text
