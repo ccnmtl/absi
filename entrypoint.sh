@@ -10,7 +10,8 @@ fi
 ./ve/bin/python manage.py collectstatic --noinput --clear --settings=$SETTINGS
 
 # Start the Django application
-./ve/bin/gunicorn absi.wsgi:application \
+./ve/bin/gunicorn absi.asgi:application \
          --env DJANGO_SETTINGS_MODULE=$SETTINGS \
-         --bind 0.0.0.0:8000 \
-         --workers 2
+         --worker-class asgi \
+         --workers 4 \
+         --bind 0.0.0.0:8000
