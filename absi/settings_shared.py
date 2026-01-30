@@ -32,6 +32,8 @@ MIDDLEWARE += [  # noqa
     'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
+INSTALLED_APPS = ['daphne'] + INSTALLED_APPS  # noqa
+
 INSTALLED_APPS += [  # noqa
     'django_bootstrap5',
     'django_extensions',
