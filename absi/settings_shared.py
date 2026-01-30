@@ -88,7 +88,10 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [(REDIS_HOST, REDIS_PORT)],
+            'hosts': [{
+                'address': 'rediss://{}:{}'.format(REDIS_HOST, REDIS_PORT),
+                'ssl_cert_reqs': None,
+            }],
             'prefix': project + ':asgi',
             'serializer_format': 'json',
             'group_expiry': 3600,
