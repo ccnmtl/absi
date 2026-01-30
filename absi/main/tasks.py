@@ -14,14 +14,10 @@ transcribe = boto3.client(
 @shared_task
 def start_transcribe_job(s3_uri: str, job_name: str) -> str:
     print('queue_transcribe_job', s3_uri)
-    # job = TranscriptionJob.objects.create(
-    #     job_name=job_name,
-    #     status='IN_PROGRESS',
-    #     media_url=s3_uri,
-    # )
+    # TODO: limit audio length before starting job.
 
     print('queueing job', job_name)
-    job = transcribe.start_transcription_job(
+    transcribe.start_transcription_job(
         TranscriptionJobName=job_name,
         LanguageCode='en-US',
         Media={
@@ -29,8 +25,7 @@ def start_transcribe_job(s3_uri: str, job_name: str) -> str:
         },
     )
 
-    notify_ws(job)
-
+    notify_ws('Transcript loading...')
     return job_name
 
 
@@ -61,9 +56,6 @@ def fetch_transcript(transcript_uri):
     data = response.json()
     transcript_text = data['results']['transcripts'][0]['transcript']
 
-    # job = TranscriptionJob.objects.get(aws_job_name=job_name)
-    # job.transcript_text = transcript_text
-    # job.save()
-
-    notify_ws('job')
+    print('transcript_text', transcript_text)
+    notify_ws(transcript_text)
     return transcript_text
