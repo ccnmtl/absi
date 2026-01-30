@@ -10,8 +10,7 @@ fi
 ./ve/bin/python manage.py collectstatic --noinput --clear --settings=$SETTINGS
 
 # Start the Django application
-./ve/bin/gunicorn absi.asgi:application \
-         --env DJANGO_SETTINGS_MODULE=$SETTINGS \
-         --worker-class asgi \
-         --workers 2 \
-         --bind 0.0.0.0:8000
+export DJANGO_SETTINGS_MODULE=$SETTINGS
+./ve/bin/daphne absi.asgi:application \
+         --proxy-headers \
+         --bind 0.0.0.0 --port 8000
