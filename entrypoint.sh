@@ -13,5 +13,5 @@ fi
 ./ve/bin/gunicorn absi.asgi:application \
          --env DJANGO_SETTINGS_MODULE=$SETTINGS \
          --worker-class asgi \
-         --workers 4 \
+         --workers 2 \
          --bind 0.0.0.0:8000
