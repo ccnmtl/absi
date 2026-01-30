@@ -36,6 +36,7 @@ def start_transcribe_job(s3_uri: str, job_name: str) -> str:
 
 @shared_task(bind=True, max_retries=60)
 def poll_transcription(self, job_name):
+    print('poll_transcription', job_name)
     response = transcribe.get_transcription_job(
         TranscriptionJobName=job_name
     )
@@ -54,6 +55,7 @@ def poll_transcription(self, job_name):
 
 @shared_task
 def fetch_transcript(transcript_uri):
+    print('fetch_transcript', transcript_uri)
     response = requests.get(transcript_uri, timeout=30)
     response.raise_for_status()
     data = response.json()
