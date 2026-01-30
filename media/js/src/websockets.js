@@ -5,6 +5,12 @@ const socket = new WebSocket(
 socket.onmessage = function(e) {
     const data = JSON.parse(e.data);
     console.log('onmessage', data);
+
+    const el = document.getElementById('transcription-result');
+
+    if (el && data && data.message) {
+        el.innerHTML = data.message;
+    }
 };
 
 socket.onclose = function(e) {
