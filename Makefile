@@ -10,4 +10,12 @@ gunicorn: $(PY_SENTINAL)
 		--worker-class asgi \
 		--workers 2 \
 		--bind 127.0.0.1:8000
-.PHONY: gunicorn
+
+daphne: $(PY_SENTINAL)
+	./ve/bin/daphne absi.asgi:application \
+		--proxy-headers \
+		--bind 127.0.0.1 \
+		--port 8000
+
+
+.PHONY: gunicorn daphne
