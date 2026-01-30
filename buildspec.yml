@@ -82,6 +82,11 @@ phases:
       - TASK_DEFINITION_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json --query "taskDefinition.taskDefinitionArn" --output text)
       - echo "Registered new task definition - $TASK_DEFINITION_ARN"
       - echo "Updating Production ECS service"
-      - aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --task-definition $TASK_DEFINITION_ARN
+      - |
+        aws ecs update-service --cluster $ECS_CLUSTER_NAME \
+          --service $ECS_SERVICE_NAME --task-definition $TASK_DEFINITION_ARN
+      - |
+        aws ecs update-service --cluster $ECS_CLUSTER_NAME \
+          --service $ECS_SERVICE_WORKER_NAME
 artifacts:
     files: imagedefinitions.json
