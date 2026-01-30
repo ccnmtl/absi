@@ -13,4 +13,5 @@ fi
 export DJANGO_SETTINGS_MODULE=$SETTINGS
 ./ve/bin/daphne absi.asgi:application \
          --proxy-headers \
-         --bind 0.0.0.0 --port 8000
+         --bind 0.0.0.0 --port 8000 \
+         --websocket_timeout 1800

@@ -91,6 +91,7 @@ CHANNEL_LAYERS = {
             'hosts': [(REDIS_HOST, REDIS_PORT)],
             'prefix': project + ':asgi',
             'serializer_format': 'json',
+            'group_expiry': 3600,
         },
     },
 }
