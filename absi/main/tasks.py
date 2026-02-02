@@ -44,8 +44,8 @@ def poll_transcription(self, job_name):
     if status == 'FAILED':
         raise RuntimeError(job['FailureReason'])
 
-    # still running → retry in 5 seconds
-    raise self.retry(countdown=5)
+    # still running → retry in 2 seconds
+    raise self.retry(countdown=2)
 
 
 @shared_task
