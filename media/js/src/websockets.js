@@ -1,3 +1,13 @@
+const displayMessage = function(msg) {
+    $(document).ready(function() {
+        const el = $('#transcription-result');
+
+        if (el && msg) {
+            $(el).text(msg);
+        }
+    });
+};
+
 const socket = new WebSocket(
     'wss://' + window.location.host + '/ws/'
 );
@@ -6,13 +16,14 @@ socket.onmessage = function(e) {
     const data = JSON.parse(e.data);
     console.log('onmessage', data);
 
-    const el = document.getElementById('transcription-result');
-
-    if (el && data && data.message) {
-        el.innerHTML = data.message;
+    if (data && data.message) {
+        displayMessage(data.message);
     }
 };
 
 socket.onclose = function(e) {
-    console.error('Socket closed unexpectedly');
+    const errorMessage = 'Socket closed unexpectedly';
+
+    displayMessage(errorMessage);
+    console.error(errorMessage);
 };
