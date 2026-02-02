@@ -86,7 +86,7 @@ if os.environ.get('REDIS_PORT'):
 USE_X_FORWARDED_HOST = True
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.pubsub.RedisPubSubChannelLayer',
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             'hosts': [{
                 'address': 'rediss://{}:{}'.format(REDIS_HOST, REDIS_PORT),
