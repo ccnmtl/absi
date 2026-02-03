@@ -20,7 +20,7 @@ class TranscribeConsumer(AsyncJsonWebsocketConsumer):
         await self.channel_layer.group_discard(
             self.group_name, self.channel_name)
 
-    async def send_transcript(self, event):
-        print('send_transcript', event)
+    async def send_message(self, event):
+        print('send_message', event)
         text = event['text']
         await self.send_json({'message': text})

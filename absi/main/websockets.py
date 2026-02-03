@@ -10,7 +10,7 @@ def notify_ws(text: str):
     print('Sending message to group:', text)
     async_to_sync(channel_layer.group_send)(
         'transcribe_updates', {
-            'type': 'send_transcript',
+            'type': 'send_message',
             'text': text,
         },
     )
