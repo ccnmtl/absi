@@ -19,7 +19,7 @@ def start_transcribe_job(s3_uri: str, job_name: str) -> str:
     print('queueing job', job_name)
     transcribe.start_transcription_job(
         TranscriptionJobName=job_name,
-        LanguageCode='en-US',
+        LanguageCode='ar-SA',
         Media={
             'MediaFileUri': s3_uri,
         },
