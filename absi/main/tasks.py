@@ -29,7 +29,14 @@ def start_transcribe_job(s3_uri: str, job_name: str) -> str:
     return job_name
 
 
-@shared_task(bind=True, max_retries=60)
+@shared_task(
+    bind=True,
+    max_retries=60,
+    autoretry_for=(Exception,),
+    retry_backoff=True,
+    retry_backoff_max=60,
+    retry_jitter=True
+)
 def poll_transcription(self, job_name):
     print('poll_transcription', job_name)
     response = transcribe.get_transcription_job(
@@ -44,8 +51,7 @@ def poll_transcription(self, job_name):
     if status == 'FAILED':
         raise RuntimeError(job['FailureReason'])
 
-    # still running → retry in 2 seconds
-    raise self.retry(countdown=2)
+    raise Exception('Job still in progress')
 
 
 @shared_task
