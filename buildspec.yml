@@ -85,8 +85,29 @@ phases:
       - |
         aws ecs update-service --cluster $ECS_CLUSTER_NAME \
           --service $ECS_SERVICE_NAME --task-definition $TASK_DEFINITION_ARN
+      - echo "Retrieve the latest worker task definition ARN..."
+      - |
+        latest_worker_arn=$(aws ecs list-task-definitions \
+            --family-prefix $ECS_WORKER_TASK_DEFINITION_FAMILY \
+            --status ACTIVE \
+            --sort DESC \
+            --no-paginate \
+            --query 'taskDefinitionArns[0]' \
+            --output text)
+
+      - echo "Latest worker ARN:" $latest_worker_arn
+      - echo "Describe the latest task definition and save the JSON to a file..."
+      - aws ecs describe-task-definition --task-definition $latest_worker_arn --query 'taskDefinition' --output json > previous-task-definition.json
+      - echo "Below jq command to remove the warnings from github because the properties are not needed for the ECS deploy..."
+      - jq 'del(.compatibilities, .taskDefinitionArn, .requiresAttributes, .revision, .status, .registeredAt, .registeredBy)' previous-task-definition.json > tmpfile && mv tmpfile previous-task-definition.json
+      - echo "Modify the JSON to update the image..."
+      - jq --arg image "$REPOSITORY_URI:$IMAGE_TAG" '.containerDefinitions[0].image = $image' previous-task-definition.json > task-definition.json
+      - echo "Run aws ecs register task definition..."
+      - WORKER_TASK_DEFINITION_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json --query "taskDefinition.taskDefinitionArn" --output text)
+      - echo "Registered new task definition - WORKER_$TASK_DEFINITION_ARN"
+      - echo "Updating Staging worker ECS service"
       - |
         aws ecs update-service --cluster $ECS_CLUSTER_NAME \
-          --service $ECS_SERVICE_WORKER_NAME
+          --service $ECS_WORKER_SERVICE_NAME --task-definition $WORKER_TASK_DEFINITION_ARN
 artifacts:
     files: imagedefinitions.json
