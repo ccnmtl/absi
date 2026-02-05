@@ -30,6 +30,22 @@ const queueTranscribeJob = function(uri) {
     });
 };
 
+const queueAzureTranscribeJob = function(uri) {
+    console.log('queueTranscribeJob', uri);
+    return fetch('/api/azure_transcribe/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        },
+        mode: 'same-origin',
+        body: JSON.stringify({
+            s3_uri: uri
+        })
+    });
+};
+
 // Main block for doing the audio recording
 if (navigator.mediaDevices.getUserMedia) {
     console.log('The mediaDevices.getUserMedia() method is supported.');
@@ -118,6 +134,9 @@ if (navigator.mediaDevices.getUserMedia) {
                 onFinishS3Put: function(publicUrl) {
                     // Submit to django view queueing transcribe job
                     queueTranscribeJob(publicUrl);
+
+                    // Transcribe in Azure as well.
+                    queueAzureTranscribeJob(publicUrl);
                 }
             });
 

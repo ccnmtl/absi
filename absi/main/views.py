@@ -1,6 +1,8 @@
-import uuid
 import boto3
+import uuid
+from urllib.parse import urlparse
 from celery import chain
+from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.views import APIView
@@ -14,6 +16,7 @@ from s3sign.utils import s3_config
 from absi.main.tasks import (
     start_transcribe_job, poll_transcription, fetch_transcript
 )
+from absi.main.azure_speech import download_and_transcribe_s3_audio
 
 
 def enqueue_transcription(job_name: str, media_uri: str):
@@ -41,7 +44,7 @@ class TranscribeView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class QueueTranscribeJobView(APIView):
+class QueueAWSTranscribeJobView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -57,6 +60,30 @@ class QueueTranscribeJobView(APIView):
                 'status': 'QUEUED',
             },
             status=status.HTTP_202_ACCEPTED,
+        )
+
+
+class AzureTranscribeJobView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        print('azure transcribe post')
+
+        s3_uri = request.data['s3_uri']
+        url = urlparse(s3_uri)
+        s3_path = url.path
+        s3_path = s3_path.lstrip('/')
+        print(s3_path)
+
+        result = download_and_transcribe_s3_audio(
+            settings.AWS_UPLOAD_BUCKET, s3_path)
+        print('result', result)
+
+        return Response(
+            {
+                'result': result.text,
+            },
+            status=status.HTTP_200_OK,
         )
 
 

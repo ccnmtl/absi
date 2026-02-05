@@ -98,3 +98,8 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# Azure
+AZURE_SPEECH_KEY = os.environ.get('AZURE_SPEECH_KEY')
+AZURE_SPEECH_ENDPOINT = os.environ.get('AZURE_SPEECH_ENDPOINT')
+AZURE_SPEECH_REGION = os.environ.get('AZURE_SPEECH_REGION', 'eastus')
