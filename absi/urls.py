@@ -30,8 +30,11 @@ urlpatterns = [
     path('transcribe/', views.TranscribeView.as_view(),
          name='transcribe_view'),
 
-    path('api/transcribe/', views.QueueTranscribeJobView.as_view(),
+    path('api/transcribe/', views.QueueAWSTranscribeJobView.as_view(),
          name='api_transcribe_job_view'),
+
+    path('api/azure_transcribe/', views.AzureTranscribeJobView.as_view(),
+         name='api_azure_transcribe_job_view'),
 
     path('s3sign/', views.SignS3ECSView.as_view()),
 

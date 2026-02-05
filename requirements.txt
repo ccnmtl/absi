@@ -84,6 +84,7 @@ django-markdownify==0.9.6
 django-s3sign==0.6.1
 six==1.17.0  # django-s3sign
 
+azure-core==1.38.0
 azure-cognitiveservices-speech==1.47.0
 
 vine==5.1.0  # amqp

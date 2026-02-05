@@ -5,7 +5,7 @@ from django.conf import settings
 from absi.main.websockets import notify_ws
 
 
-transcribe = boto3.client(
+boto_transcribe = boto3.client(
     'transcribe',
     region_name=settings.AWS_REGION
 )
@@ -17,7 +17,7 @@ def start_transcribe_job(s3_uri: str, job_name: str) -> str:
     # TODO: limit audio length before starting job.
 
     print('queueing job', job_name)
-    transcribe.start_transcription_job(
+    boto_transcribe.start_transcription_job(
         TranscriptionJobName=job_name,
         LanguageCode='ar-SA',
         Media={
@@ -39,7 +39,7 @@ def start_transcribe_job(s3_uri: str, job_name: str) -> str:
 )
 def poll_transcription(self, job_name):
     print('poll_transcription', job_name)
-    response = transcribe.get_transcription_job(
+    response = boto_transcribe.get_transcription_job(
         TranscriptionJobName=job_name
     )
 
