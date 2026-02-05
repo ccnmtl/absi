@@ -1,3 +1,5 @@
+const MAX_SECONDS = 5;
+
 // Set up basic variables for app
 const record = document.querySelector('.record');
 const stop = document.querySelector('.stop');
@@ -35,6 +37,17 @@ if (navigator.mediaDevices.getUserMedia) {
     const constraints = { audio: true };
     let chunks = [];
 
+    const stopRecording = function(media) {
+        media.stop();
+        console.log(media.state);
+        console.log('Recorder stopped.');
+        record.style.background = '';
+        record.style.color = '';
+
+        stop.disabled = true;
+        record.disabled = false;
+    };
+
     let onSuccess = function(stream) {
         const mediaRecorder = new MediaRecorder(stream);
 
@@ -48,17 +61,16 @@ if (navigator.mediaDevices.getUserMedia) {
 
             stop.disabled = false;
             record.disabled = true;
+
+            setTimeout(() => {
+                if (mediaRecorder.state === 'recording') {
+                    stopRecording(mediaRecorder);
+                }
+            }, MAX_SECONDS * 1000);
         };
 
         stop.onclick = function() {
-            mediaRecorder.stop();
-            console.log(mediaRecorder.state);
-            console.log('Recorder stopped.');
-            record.style.background = '';
-            record.style.color = '';
-
-            stop.disabled = true;
-            record.disabled = false;
+            stopRecording(mediaRecorder);
         };
 
         mediaRecorder.onstop = function(e) {
