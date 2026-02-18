@@ -1,6 +1,7 @@
 import boto3
 import os
 import tempfile
+from pathlib import Path
 from django.conf import settings
 import azure.cognitiveservices.speech as speechsdk
 
@@ -37,7 +38,12 @@ def transcribe_audio_file(path: str) -> str:
 
 
 def download_and_transcribe_s3_audio(bucket: str, key: str) -> str:
-    with tempfile.NamedTemporaryFile(delete=False) as f:
+    suffix = '.webm'
+    file_path = Path(key)
+    if file_path and file_path.suffix:
+        suffix = file_path.suffix
+
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as f:
         tmp_path = f.name
 
     s3.download_file(bucket, key, tmp_path)
