@@ -37,7 +37,7 @@ def transcribe_audio_file(path: str) -> str:
 
 
 def download_and_transcribe_s3_audio(bucket: str, key: str) -> str:
-    with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as f:
+    with tempfile.NamedTemporaryFile(delete=False) as f:
         tmp_path = f.name
 
     s3.download_file(bucket, key, tmp_path)
