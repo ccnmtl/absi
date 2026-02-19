@@ -1,5 +1,6 @@
 import boto3
 import os
+import subprocess  # nosec
 import tempfile
 from pathlib import Path
 from django.conf import settings
@@ -45,10 +46,20 @@ def download_and_transcribe_s3_audio(bucket: str, key: str) -> str:
 
     with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as f:
         tmp_path = f.name
+        tmp_stem = Path(tmp_path).stem
 
     s3.download_file(bucket, key, tmp_path)
 
+    # Transcode recorded audio to PCM, for Azure.
+    completed_process = subprocess.run([  # nosec
+        'ffmpeg', '-i', tmp_path, '-ac', '1',
+        '-ar', '16000', '-f', '-s16le',
+        f'/tmp/{tmp_stem}.pcm'  # nosec
+    ])
+    print(completed_process)
+
     try:
-        return transcribe_audio_file(tmp_path)
+        return transcribe_audio_file(f'/tmp/{tmp_stem}.pcm')  # nosec
     finally:
         os.remove(tmp_path)
+        os.remove(f'/tmp/{tmp_stem}.pcm')  # nosec
