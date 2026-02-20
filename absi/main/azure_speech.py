@@ -21,19 +21,37 @@ def transcribe_audio_file(path: str) -> str:
     recognizer = speechsdk.SpeechRecognizer(
         speech_config=speech_config,
         audio_config=audio_config,
+        language='en-US',
     )
 
-    result = recognizer.recognize_once()
-    print('result', result)
+    pronunciation_config = speechsdk.PronunciationAssessmentConfig(
+        reference_text='',
+        grading_system=speechsdk.PronunciationAssessmentGradingSystem.HundredMark,  # noqa
+        granularity=speechsdk.PronunciationAssessmentGranularity.Phoneme,
+        enable_miscue=False)
+    pronunciation_config.enable_prosody_assessment()
 
-    if result.reason == speechsdk.ResultReason.RecognizedSpeech:
-        return result.text
+    speech_recognition_result = recognizer.recognize_once()
+    print('result', speech_recognition_result)
 
-    if result.reason == speechsdk.ResultReason.NoMatch:
+    pronunciation_assessment_result = speechsdk.PronunciationAssessmentResult(
+        speech_recognition_result)
+    print('pronunciation_assessment_result', pronunciation_assessment_result)
+    pronunciation_assessment_result_json = \
+        speech_recognition_result.properties.get(
+            speechsdk.PropertyId.SpeechServiceResponse_JsonResult)
+    print('pronunciation_assessment_result_json',
+          pronunciation_assessment_result_json)
+
+    if speech_recognition_result.reason == \
+       speechsdk.ResultReason.RecognizedSpeech:
+        return speech_recognition_result.text
+
+    if speech_recognition_result.reason == speechsdk.ResultReason.NoMatch:
         raise RuntimeError('No speech recognized')
 
-    if result.reason == speechsdk.ResultReason.Canceled:
-        details = result.cancellation_details
+    if speech_recognition_result.reason == speechsdk.ResultReason.Canceled:
+        details = speech_recognition_result.cancellation_details
         raise RuntimeError(
             f'Canceled: {details.reason} {details.error_details}')
 
