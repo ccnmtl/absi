@@ -81,7 +81,7 @@ tinycss2==1.4.0 # django-markdownify
 bleach==6.3.0 # django-markdownify
 django-markdownify==0.9.6
 
-django-s3sign==0.6.2
+django-s3sign==0.6.3
 six==1.17.0  # django-s3sign
 
 azure-core==1.38.2
