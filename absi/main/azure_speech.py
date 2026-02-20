@@ -52,14 +52,18 @@ def download_and_transcribe_s3_audio(bucket: str, key: str) -> str:
 
     # Transcode recorded audio to PCM, for Azure.
     completed_process = subprocess.run([  # nosec
-        'ffmpeg', '-i', tmp_path, '-ac', '1',
-        '-ar', '16000', '-f', '-s16le',
-        f'/tmp/{tmp_stem}.pcm'  # nosec
-    ])
+        'ffmpeg', '-y',
+        '-i', tmp_path,
+        '-ac', '1',
+        '-ar', '16000',
+        '-af', 'loudnorm',
+        '-c:a', 'pcm_s16le',
+        f'/tmp/{tmp_stem}.wav'  # nosec
+    ], check=True)
     print(completed_process)
 
     try:
-        return transcribe_audio_file(f'/tmp/{tmp_stem}.pcm')  # nosec
+        return transcribe_audio_file(f'/tmp/{tmp_stem}.wav')  # nosec
     finally:
         os.remove(tmp_path)
-        os.remove(f'/tmp/{tmp_stem}.pcm')  # nosec
+        os.remove(f'/tmp/{tmp_stem}.wav')  # nosec
