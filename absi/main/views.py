@@ -81,7 +81,7 @@ class AzureTranscribeJobView(APIView):
 
         return Response(
             {
-                'result': result.text,
+                'result': result,
             },
             status=status.HTTP_200_OK,
         )
