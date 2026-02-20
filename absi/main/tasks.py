@@ -19,7 +19,7 @@ def start_transcribe_job(s3_uri: str, job_name: str) -> str:
     print('queueing job', job_name)
     boto_transcribe.start_transcription_job(
         TranscriptionJobName=job_name,
-        LanguageCode='ar-SA',
+        LanguageCode=settings.ABSI_LANG,
         Media={
             'MediaFileUri': s3_uri,
         },

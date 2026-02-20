@@ -14,14 +14,14 @@ def transcribe_audio_file(path: str) -> str:
     speech_config = speechsdk.SpeechConfig(
         subscription=settings.AZURE_SPEECH_KEY,
         region=settings.AZURE_SPEECH_REGION,
-        speech_recognition_language='en-US',
+        speech_recognition_language=settings.ABSI_LANG,
     )
 
     audio_config = speechsdk.AudioConfig(filename=path)
     recognizer = speechsdk.SpeechRecognizer(
         speech_config=speech_config,
         audio_config=audio_config,
-        language='en-US',
+        language=settings.ABSI_LANG,
     )
 
     pronunciation_config = speechsdk.PronunciationAssessmentConfig(
