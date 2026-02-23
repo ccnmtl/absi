@@ -1,6 +1,9 @@
-const displayMessage = function(msg) {
+const displayMessage = function(msg, azure) {
     $(document).ready(function() {
-        const el = $('#transcription-result');
+        let el = $('#transcription-result');
+        if (azure) {
+            el = $('#azure-transcription-result');
+        };
 
         if (el && msg) {
             $(el).text(msg);
@@ -17,7 +20,7 @@ socket.onmessage = function(e) {
     console.log('onmessage', data);
 
     if (data && data.message) {
-        displayMessage(data.message);
+        displayMessage(data.message, data.azure);
     }
 };
 
@@ -25,5 +28,6 @@ socket.onclose = function(e) {
     const errorMessage = 'Socket closed unexpectedly';
 
     displayMessage(errorMessage);
+    displayMessage(errorMessage, true);
     console.error(errorMessage);
 };

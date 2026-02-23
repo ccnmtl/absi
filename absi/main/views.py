@@ -15,8 +15,7 @@ from s3sign.utils import s3_config
 from absi.main.tasks import (
     start_transcribe_job, poll_transcription, fetch_transcript,
 
-    start_azure_transcribe_job, poll_azure_transcription,
-    fetch_azure_transcript
+    start_azure_transcribe_job
 )
 
 
@@ -28,11 +27,9 @@ def enqueue_transcription(job_name: str, media_uri: str):
     ).apply_async()
 
 
-def enqueue_azure_transcription(job_name: str, media_uri: str):
+def enqueue_azure_transcription(s3_path: str):
     chain(
-        start_azure_transcribe_job.s(job_name, media_uri),
-        poll_azure_transcription.s(),
-        fetch_azure_transcript.s(),
+        start_azure_transcribe_job.s(s3_path),
     ).apply_async()
 
 
@@ -84,13 +81,11 @@ class AzureTranscribeJobView(APIView):
         s3_path = s3_path.lstrip('/')
         print(s3_path)
 
-        job_name = 'absi-azure-transcribe-' + str(uuid.uuid4())
-
-        enqueue_azure_transcription(s3_uri, job_name)
+        poll_url = enqueue_azure_transcription(s3_path)
 
         return Response(
             {
-                'job_id': None,
+                'poll_url': poll_url,
                 'status': 'QUEUED',
             },
             status=status.HTTP_202_ACCEPTED,

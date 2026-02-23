@@ -2,7 +2,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
 
-def notify_ws(text: str):
+def notify_ws(text: str, azure: bool = False):
     """
     Send a JSON-serializable payload to all connected /ws/ clients.
     """
@@ -12,6 +12,7 @@ def notify_ws(text: str):
         'transcribe_updates', {
             'type': 'send_message',
             'text': text,
+            'azure': azure,
         },
     )
     print('Message sent!')
