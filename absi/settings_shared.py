@@ -83,15 +83,25 @@ REDIS_PORT = 6379
 if os.environ.get('REDIS_PORT'):
     REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
 
+# Redis SSL
+REDIS_PROTO = 'rediss'
+if REDIS_HOST == '127.0.0.1':
+    # non-SSL for local use
+    REDIS_PROTO = 'redis'
+
+redis_host_obj = {
+    'address': '{}://{}:{}'.format(REDIS_PROTO, REDIS_HOST, REDIS_PORT),
+}
+
+if REDIS_PROTO == 'rediss':
+    redis_host_obj['ssl_cert_reqs'] = None
+
 USE_X_FORWARDED_HOST = True
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [{
-                'address': 'rediss://{}:{}'.format(REDIS_HOST, REDIS_PORT),
-                'ssl_cert_reqs': None,
-            }],
+            'hosts': [redis_host_obj],
             'prefix': project + ':asgi',
             'serializer_format': 'json',
             'group_expiry': 3600,
