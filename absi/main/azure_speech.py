@@ -10,7 +10,7 @@ import azure.cognitiveservices.speech as speechsdk
 s3 = boto3.client('s3', region_name=settings.AWS_REGION)
 
 
-def transcribe_audio_file(path: str) -> str:
+def submit_audio_to_azure(path: str) -> str:
     speech_config = speechsdk.SpeechConfig(
         subscription=settings.AZURE_SPEECH_KEY,
         region=settings.AZURE_SPEECH_REGION,
@@ -56,7 +56,7 @@ def transcribe_audio_file(path: str) -> str:
             f'Canceled: {details.reason} {details.error_details}')
 
 
-def download_and_transcribe_s3_audio(bucket: str, key: str) -> str:
+def download_and_transcode_s3_audio(bucket: str, key: str) -> str:
     suffix = '.webm'
     file_path = Path(key)
     if file_path and file_path.suffix:
@@ -80,8 +80,6 @@ def download_and_transcribe_s3_audio(bucket: str, key: str) -> str:
     ], check=True)
     print(completed_process)
 
-    try:
-        return transcribe_audio_file(f'/tmp/{tmp_stem}.wav')  # nosec
-    finally:
-        os.remove(tmp_path)
-        os.remove(f'/tmp/{tmp_stem}.wav')  # nosec
+    os.remove(tmp_path)
+
+    return f'/tmp/{tmp_stem}.wav'  # nosec

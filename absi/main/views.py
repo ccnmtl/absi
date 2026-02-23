@@ -2,7 +2,6 @@ import boto3
 import uuid
 from urllib.parse import urlparse
 from celery import chain
-from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.views import APIView
@@ -14,9 +13,11 @@ from s3sign.views import SignS3View
 from s3sign.utils import s3_config
 
 from absi.main.tasks import (
-    start_transcribe_job, poll_transcription, fetch_transcript
+    start_transcribe_job, poll_transcription, fetch_transcript,
+
+    start_azure_transcribe_job, poll_azure_transcription,
+    fetch_azure_transcript
 )
-from absi.main.azure_speech import download_and_transcribe_s3_audio
 
 
 def enqueue_transcription(job_name: str, media_uri: str):
@@ -24,6 +25,14 @@ def enqueue_transcription(job_name: str, media_uri: str):
         start_transcribe_job.s(job_name, media_uri),
         poll_transcription.s(),
         fetch_transcript.s(),
+    ).apply_async()
+
+
+def enqueue_azure_transcription(job_name: str, media_uri: str):
+    chain(
+        start_azure_transcribe_job.s(job_name, media_uri),
+        poll_azure_transcription.s(),
+        fetch_azure_transcript.s(),
     ).apply_async()
 
 
@@ -75,15 +84,16 @@ class AzureTranscribeJobView(APIView):
         s3_path = s3_path.lstrip('/')
         print(s3_path)
 
-        result = download_and_transcribe_s3_audio(
-            settings.AWS_UPLOAD_BUCKET, s3_path)
-        print('result', result)
+        job_name = 'absi-azure-transcribe-' + str(uuid.uuid4())
+
+        enqueue_azure_transcription(s3_uri, job_name)
 
         return Response(
             {
-                'result': result,
+                'job_id': None,
+                'status': 'QUEUED',
             },
-            status=status.HTTP_200_OK,
+            status=status.HTTP_202_ACCEPTED,
         )
 
 
