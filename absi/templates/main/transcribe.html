@@ -10,11 +10,24 @@
 
 <section class="main-controls">
     <canvas class="visualizer" height="60px"></canvas>
-    <div id="transcription-result">
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">AWS Transcribe</h5>
+            <div class="card-text" id="transcription-result"></div>
+        </div>
     </div>
-    <div id="buttons">
-        <button class="record">Record</button>
-        <button class="stop">Stop</button>
+
+    <div class="card mt-2" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Azure Speech</h5>
+            <div class="card-text" id="azure-transcription-result"></div>
+        </div>
+    </div>
+
+    <div id="buttons" class="mt-2">
+        <button type="button" class="btn btn-primary record">Record</button>
+        <button type="button" class="btn btn-secondary stop">Stop</button>
     </div>
 </section>
 

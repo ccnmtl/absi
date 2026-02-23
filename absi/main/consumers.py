@@ -12,7 +12,12 @@ class TranscribeConsumer(AsyncJsonWebsocketConsumer):
 
         # Optionally send a welcome message
         await self.send_json({
-            'message': 'Record your voice to transcribe it.'
+            'message': 'Record your voice to transcribe it.',
+            'azure': False,
+        })
+        await self.send_json({
+            'message': 'Record your voice to transcribe it.',
+            'azure': True,
         })
 
     async def disconnect(self, close_code):
@@ -23,4 +28,8 @@ class TranscribeConsumer(AsyncJsonWebsocketConsumer):
     async def send_message(self, event):
         print('send_message', event)
         text = event['text']
-        await self.send_json({'message': text})
+        azure = event.get('azure', None)
+        await self.send_json({
+            'message': text,
+            'azure': azure,
+        })
