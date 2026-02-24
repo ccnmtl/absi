@@ -6,6 +6,10 @@ const displayMessage = function(msg, azure) {
         };
 
         if (el && msg) {
+            if (typeof msg === 'object') {
+                msg = JSON.stringify(msg);
+            }
+
             $(el).text(msg);
         }
     });

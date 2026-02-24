@@ -71,8 +71,13 @@ def fetch_transcript(transcript_uri):
     return transcript_text
 
 
-@shared_task
-def start_azure_transcribe_job(s3_path: str) -> object:
+@shared_task(
+    bind=True,
+    autoretry_for=(Exception,),
+    retry_backoff=2,
+    retry_kwargs={'max_retries': 3}
+)
+def start_azure_transcribe_job(self, s3_path: str) -> object:
     print('start_azure_transcribe_job', s3_path)
     # TODO: limit audio length before starting job.
 
@@ -85,16 +90,3 @@ def start_azure_transcribe_job(s3_path: str) -> object:
 
     notify_ws(azure_result, True)
     return azure_result
-
-
-@shared_task
-def fetch_azure_transcript(transcript_uri):
-    print('fetch_azure_transcript', transcript_uri)
-    response = requests.get(transcript_uri, timeout=30)
-    response.raise_for_status()
-    data = response.json()
-    transcript_text = data['results']['transcripts'][0]['transcript']
-
-    print('azure transcript_text', transcript_text)
-    notify_ws(transcript_text, True)
-    return transcript_text
