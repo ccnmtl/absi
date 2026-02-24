@@ -27,12 +27,6 @@ def enqueue_transcription(job_name: str, media_uri: str):
     ).apply_async()
 
 
-def enqueue_azure_transcription(s3_path: str):
-    chain(
-        start_azure_transcribe_job.s(s3_path),
-    ).apply_async()
-
-
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -81,11 +75,12 @@ class AzureTranscribeJobView(APIView):
         s3_path = s3_path.lstrip('/')
         print(s3_path)
 
-        poll_url = enqueue_azure_transcription(s3_path)
+        task = start_azure_transcribe_job.delay(s3_path)
+        print('AzureTranscribeJobView task', task)
 
         return Response(
             {
-                'poll_url': poll_url,
+                'task_id': task.id,
                 'status': 'QUEUED',
             },
             status=status.HTTP_202_ACCEPTED,
