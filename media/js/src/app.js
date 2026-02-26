@@ -31,7 +31,8 @@ const queueTranscribeJob = function(uri) {
 };
 
 const queueAzureTranscribeJob = function(uri) {
-    console.log('queueTranscribeJob', uri);
+    const transcribeText = jQuery('[name="transcribe_text"]').text();
+    console.log('queueAzureTranscribeJob', uri, transcribeText);
     return fetch('/api/azure_transcribe/', {
         method: 'POST',
         headers: {
@@ -42,7 +43,7 @@ const queueAzureTranscribeJob = function(uri) {
         mode: 'same-origin',
         body: JSON.stringify({
             s3_uri: uri,
-            transcribe_text: jQuery('[name="transcribe_text"]').text()
+            transcribe_text: transcribeText
         })
     });
 };
