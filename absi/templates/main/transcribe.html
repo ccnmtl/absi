@@ -11,23 +11,33 @@
 <section class="main-controls">
     <canvas class="visualizer" height="60px"></canvas>
 
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">AWS Transcribe</h5>
-            <div class="card-text" id="transcription-result"></div>
-        </div>
-    </div>
-
-    <div class="card mt-2" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Azure Speech</h5>
-            <div class="card-text" id="azure-transcription-result"></div>
-        </div>
-    </div>
+    <textarea
+        class="form-control mt-2"
+        name="transcribe_text"
+        title="Transcribe text">سيارة</textarea>
 
     <div id="buttons" class="mt-2">
         <button type="button" class="btn btn-primary record">Record</button>
         <button type="button" class="btn btn-secondary stop">Stop</button>
+    </div>
+
+    <hr />
+
+    <div class="d-flex justify-content-around mt-2">
+        Output:
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">AWS Transcribe</h5>
+                <div class="card-text" id="transcription-result"></div>
+            </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Azure Speech</h5>
+                <div class="card-text" id="azure-transcription-result"></div>
+            </div>
+        </div>
     </div>
 </section>
 

@@ -40,7 +40,7 @@ def download_and_transcode_s3_audio(bucket: str, key: str) -> str:
     return f'/tmp/{tmp_stem}.wav'  # nosec
 
 
-def submit_audio_to_azure(path: str) -> object:
+def submit_audio_to_azure(path: str, transcribe_text: str) -> object:
     speech_config = speechsdk.SpeechConfig(
         subscription=settings.AZURE_SPEECH_KEY,
         region=settings.AZURE_SPEECH_REGION,
@@ -54,7 +54,9 @@ def submit_audio_to_azure(path: str) -> object:
         language=settings.ABSI_LANG,
     )
 
-    pronunciation_config = speechsdk.PronunciationAssessmentConfig()
+    pronunciation_config = speechsdk.PronunciationAssessmentConfig(
+        reference_text=transcribe_text)
+
     pronunciation_config.enable_prosody_assessment()
 
     speech_recognition_result = recognizer.recognize_once()

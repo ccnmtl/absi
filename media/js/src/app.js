@@ -41,7 +41,8 @@ const queueAzureTranscribeJob = function(uri) {
         },
         mode: 'same-origin',
         body: JSON.stringify({
-            s3_uri: uri
+            s3_uri: uri,
+            transcribe_text: jQuery('[name="transcribe_text"]').text()
         })
     });
 };
