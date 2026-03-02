@@ -62,25 +62,22 @@ def submit_audio_to_azure(path: str, transcribe_text: str) -> object:
     speech_recognition_result = recognizer.recognize_once()
     print('speech_recognition_result', speech_recognition_result)
 
-    pronunciation_assessment_result = speechsdk.PronunciationAssessmentResult(
-        speech_recognition_result)
-    print('pronunciation_assessment_result', pronunciation_assessment_result)
-    pronunciation_assessment_result_json = \
-        speech_recognition_result.properties.get(
+    if speech_recognition_result.reason == \
+       speechsdk.ResultReason.RecognizedSpeech:
+        assessment = speechsdk.PronunciationAssessmentResult(
+            speech_recognition_result)
+        print('assessment', assessment)
+
+        assessment_json = speech_recognition_result.properties.get(
             speechsdk.PropertyId.SpeechServiceResponse_JsonResult)
-    print('pronunciation_assessment_result_json',
-          pronunciation_assessment_result_json)
+        print('assessment_json', assessment_json)
 
-    # if speech_recognition_result.reason == \
-    #    speechsdk.ResultReason.RecognizedSpeech:
-    #     return speech_recognition_result
-
-    if speech_recognition_result.reason == speechsdk.ResultReason.NoMatch:
+        return json.loads(assessment_json)
+    elif speech_recognition_result.reason == speechsdk.ResultReason.NoMatch:
         raise RuntimeError('No speech recognized')
-
-    if speech_recognition_result.reason == speechsdk.ResultReason.Canceled:
+    elif speech_recognition_result.reason == speechsdk.ResultReason.Canceled:
         details = speech_recognition_result.cancellation_details
         raise RuntimeError(
             f'Canceled: {details.reason} {details.error_details}')
 
-    return json.loads(pronunciation_assessment_result_json)
+    return None
