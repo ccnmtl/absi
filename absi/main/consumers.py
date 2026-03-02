@@ -16,7 +16,7 @@ class TranscribeConsumer(AsyncJsonWebsocketConsumer):
             'azure': False,
         })
         await self.send_json({
-            'message': 'Record your voice to transcribe it.',
+            'message': 'Record your voice for pronunciation assessment.',
             'azure': True,
         })
 
