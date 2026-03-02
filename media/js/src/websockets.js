@@ -2,12 +2,12 @@ const displayMessage = function(msg, azure) {
     $(document).ready(function() {
         let el = $('#transcription-result');
         if (azure) {
-            el = $('#azure-transcription-result');
+            el = $('#azure-transcription-result>pre');
         };
 
         if (el && msg) {
             if (typeof msg === 'object') {
-                msg = JSON.stringify(msg);
+                msg = JSON.stringify(msg, null, '  ');
             }
 
             $(el).text(msg);
