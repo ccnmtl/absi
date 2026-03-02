@@ -59,6 +59,8 @@ def submit_audio_to_azure(path: str, transcribe_text: str) -> object:
 
     pronunciation_config.enable_prosody_assessment()
 
+    pronunciation_config.apply_to(recognizer)
+
     speech_recognition_result = recognizer.recognize_once()
     print('speech_recognition_result', speech_recognition_result)
 
