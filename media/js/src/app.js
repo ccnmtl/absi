@@ -217,3 +217,15 @@ window.onresize = function() {
 };
 
 window.onresize();
+
+$(document).ready(function() {
+    const $textarea = $('textarea[name="transcribe_text"]');
+    $('.absi-text-buttons button').click(function(e) {
+        let text = $(this).text();
+        if (text) {
+            text = text.trim();
+        }
+
+        $textarea.text(text);
+    });
+});
