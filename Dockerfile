@@ -12,6 +12,7 @@ WORKDIR /app
 RUN mkdir -p /tmp && chmod 1777 /tmp
 
 COPY requirements.txt .
+COPY requirements/ ./requirements/
 
 # Upgrade pip
 RUN python -m venv ve
