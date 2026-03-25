@@ -109,7 +109,7 @@ zope.interface==8.2  # Twisted
 constantly==23.10.4  # Twisted
 Automat==25.4.16  # Twisted
 hyperlink==21.0.0  # Twisted
-attrs==25.4.0  # Twisted
+attrs==26.1.0  # Twisted
 typing-extensions==4.15.0  # Twisted
 service-identity==24.2.0  # Twisted
 twisted[http2,tls,websocket]==25.5.0  # daphne
