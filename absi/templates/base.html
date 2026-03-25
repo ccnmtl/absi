@@ -85,6 +85,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/transcribe/" title="Transcribe">Transcribe</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/pages/" title="Pages">Pages</a>
+                </li>
             </ul>
             {% block usernav %}
             <ul class="navbar-nav">
@@ -129,8 +132,10 @@
 
     <section id="content">
         <div class="container">
-        {% block pagetitle %}{% endblock %}
-        {% block content %}{% endblock %}
+            {% block navrightextra %}{% endblock %}
+
+            {% block pagetitle %}{% endblock %}
+            {% block content %}{% endblock %}
         </div>
     </section>
 
