@@ -101,7 +101,7 @@ billiard==4.2.4  # celery
 tzlocal==5.3.1  # celery
 celery[sqs]==5.6.2
 
-djangorestframework==3.17.0
+djangorestframework==3.17.1
 
 gunicorn==25.2.0
 Incremental==24.11.0  # Twisted
