@@ -99,7 +99,7 @@ prompt-toolkit==3.0.52  # celery
 wcwidth==0.6.0  # celery
 billiard==4.2.4  # celery
 tzlocal==5.3.1  # celery
-celery[sqs]==5.6.2
+celery[sqs]==5.6.3
 
 djangorestframework==3.17.1
 
