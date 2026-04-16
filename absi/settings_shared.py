@@ -39,6 +39,7 @@ INSTALLED_APPS = ['daphne'] + INSTALLED_APPS + [  # noqa
 
 PAGEBLOCKS = [
     'pageblocks.TextBlock',
+    'main.PlayBlock',
 ]
 
 INSTALLED_APPS += [  # noqa
