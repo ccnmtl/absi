@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django.views.static import serve
 from django_cas_ng import views as cas_views
 from absi.main import views
-from pagetree.generic.views import PageView, EditView, InstructorView
+from pagetree.generic.views import EditView, InstructorView
 
 admin.autodiscover()
 
@@ -53,6 +53,6 @@ urlpatterns = [
             hierarchy_name='main', hierarchy_base='/pages/')),
     re_path(
         r'^pages/(?P<path>.*)$',
-        PageView.as_view(
+        views.AuthedPageView.as_view(
             hierarchy_name='main', hierarchy_base='/pages/')),
 ]

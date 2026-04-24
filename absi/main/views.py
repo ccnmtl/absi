@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from celery import chain
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from pagetree.generic.views import PageView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -42,6 +43,14 @@ class TranscribeView(LoginRequiredMixin, TemplateView):
             context['token'] = token
 
         return context
+
+
+class AuthedPageView(LoginRequiredMixin, PageView):
+    """
+    Pagetree PageView which requires authentication. We don't need the
+    lessons public to the world, yet.
+    """
+    pass
 
 
 class QueueAWSTranscribeJobView(APIView):
