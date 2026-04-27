@@ -1,2 +1,11 @@
 {% load markdownify %}
-{{ pageblock.text | markdownify }}
+
+<p class="fs-1">
+    <a href="#"
+       class="fw-bold link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+       data-bs-toggle="popover"
+       data-bs-title="Pronunciation"
+       data-bs-content="Test popover content">
+        {{ pageblock.text | markdownify }}
+    </a>
+</p>

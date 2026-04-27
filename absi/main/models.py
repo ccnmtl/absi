@@ -9,6 +9,7 @@ class PlayBlock(BasePageBlock):
     """
     display_name = 'Play Block'
     template_file = 'main/pageblocks/play_block.html'
+    js_template_file = 'main/pageblocks/play_block_js.html'
 
     text = models.TextField(help_text='Arabic text to play and evaluate')
 
