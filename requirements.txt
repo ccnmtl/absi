@@ -105,7 +105,7 @@ djangorestframework==3.17.1
 
 gunicorn==25.3.0
 Incremental==24.11.0  # Twisted
-zope.interface==8.3  # Twisted
+zope.interface==8.4  # Twisted
 constantly==23.10.4  # Twisted
 Automat==25.4.16  # Twisted
 hyperlink==21.0.0  # Twisted
