@@ -55,4 +55,6 @@ urlpatterns = [
         r'^pages/(?P<path>.*)$',
         views.AuthedPageView.as_view(
             hierarchy_name='main', hierarchy_base='/pages/')),
+
+    path('polly-audio/', views.PollyAudioView.as_view(), name='polly-audio'),
 ]
