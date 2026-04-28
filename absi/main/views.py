@@ -2,6 +2,9 @@ import boto3
 import uuid
 from urllib.parse import urlparse
 from celery import chain
+from django.conf import settings
+from django.http import HttpResponse
+from django.views import View
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from pagetree.generic.views import PageView
@@ -45,11 +48,28 @@ class TranscribeView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class PollyAudioView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        polly_client = boto3.Session(
+            region_name=settings.AWS_REGION,
+        ).client('polly')
+        response = polly_client.synthesize_speech(
+            VoiceId='Hala',
+            OutputFormat='mp3',
+            Text='ب',
+            Engine='neural',
+        )
+        audio_stream = response['AudioStream'].read()
+        return HttpResponse(
+            audio_stream,
+            content_type='audio/mpeg',
+            headers={
+                'Content-Disposition': "inline; filename='speech.mp3'"
+            },
+        )
+
+
 class AuthedPageView(LoginRequiredMixin, PageView):
-    """
-    Pagetree PageView which requires authentication. We don't need the
-    lessons public to the world, yet.
-    """
     pass
 
 
