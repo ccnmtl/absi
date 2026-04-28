@@ -3,7 +3,7 @@ import uuid
 from urllib.parse import urlparse
 from celery import chain
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -21,6 +21,9 @@ from absi.main.tasks import (
 
     start_azure_transcribe_job
 )
+
+
+MAX_LENGTH = 200
 
 
 def enqueue_transcription(job_name: str, media_uri: str):
@@ -53,20 +56,30 @@ class PollyAudioView(LoginRequiredMixin, View):
         polly_client = boto3.Session(
             region_name=settings.AWS_REGION,
         ).client('polly')
+        text = kwargs.get('text', '')
+
+        if not text:
+            return JsonResponse({'error': 'Text is required'}, status=400)
+
+        if len(text) > MAX_LENGTH:
+            return JsonResponse({
+                'error':
+                f'Text too long. Max length is {MAX_LENGTH} characters.'
+            }, status=400)
+
         response = polly_client.synthesize_speech(
             VoiceId='Hala',
             OutputFormat='mp3',
-            Text='ب',
-            Engine='neural',
-        )
+            Text=text,
+            Engine='neural')
+
         audio_stream = response['AudioStream'].read()
         return HttpResponse(
             audio_stream,
             content_type='audio/mpeg',
             headers={
                 'Content-Disposition': "inline; filename='speech.mp3'"
-            },
-        )
+            })
 
 
 class AuthedPageView(LoginRequiredMixin, PageView):
