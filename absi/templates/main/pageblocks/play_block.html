@@ -10,9 +10,12 @@
     </a>
 </p>
 
-<audio controls
-       id="absi-audio"
-       src="{% url 'polly-audio' pageblock.text %}"></audio>
+<audio controls id="absi-audio">
+    <source src="{% url 'polly-audio' pageblock.text %}"
+            type="audio/ogg" />
+    <source src="{% url 'polly-audio' pageblock.text %}?audio_format=mp3"
+            type="audio/mpeg" />
+</audio>
 
 <div class="float-end">
     Voice:

@@ -11,12 +11,17 @@
             $('input[name="radioVoice"]').on('change', (e) => {
                 if (e.target && e.target.value) {
                     const voice = e.target.value;
-                    const src = $audio[0].src;
-                    const url = new URL(src);
+                    $audio.find('source').each((i, source) => {
+                        const src = source.src;
+                        const url = new URL(src);
 
-                    url.searchParams.set('voice', voice);
+                        url.searchParams.set('voice', voice);
 
-                    $audio[0].src = url;
+                        source.src = url;
+                    });
+
+                    // Reload audio
+                    $audio[0].load();
                 }
             });
         }
