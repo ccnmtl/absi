@@ -57,6 +57,7 @@ class PollyAudioView(LoginRequiredMixin, View):
             region_name=settings.AWS_REGION,
         ).client('polly')
         text = kwargs.get('text', '')
+        voice = request.GET.get('voice', '')
 
         if not text:
             return JsonResponse({'error': 'Text is required'}, status=400)
@@ -67,8 +68,12 @@ class PollyAudioView(LoginRequiredMixin, View):
                 f'Text too long. Max length is {MAX_LENGTH} characters.'
             }, status=400)
 
+        voice_id = 'Hala'
+        if voice == 'Zayd':
+            voice_id = 'Zayd'
+
         response = polly_client.synthesize_speech(
-            VoiceId='Hala',
+            VoiceId=voice_id,
             OutputFormat='mp3',
             Text=text,
             Engine='neural')

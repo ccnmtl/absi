@@ -3,4 +3,22 @@
         '[data-bs-toggle="popover"]');
     const popoverList = [...popoverTriggerList].map(
         popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+
+    $(document).ready(() => {
+        const $audio = $('#absi-audio');
+
+        if ($audio.length > 0) {
+            $('input[name="radioVoice"]').on('change', (e) => {
+                if (e.target && e.target.value) {
+                    const voice = e.target.value;
+                    const src = $audio[0].src;
+                    const url = new URL(src);
+
+                    url.searchParams.set('voice', voice);
+
+                    $audio[0].src = url;
+                }
+            });
+        }
+    });
 </script>
