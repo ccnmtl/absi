@@ -52,6 +52,19 @@ class TranscribeView(LoginRequiredMixin, TemplateView):
 
 
 class PollyAudioView(LoginRequiredMixin, View):
+    audio_formats = {
+        'ogg': {
+            'output_format': 'ogg_vorbis',
+            'extension': 'ogg',
+            'content_type': 'audio/ogg',
+        },
+        'mp3': {
+            'output_format': 'mp3',
+            'extension': 'mp3',
+            'content_type': 'audio/mpeg',
+        }
+    }
+
     def get(self, request, *args, **kwargs):
         polly_client = boto3.Session(
             region_name=settings.AWS_REGION,
@@ -73,17 +86,13 @@ class PollyAudioView(LoginRequiredMixin, View):
         if voice_param == 'Zayd':
             voice_id = 'Zayd'
 
-        audio_format = 'ogg_vorbis'
-        audio_extension = 'ogg'
-        content_type = 'audio/ogg'
+        audio_format = PollyAudioView.audio_formats.get('ogg')
         if audio_format_param == 'mp3':
-            audio_format = 'mp3'
-            audio_extension = 'mp3'
-            content_type = 'audio/mpeg'
+            audio_format = PollyAudioView.audio_formats.get('mp3')
 
         response = polly_client.synthesize_speech(
             VoiceId=voice_id,
-            OutputFormat=audio_format,
+            OutputFormat=audio_format.get('output_format'),
             SampleRate='44100',
             Text=text,
             Engine='neural')
@@ -91,10 +100,11 @@ class PollyAudioView(LoginRequiredMixin, View):
         audio_stream = response['AudioStream'].read()
         return HttpResponse(
             audio_stream,
-            content_type=content_type,
+            content_type=audio_format.get('content_type'),
             headers={
                 'Content-Disposition':
-                "inline; filename=speech.{}".format(audio_extension)
+                'inline; filename=speech.{}'.format(
+                    audio_format.get('extension'))
             })
 
 
