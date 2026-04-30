@@ -1,10 +1,22 @@
 <script>
-    const popoverTriggerList = document.querySelectorAll(
-        '[data-bs-toggle="popover"]');
-    const popoverList = [...popoverTriggerList].map(
-        popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    document.addEventListener('DOMContentLoaded', () => {
+        // https://getbootstrap.com/docs/5.3/getting-started/javascript/#sanitizer
+        const myDefaultAllowList = bootstrap.Tooltip.Default.allowList;
+        myDefaultAllowList.audio = ['controls'];
 
-    $(document).ready(() => {
+        // https://getbootstrap.com/docs/5.3/components/popovers/#enable-popovers
+        const popoverTriggerList = document.querySelectorAll(
+            '[data-bs-toggle="popover"]');
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => {
+            new bootstrap.Popover(popoverTriggerEl, {
+                allowList: myDefaultAllowList,
+                html: true
+            });
+        });
+        // Note: It's also possible to initialize the popovers with
+        // jQuery instead:
+        // $('[data-bs-toggle="popover"]').popover();
+
         const $audio = $('#absi-audio');
 
         if ($audio.length > 0) {
