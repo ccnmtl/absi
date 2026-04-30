@@ -9,4 +9,28 @@
         {{ pageblock.text | markdownify }}
     </a>
 </p>
-<audio controls src="{% url 'polly-audio' pageblock.text %}"></audio>
+
+<audio controls id="absi-audio">
+    <source src="{% url 'polly-audio' pageblock.text %}"
+            type="audio/ogg" />
+    <source src="{% url 'polly-audio' pageblock.text %}?audio_format=mp3"
+            type="audio/mpeg" />
+</audio>
+
+<div class="float-end">
+    Voice:
+    <div class="form-check">
+        <input class="form-check-input" type="radio"
+               name="radioVoice" id="radioVoiceHala" value="Hala" checked>
+        <label class="form-check-label" for="radioVoiceHala">
+            هالة (Hala)
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio"
+               name="radioVoice" id="radioVoiceZayd" value="Zayd">
+        <label class="form-check-label" for="radioVoiceZayd">
+            زايد (Zayd)
+        </label>
+    </div>
+</div>
