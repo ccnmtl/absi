@@ -40,7 +40,7 @@ def download_and_transcode_s3_audio(bucket: str, key: str) -> str:
     return f'/tmp/{tmp_stem}.wav'  # nosec
 
 
-def submit_audio_to_azure(path: str, transcribe_text: str) -> object:
+def submit_audio_to_azure(path: str, transcribe_text: str) -> dict:
     speech_config = speechsdk.SpeechConfig(
         subscription=settings.AZURE_SPEECH_KEY,
         region=settings.AZURE_SPEECH_REGION,
@@ -76,7 +76,7 @@ def submit_audio_to_azure(path: str, transcribe_text: str) -> object:
 
         return json.loads(assessment_json)
     elif speech_recognition_result.reason == speechsdk.ResultReason.NoMatch:
-        raise RuntimeError('No speech recognized')
+        return {'status': 'no_match'}
     elif speech_recognition_result.reason == speechsdk.ResultReason.Canceled:
         details = speech_recognition_result.cancellation_details
         raise RuntimeError(
