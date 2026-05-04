@@ -109,7 +109,14 @@ class PollyAudioView(LoginRequiredMixin, View):
 
 
 class AuthedPageView(LoginRequiredMixin, PageView):
-    pass
+    def get_extra_context(self):
+        context = super().get_extra_context()
+
+        if self.request and self.request.user:
+            token, _ = Token.objects.get_or_create(user=self.request.user)
+            context['token'] = token
+
+        return context
 
 
 class QueueAWSTranscribeJobView(APIView):

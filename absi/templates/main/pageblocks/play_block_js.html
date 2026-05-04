@@ -1,3 +1,21 @@
+{% load static %}
+
+{% csrf_token %}
+<script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    {% if token and token.key %}
+    const token = '{{ token.key }}';
+    {% endif %}
+</script>
+
+<script type="module" src="{% static 's3sign/js/s3upload.js' %}"
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/src/websockets.js' %}"
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/src/app.js' %}"
+        crossorigin="anonymous"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // https://getbootstrap.com/docs/5.3/getting-started/javascript/#sanitizer
