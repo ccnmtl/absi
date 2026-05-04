@@ -12,6 +12,7 @@
     <canvas class="visualizer" height="60px"></canvas>
 
     <textarea
+        id="transcribe_text"
         class="form-control mt-2"
         name="transcribe_text"
         title="Transcribe text">سيارة</textarea>
@@ -69,8 +70,12 @@
     </div>
 
     <div id="buttons" class="mt-2">
-        <button type="button" class="btn btn-primary record">Record</button>
-        <button type="button" class="btn btn-secondary stop">Stop</button>
+        <button type="button" class="btn btn-primary record">
+            <i class="bi bi-record"></i> Record
+        </button>
+        <button type="button" class="btn btn-secondary stop">
+            <i class="bi bi-stop"></i> Stop
+        </button>
     </div>
 
     <hr />

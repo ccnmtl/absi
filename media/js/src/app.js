@@ -36,7 +36,10 @@ const queueTranscribeJob = function(uri) {
 };
 
 const queueAzureTranscribeJob = function(uri) {
-    const transcribeText = jQuery('[name="transcribe_text"]').val();
+    const $transcribeEl = jQuery('#transcribe_text');
+    const transcribeText = $transcribeEl.val().trim() ||
+          $transcribeEl.text().trim();
+
     console.log('queueAzureTranscribeJob', uri, transcribeText);
     return fetch('/api/azure_transcribe/', {
         method: 'POST',
@@ -132,7 +135,9 @@ if (navigator.mediaDevices.getUserMedia) {
             clipContainer.appendChild(audio);
             clipContainer.appendChild(clipLabel);
             clipContainer.appendChild(deleteButton);
-            soundClips.appendChild(clipContainer);
+            if (soundClips) {
+                soundClips.appendChild(clipContainer);
+            }
 
             audio.controls = true;
             const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
@@ -232,7 +237,7 @@ function visualize(stream) {
 }
 
 window.onresize = function() {
-    if (canvas) {
+    if (canvas && !canvas.classList.contains('inline')) {
         canvas.width = mainSection.offsetWidth;
     }
 };

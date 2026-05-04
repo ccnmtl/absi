@@ -10,6 +10,10 @@
     </a>
 </p>
 
+<span id="transcribe_text" class="d-none">
+    {{ pageblock.text | markdownify }}
+</span>
+
 <audio controls id="absi-audio">
     <source src="{% url 'polly-audio' pageblock.text %}"
             type="audio/ogg" />
@@ -32,5 +36,25 @@
         <label class="form-check-label" for="radioVoiceZayd">
             زايد (Zayd)
         </label>
+    </div>
+</div>
+
+<div class="container my-2">
+    <div class="row">
+        <div class="col-6">
+            <div class="main-controls p-2 border border-dark rounded">
+                Assess my pronunciation:
+                <canvas class="visualizer inline" height="60"></canvas>
+
+                <div id="buttons">
+                    <button type="button" class="btn btn-primary record">
+                        <i class="bi bi-record"></i> Record
+                    </button>
+                    <button type="button" class="btn btn-secondary stop">
+                        <i class="bi bi-stop"></i> Stop
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
