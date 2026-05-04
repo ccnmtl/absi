@@ -8,11 +8,16 @@ const canvas = document.querySelector('.visualizer');
 const mainSection = document.querySelector('.main-controls');
 
 // Disable stop button while not recording
-stop.disabled = true;
+if (stop) {
+    stop.disabled = true;
+}
 
 // Visualiser setup - create web audio api context and canvas
 let audioCtx;
-const canvasCtx = canvas.getContext('2d');
+let canvasCtx = null;
+if (canvas) {
+    canvasCtx = canvas.getContext('2d');
+}
 
 const queueTranscribeJob = function(uri) {
     console.log('queueTranscribeJob', uri);
@@ -59,11 +64,17 @@ if (navigator.mediaDevices.getUserMedia) {
         media.stop();
         console.log(media.state);
         console.log('Recorder stopped.');
-        record.style.background = '';
-        record.style.color = '';
 
-        stop.disabled = true;
-        record.disabled = false;
+        if (record) {
+            record.style.background = '';
+            record.style.color = '';
+            record.disabled = false;
+        }
+
+        if (stop) {
+            stop.disabled = true;
+        }
+
     };
 
     let onSuccess = function(stream) {
@@ -71,25 +82,29 @@ if (navigator.mediaDevices.getUserMedia) {
 
         visualize(stream);
 
-        record.onclick = function() {
-            mediaRecorder.start();
-            console.log(mediaRecorder.state);
-            console.log('Recorder started.');
-            record.style.background = 'red';
+        if (record) {
+            record.onclick = function() {
+                mediaRecorder.start();
+                console.log(mediaRecorder.state);
+                console.log('Recorder started.');
+                record.style.background = 'red';
 
-            stop.disabled = false;
-            record.disabled = true;
+                stop.disabled = false;
+                record.disabled = true;
 
-            setTimeout(() => {
-                if (mediaRecorder.state === 'recording') {
-                    stopRecording(mediaRecorder);
-                }
-            }, MAX_SECONDS * 1000);
-        };
+                setTimeout(() => {
+                    if (mediaRecorder.state === 'recording') {
+                        stopRecording(mediaRecorder);
+                    }
+                }, MAX_SECONDS * 1000);
+            };
+        }
 
-        stop.onclick = function() {
-            stopRecording(mediaRecorder);
-        };
+        if (stop) {
+            stop.onclick = function() {
+                stopRecording(mediaRecorder);
+            };
+        }
 
         mediaRecorder.onstop = function(e) {
             console.log(
@@ -176,6 +191,10 @@ function visualize(stream) {
     draw();
 
     function draw() {
+        if (!canvas) {
+            return;
+        }
+
         const WIDTH = canvas.width;
         const HEIGHT = canvas.height;
 
@@ -213,7 +232,9 @@ function visualize(stream) {
 }
 
 window.onresize = function() {
-    canvas.width = mainSection.offsetWidth;
+    if (canvas) {
+        canvas.width = mainSection.offsetWidth;
+    }
 };
 
 window.onresize();
