@@ -103,7 +103,7 @@ celery[sqs]==5.6.3
 
 djangorestframework==3.17.1
 
-gunicorn==25.3.0
+gunicorn==26.0.0
 Incremental==24.11.0  # Twisted
 zope.interface==8.4  # Twisted
 constantly==23.10.4  # Twisted
