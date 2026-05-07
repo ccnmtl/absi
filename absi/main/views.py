@@ -116,6 +116,20 @@ class AuthedPageView(LoginRequiredMixin, PageView):
             token, _ = Token.objects.get_or_create(user=self.request.user)
             context['token'] = token
 
+        pageblock_text = None
+        for p in self.section.pageblock_set.all():
+            block = p.block()
+            if hasattr(block, 'text'):
+                pageblock_text = block.text
+                break
+
+        if pageblock_text:
+            wrapped_text = ' '.join([
+                f'<span class="wrapped-word">{word}</span>'
+                for word in pageblock_text.split()
+            ])
+            context['wrapped_text'] = wrapped_text
+
         return context
 
 

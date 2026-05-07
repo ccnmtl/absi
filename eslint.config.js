@@ -5,8 +5,8 @@ export default [
         files: ["**/*.js"],
 
         languageOptions: {
-            ecmaVersion: 6,
-            sourceType: "script",
+            ecmaVersion: "latest",
+            sourceType: "module",
             globals: {
                 ...globals.browser,
                 ...globals.amd,
