@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from pagetree.generic.views import PageView
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -21,9 +22,10 @@ from absi.main.tasks import (
 
     start_azure_transcribe_job
 )
+from absi.main.models import PlayBlock
 
 
-MAX_LENGTH = 200
+MAX_LENGTH = 512
 
 
 def enqueue_transcription(job_name: str, media_uri: str):
@@ -69,7 +71,16 @@ class PollyAudioView(LoginRequiredMixin, View):
         polly_client = boto3.Session(
             region_name=settings.AWS_REGION,
         ).client('polly')
-        text = kwargs.get('text', '')
+
+        pageblock_id = kwargs.get('pk', '')
+        pageblock = None
+        if pageblock_id:
+            pageblock = get_object_or_404(PlayBlock, pk=pageblock_id)
+
+        text = None
+        if pageblock:
+            text = pageblock.text
+
         voice_param = request.GET.get('voice', '')
         audio_format_param = request.GET.get('audio_format', '')
 

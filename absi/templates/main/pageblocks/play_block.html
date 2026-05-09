@@ -24,9 +24,9 @@
 </span>
 
 <audio controls id="absi-audio">
-    <source src="{% url 'polly-audio' pageblock.text %}"
+    <source src="{% url 'polly-audio' pageblock.pk %}"
             type="audio/ogg" />
-    <source src="{% url 'polly-audio' pageblock.text %}?audio_format=mp3"
+    <source src="{% url 'polly-audio' pageblock.pk %}?audio_format=mp3"
             type="audio/mpeg" />
 </audio>
 
