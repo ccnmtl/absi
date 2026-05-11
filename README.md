@@ -1,8 +1,8 @@
 # absi
 Arabic Learning R&amp;D
 
-## Requirements                                                                                                                                                                               
-This project relies on the following technologies:                                                                                                                                            
+## Requirements
+This project relies on the following technologies:
 * Django
 * [django-channels](https://channels.readthedocs.io/en/latest/) - for
   providing live feedback to events via websockets
