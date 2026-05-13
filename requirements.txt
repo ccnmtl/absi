@@ -112,7 +112,7 @@ hyperlink==21.0.0  # Twisted
 attrs==26.1.0  # Twisted
 typing-extensions==4.15.0  # Twisted
 service-identity==24.2.0  # Twisted
-twisted[http2,tls,websocket]==25.5.0  # daphne
+twisted[http2,tls,websocket]==26.4.0  # daphne
 txaio==25.12.2  # autobahn
 pycparser==3.0  # autobahn
 autobahn==25.12.2  # daphne
