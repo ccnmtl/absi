@@ -57,3 +57,19 @@ document.addEventListener('click', () => {
         box.style.display = 'none';
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const floating = document.getElementById('floating');
+
+    document.addEventListener('mousemove', ({ clientX, clientY }) => {
+        if (!floating) return;
+
+        Object.assign(floating.style, {
+            position: 'fixed',
+            left: `${clientX}px`,
+            top: `${clientY}px`,
+            transform: 'translate(-50%, -50%)',
+            pointerEvents: 'none',
+        });
+    });
+});
