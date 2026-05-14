@@ -3,6 +3,10 @@ body {
     background-color: #edeae6;
 }
 
+.float-anchor {
+    position: relative;
+}
+
 .float-box {
     display: none;
     position: absolute;
@@ -17,21 +21,21 @@ body {
 }
 
 #floating {
-    position: absolute;
-    padding: 0.5rem;
-    color: white;
-    box-sizing: border-box;
-
-    --s: 50px; /* size of the corners */
-    border: 8px solid #B38184;
-    padding: 10px;
-    height: 180px;
+    position: fixed;
     width: 250px;
-    background: rgba(242, 242, 242, 0.1) content-box;
-    mask:
-        conic-gradient(#000 0 0) content-box,
-        conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
-                      0 0/calc(100% - var(--s)) calc(100% - var(--s));
+    height: 180px;
+    overflow: hidden;
+    pointer-events: none;
+
+    transform: translate(-50%, -50%);
+
+    border: 8px solid #B38184;
+    background: rgba(242, 242, 242, 0.1);
+}
+
+#magnified {
+    position: absolute;
+    transform-origin: top left;
 }
 
 .wrapped-word {
