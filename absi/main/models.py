@@ -23,6 +23,9 @@ class PlayBlockForm(forms.ModelForm):
     class Meta:
         model = PlayBlock
         fields = '__all__'
+        widgets = {
+            'text': forms.Textarea(attrs={'dir': 'rtl'}),
+        }
 
 
 PlayBlock.form = PlayBlockForm
