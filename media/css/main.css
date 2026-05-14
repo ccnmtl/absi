@@ -5,14 +5,33 @@ body {
 
 .float-box {
     display: none;
-    width: max-content;
     position: absolute;
+    min-width: 120px;
+    height: 80px;
+    transform: translate(0, 70%);
     top: 0;
     left: 0;
     color: white;
     font-weight: bold;
     padding: 5px;
-    font-size: 90%;
+}
+
+#floating {
+    position: absolute;
+    padding: 0.5rem;
+    color: white;
+    box-sizing: border-box;
+
+    --s: 50px; /* size of the corners */
+    border: 8px solid #B38184;
+    padding: 10px;
+    height: 180px;
+    width: 250px;
+    background: rgba(242, 242, 242, 0.1) content-box;
+    mask:
+        conic-gradient(#000 0 0) content-box,
+        conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
+                      0 0/calc(100% - var(--s)) calc(100% - var(--s));
 }
 
 .wrapped-word {
