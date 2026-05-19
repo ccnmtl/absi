@@ -60,12 +60,6 @@ document.addEventListener('click', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const floating = document.getElementById('floating');
-    const magnified = document.getElementById('magnified');
-    const anchor = document.querySelector('.float-anchor');
-
-    const zoom = 1.5;
-
-    magnified.innerHTML = anchor.innerHTML;
 
     document.addEventListener('mousemove', ({ clientX, clientY }) => {
         if (!floating) return;
@@ -77,20 +71,5 @@ document.addEventListener('DOMContentLoaded', () => {
             transform: 'translate(-50%, -50%)',
             pointerEvents: 'none',
         });
-
-        const rect = anchor.getBoundingClientRect();
-
-        // move floating lens
-        floating.style.left = `${clientX}px`;
-        floating.style.top = `${clientY}px`;
-
-        // cursor position relative to anchor
-        const relX = clientX - rect.left;
-        const relY = clientY - rect.top;
-
-        magnified.style.transform = `
-        scale(${zoom})
-        translate(${-relX + floating.offsetWidth / (2 * zoom)}px, ${
-    -relY + floating.offsetHeight / (2 * zoom)}px)`;
     });
 });
