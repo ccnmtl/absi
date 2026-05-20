@@ -72,4 +72,29 @@ document.addEventListener('DOMContentLoaded', () => {
             pointerEvents: 'none',
         });
     });
+
+    // https://getbootstrap.com/docs/5.3/getting-started/javascript/#sanitizer
+    const myDefaultAllowList = bootstrap.Tooltip.Default.allowList;
+    myDefaultAllowList.audio = ['controls'];
+
+    const $audio = $('#absi-audio');
+
+    if ($audio.length > 0) {
+        $('input[name="radioVoice"]').on('change', (e) => {
+            if (e.target && e.target.value) {
+                const voice = e.target.value;
+                $audio.find('source').each((i, source) => {
+                    const src = source.src;
+                    const url = new URL(src);
+
+                    url.searchParams.set('voice', voice);
+
+                    source.src = url;
+                });
+
+                // Reload audio
+                $audio[0].load();
+            }
+        });
+    }
 });
