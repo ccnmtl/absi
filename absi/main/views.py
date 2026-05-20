@@ -72,14 +72,17 @@ class PollyAudioView(LoginRequiredMixin, View):
             region_name=settings.AWS_REGION,
         ).client('polly')
 
-        pageblock_id = kwargs.get('pk', '')
-        pageblock = None
-        if pageblock_id:
-            pageblock = get_object_or_404(PlayBlock, pk=pageblock_id)
+        text = request.GET.get('text', None)
 
-        text = None
-        if pageblock:
-            text = pageblock.text
+        if not text:
+            pageblock_id = kwargs.get('pk', '')
+            pageblock = None
+            if pageblock_id:
+                pageblock = get_object_or_404(PlayBlock, pk=pageblock_id)
+
+            text = None
+            if pageblock:
+                text = pageblock.text
 
         voice_param = request.GET.get('voice', '')
         audio_format_param = request.GET.get('audio_format', '')

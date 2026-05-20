@@ -36,15 +36,22 @@ document.querySelectorAll('.wrapped-word').forEach((anchor) => {
     function toggle(event) {
         event.stopPropagation();
 
-        const isOpen = box.style.display === 'block';
-
         document.querySelectorAll('.float-box').forEach((otherBox) => {
             otherBox.style.display = 'none';
         });
 
-        if (!isOpen) {
-            show();
-        }
+        show();
+
+        const word = $(event.target).text().trim();
+        $('#transcribe_text').text(word);
+
+        const audioEl = document.getElementById('absi-audio');
+        audioEl.querySelectorAll('source').forEach((source) => {
+            const url = new URL(source.src);
+            url.searchParams.set('text', word);
+            source.src = url.toString();
+        });
+        audioEl.load();
     }
 
     anchor.addEventListener('click', toggle);
