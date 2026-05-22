@@ -13,6 +13,11 @@ class PlayBlock(BasePageBlock):
 
     text = models.TextField(help_text='Arabic text to play and evaluate')
 
+    initial = models.CharField(null=True, blank=True)
+    medial = models.CharField(null=True, blank=True)
+    final = models.CharField(null=True, blank=True)
+    diacritic = models.CharField(null=True, blank=True)
+
     @staticmethod
     def create(request):
         form = PlayBlockForm(request.POST)
@@ -25,6 +30,10 @@ class PlayBlockForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'text': forms.Textarea(attrs={'dir': 'rtl'}),
+            'initial': forms.TextInput(attrs={'dir': 'rtl'}),
+            'medial': forms.TextInput(attrs={'dir': 'rtl'}),
+            'final': forms.TextInput(attrs={'dir': 'rtl'}),
+            'diacritic': forms.TextInput(attrs={'dir': 'rtl'}),
         }
 
 
