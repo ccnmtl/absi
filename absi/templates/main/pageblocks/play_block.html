@@ -1,32 +1,34 @@
-{% load markdownify %}
+{% load markdownify text_filters %}
 
+{% if pageblock.text %}
 <div class="float-anchor" dir="rtl">
     <p class="fs-2">
-        {{ wrapped_text|safe }}
+        {{ pageblock.text|wrap_words }}
     </p>
 </div>
+{% endif %}
 
 {% if pageblock.initial %}
 <p class="fs-3" dir="rtl" title="Initial">
-    {{ pageblock.initial }}
+    {{ pageblock.initial|wrap_words }}
 </p>
 {% endif %}
 
 {% if pageblock.medial %}
 <p class="fs-3" dir="rtl" title="Medial">
-    {{ pageblock.medial }}
+    {{ pageblock.medial|wrap_words }}
 </p>
 {% endif %}
 
 {% if pageblock.final %}
 <p class="fs-3" dir="rtl" title="Final">
-    {{ pageblock.final }}
+    {{ pageblock.final|wrap_words }}
 </p>
 {% endif %}
 
 {% if pageblock.diacritic %}
 <p class="fs-3" dir="rtl" title="Diacritic">
-    {{ pageblock.diacritic }}
+    {{ pageblock.diacritic|wrap_words }}
 </p>
 {% endif %}
 
