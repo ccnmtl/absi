@@ -1,5 +1,5 @@
-# absi
-Arabic Learning R&amp;D
+# مدربتي (Mudarribatī)
+Mudarribatī is an Arabic pronunciation coach.
 
 ## Requirements
 This project relies on the following technologies:
