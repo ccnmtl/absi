@@ -66,10 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     socket.onclose = function(e) {
-        const errorMessage = 'Socket closed unexpectedly';
+        const errorMessage =
+              `Socket closed: code=${e.code}, reason=${e.reason || '(none)'}`;
 
         displayMessage(errorMessage);
         displayMessage(errorMessage, true);
-        console.error(errorMessage);
+        console.error(errorMessage, e);
     };
 });
