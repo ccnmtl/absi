@@ -1,8 +1,10 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
+from absi.main.util import GROUP_NAME
+
 
 class TranscribeConsumer(AsyncJsonWebsocketConsumer):
-    group_name = 'transcribe_updates'
+    group_name = GROUP_NAME
 
     async def connect(self):
         # Accept the connection
@@ -24,9 +26,9 @@ class TranscribeConsumer(AsyncJsonWebsocketConsumer):
 
     async def send_message(self, event):
         print('send_message', event)
-        text = event['text']
+        message = event['message']
         azure = event.get('azure', None)
         await self.send_json({
-            'message': text,
+            'message': message,
             'azure': azure,
         })
