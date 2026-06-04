@@ -12,35 +12,42 @@ s3 = boto3.client('s3', region_name=settings.AWS_REGION)
 
 
 def download_and_transcode_s3_audio(bucket: str, key: str) -> str:
-    suffix = '.webm'
-    file_path = Path(key)
-    if file_path and file_path.suffix:
-        suffix = file_path.suffix
+    suffix = Path(key).suffix or '.webm'
 
-    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as f:
-        tmp_path = f.name
-        tmp_stem = Path(tmp_path).stem
+    with tempfile.NamedTemporaryFile(
+        suffix=suffix,
+        delete=False,
+    ) as input_file:
+        input_path = input_file.name
 
-    s3.download_file(bucket, key, tmp_path)
+    with tempfile.NamedTemporaryFile(
+        suffix='.wav',
+        delete=False,
+    ) as output_file:
+        output_path = output_file.name
 
-    # Transcode recorded audio to PCM, for Azure.
-    completed_process = subprocess.run([  # nosec
-        'ffmpeg', '-y',
-        '-i', tmp_path,
-        '-ac', '1',
-        '-ar', '16000',
-        '-af', 'loudnorm',
-        '-c:a', 'pcm_s16le',
-        f'/tmp/{tmp_stem}.wav'  # nosec
-    ], check=True)
-    print(completed_process)
+    try:
+        s3.download_file(bucket, key, input_path)
 
-    os.remove(tmp_path)
+        # Transcode recorded audio to PCM, for Azure.
+        completed_process = subprocess.run([  # nosec
+            'ffmpeg', '-y',
+            '-i', input_path,
+            '-ac', '1',
+            '-ar', '16000',
+            '-af', 'loudnorm',
+            '-c:a', 'pcm_s16le',
+            output_path,
+        ], check=True, capture_output=True, text=True)
+        print(completed_process, output_path)
 
-    return f'/tmp/{tmp_stem}.wav'  # nosec
+        return output_path
+    finally:
+        if os.path.exists(input_path):
+            os.remove(input_path)
 
 
-def submit_audio_to_azure(path: str, transcribe_text: str) -> dict:
+def submit_audio_to_azure(path: str, transcribe_text: str) -> dict | None:
     speech_config = speechsdk.SpeechConfig(
         subscription=settings.AZURE_SPEECH_KEY,
         region=settings.AZURE_SPEECH_REGION,
