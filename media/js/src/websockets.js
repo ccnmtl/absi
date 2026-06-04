@@ -40,14 +40,14 @@ const showToast = function(title, body, time) {
     $toast.find('.me-auto').text(title);
     $toast.find('small').text(time);
 
-    if (typeof body !== 'string' && typeof body === 'object') {
+    if (body && typeof body === 'object') {
         body = parseAzureResponse(body);
     }
 
     $toast.find('.toast-body').text(body);
     $('#toast-container-0').append($toast);
 
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance($toast);
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance($toast[0]);
     toastBootstrap.show();
 };
 
