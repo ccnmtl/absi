@@ -2,12 +2,13 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 
 class TranscribeConsumer(AsyncJsonWebsocketConsumer):
+    group_name = 'transcribe_updates'
+
     async def connect(self):
         # Accept the connection
         await self.accept()
         print('WebSocket connected')
 
-        self.group_name = 'transcribe_updates'
         await self.channel_layer.group_add(self.group_name, self.channel_name)
 
         # Optionally send a welcome message
