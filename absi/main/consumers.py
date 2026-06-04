@@ -1,6 +1,9 @@
+import logging
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 from absi.main.util import GROUP_NAME
+
+logger = logging.getLogger(__name__)
 
 
 class TranscribeConsumer(AsyncJsonWebsocketConsumer):
@@ -21,14 +24,19 @@ class TranscribeConsumer(AsyncJsonWebsocketConsumer):
 
     async def disconnect(self, close_code):
         print('WebSocket disconnected', close_code)
-        await self.channel_layer.group_discard(
-            self.group_name, self.channel_name)
+        try:
+            await self.channel_layer.group_discard(
+                self.group_name, self.channel_name)
+        except Exception:
+            logger.exception('Error discarding websocket group')
 
     async def send_message(self, event):
         print('send_message', event)
-        message = event['message']
-        azure = event.get('azure', None)
-        await self.send_json({
-            'message': message,
-            'azure': azure,
-        })
+
+        try:
+            await self.send_json({
+                'message': event.get('message', ''),
+                'azure': event.get('azure', False),
+            })
+        except Exception:
+            logger.exception('Error sending websocket message')
