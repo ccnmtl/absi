@@ -33,10 +33,14 @@ def start_transcribe_job(s3_uri: str, job_name: str) -> str:
     return job_name
 
 
+class TranscriptionStillRunning(Exception):
+    pass
+
+
 @shared_task(
     bind=True,
     max_retries=60,
-    autoretry_for=(Exception,),
+    autoretry_for=(TranscriptionStillRunning,),
     retry_backoff=True,
     retry_backoff_max=60,
     retry_jitter=True
@@ -52,10 +56,13 @@ def poll_transcription(self, job_name):
 
     if status == 'COMPLETED':
         return job['Transcript']['TranscriptFileUri']
-    if status == 'FAILED':
-        raise RuntimeError(job['FailureReason'])
 
-    raise Exception('Job still in progress')
+    if status == 'FAILED':
+        reason = job.get('FailureReason', 'Transcription failed')
+        notify_ws(f'AWS Transcribe failed: {reason}')
+        raise RuntimeError(reason)
+
+    raise TranscriptionStillRunning('Job still in progress')
 
 
 @shared_task
