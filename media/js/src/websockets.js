@@ -4,12 +4,14 @@ const displayMessage = function(msg, azure) {
         el = $('#azure-transcription-result>pre');
     };
 
-    if (el) {
+    if (el.length) {
         if (typeof msg === 'object') {
             msg = JSON.stringify(msg, null, '  ');
         }
 
         $(el).text(msg);
+    } else {
+        console.log('el is empty:', el);
     }
 };
 
