@@ -113,6 +113,7 @@ CHANNEL_LAYERS = {
             'prefix': project + ':asgi',
             'serializer_format': 'json',
             'group_expiry': 3600,
+            'capacity': 1500,
         },
     },
 }
