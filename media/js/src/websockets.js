@@ -61,11 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let score = null;
         console.log('onmessage', data);
 
-        if (
-            typeof data?.['NBest']?.[0]?.['PronunciationAssessment']?.[
-                'PronScore'] !== 'undefined'
+        if (data && data.message &&
+            typeof data?.message?.['NBest']?.[0]?.[
+                'PronunciationAssessment']?.['PronScore'] !== 'undefined'
         ) {
-            score = data['NBest'][0]['PronunciationAssessment']['PronScore'];
+            score = data.message[
+                'NBest'][0]['PronunciationAssessment']['PronScore'];
         }
 
         if (data && data.message) {
