@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data && data.message) {
             displayMessage(data.message, data.azure);
 
-            if (typeof score !== 'null') {
+            if (typeof score !== 'undefined') {
                 showToast(
                     data.azure ? 'Azure Speech' : 'AWS Transcribe',
                     'Your score: ' + score, 'now');
