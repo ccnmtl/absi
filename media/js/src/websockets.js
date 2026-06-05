@@ -1,3 +1,6 @@
+/**
+ * displayMessage for transcribe view.
+ */
 const displayMessage = function(msg, azure) {
     let el = $('#transcription-result');
     if (azure) {
@@ -10,8 +13,6 @@ const displayMessage = function(msg, azure) {
 
     if (el.length) {
         $(el).text(msg);
-    } else {
-        console.log('el is empty:', el, msg, azure);
     }
 };
 
@@ -23,6 +24,9 @@ const parseAzureResponse = function(obj) {
     return JSON.stringify(obj);
 };
 
+/**
+ * showToast for playblock/pagetree view.
+ */
 const showToast = function(title, body, time) {
     const $toast = $(`
     <div class="toast" role="alert" aria-live="assertive"
@@ -54,14 +58,28 @@ const showToast = function(title, body, time) {
 document.addEventListener('DOMContentLoaded', () => {
     socket.onmessage = function(e) {
         const data = JSON.parse(e.data);
+        let score = null;
         console.log('onmessage', data);
+
+        if (
+            typeof data?.['NBest']?.[0]?.['PronunciationAssessment']?.[
+                'PronScore'] !== 'undefined'
+        ) {
+            score = data['NBest'][0]['PronunciationAssessment']['PronScore'];
+        }
 
         if (data && data.message) {
             displayMessage(data.message, data.azure);
 
-            showToast(
-                data.azure ? 'Azure Speech' : 'AWS Transcribe',
-                data.message || '', 'now');
+            if (typeof score !== 'null') {
+                showToast(
+                    data.azure ? 'Azure Speech' : 'AWS Transcribe',
+                    'Your score: ' + score, 'now');
+            } else {
+                showToast(
+                    data.azure ? 'Azure Speech' : 'AWS Transcribe',
+                    data.message || '', 'now');
+            }
         }
     };
 
