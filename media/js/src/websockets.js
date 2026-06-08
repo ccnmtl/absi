@@ -24,10 +24,21 @@ const parseAzureResponse = function(obj) {
     return JSON.stringify(obj);
 };
 
+const refreshToasts = function($toastContainer) {
+    const MAX_TOASTS = 3;
+    if ($toastContainer.find('.toast').length > MAX_TOASTS) {
+        const $toast = $toastContainer.first().find('.toast').first();
+        if ($toast) {
+            $toast.remove();
+        }
+    }
+};
+
 /**
  * showToast for playblock/pagetree view.
  */
 const showToast = function(title, body, time) {
+    const $toastContainer = $('#toast-container-0');
     const $toast = $(`
     <div class="toast" role="alert" aria-live="assertive"
          data-bs-config='{"autohide":false}' aria-atomic="true">
@@ -49,10 +60,12 @@ const showToast = function(title, body, time) {
     }
 
     $toast.find('.toast-body').text(body);
-    $('#toast-container-0').append($toast);
+    $toastContainer.append($toast);
 
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance($toast[0]);
     toastBootstrap.show();
+
+    refreshToasts($toastContainer);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
