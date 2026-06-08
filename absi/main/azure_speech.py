@@ -64,7 +64,7 @@ def submit_audio_to_azure(path: str, transcribe_text: str) -> dict | None:
     pronunciation_config = speechsdk.PronunciationAssessmentConfig(
         reference_text=transcribe_text,
         grading_system=(
-            speechsdk.PronunciationAssessmentGradingSystem.HundredMark,
+            speechsdk.PronunciationAssessmentGradingSystem.HundredMark
         ),
         granularity=speechsdk.PronunciationAssessmentGranularity.Word,
         enable_miscue=True,
