@@ -118,6 +118,14 @@ CHANNEL_LAYERS = {
     },
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': redis_host_obj,
+        'KEY_PREFIX': f'{project}:cache',
+    }
+}
+
 # Azure
 AZURE_SPEECH_KEY = os.environ.get('AZURE_SPEECH_KEY')
 AZURE_SPEECH_ENDPOINT = os.environ.get('AZURE_SPEECH_ENDPOINT')
