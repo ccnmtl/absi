@@ -62,9 +62,16 @@ def submit_audio_to_azure(path: str, transcribe_text: str) -> dict | None:
     )
 
     pronunciation_config = speechsdk.PronunciationAssessmentConfig(
-        reference_text=transcribe_text)
+        reference_text=transcribe_text,
+        grading_system=(
+            speechsdk.PronunciationAssessmentGradingSystem.HundredMark,
+        ),
+        granularity=speechsdk.PronunciationAssessmentGranularity.Word,
+        enable_miscue=True,
+    )
 
-    pronunciation_config.enable_prosody_assessment()
+    # Skip this for now - low support in arabic.
+    # pronunciation_config.enable_prosody_assessment()
 
     pronunciation_config.apply_to(recognizer)
 
