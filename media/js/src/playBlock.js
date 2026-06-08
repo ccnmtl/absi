@@ -52,6 +52,8 @@ document.querySelectorAll('.wrapped-word').forEach((anchor) => {
             source.src = url.toString();
         });
         audioEl.load();
+
+        return audioEl.play();
     }
 
     anchor.addEventListener('click', toggle);
