@@ -97,8 +97,9 @@ if REDIS_HOST == '127.0.0.1':
     # non-SSL for local use
     REDIS_PROTO = 'redis'
 
+redis_address = '{}://{}:{}'.format(REDIS_PROTO, REDIS_HOST, REDIS_PORT)
 redis_host_obj = {
-    'address': '{}://{}:{}'.format(REDIS_PROTO, REDIS_HOST, REDIS_PORT),
+    'address': f'{redis_address}/0',
 }
 
 if REDIS_PROTO == 'rediss':
@@ -118,11 +119,16 @@ CHANNEL_LAYERS = {
     },
 }
 
+cache_options = {}
+if REDIS_PROTO == 'rediss':
+    cache_options['ssl_cert_reqs'] = None
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': redis_host_obj,
+        'LOCATION': f'{redis_address}/1',
         'KEY_PREFIX': f'{project}:cache',
+        'OPTIONS': cache_options,
     }
 }
 
