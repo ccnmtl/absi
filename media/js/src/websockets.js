@@ -72,14 +72,28 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.onmessage = function(e) {
         const data = JSON.parse(e.data);
         let score = null;
+        let confidence = null;
         console.log('onmessage', data);
 
-        if (data && data.message &&
-            typeof data?.message?.['NBest']?.[0]?.[
-                'PronunciationAssessment']?.['PronScore'] !== 'undefined'
-        ) {
-            score = data.message[
-                'NBest'][0]['PronunciationAssessment']['PronScore'];
+        if (data && data.message) {
+            if (
+                typeof data?.message?.['NBest']?.[0]?.[
+                    'PronunciationAssessment']?.['PronScore'] !== 'undefined'
+            ) {
+                score = data.message[
+                    'NBest'][0]['PronunciationAssessment']['PronScore'];
+            }
+
+            if (
+                typeof data?.message?.['NBest']?.[0]?.['Confidence'] !==
+                    'undefined'
+            ) {
+                confidence = data.message['NBest'][0]['Confidence'];
+
+                if (typeof confidence === 'number') {
+                    confidence = confidence.toFixed(2);
+                }
+            }
         }
 
         if (data && data.message) {
@@ -88,7 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof score === 'number') {
                 showToast(
                     data.azure ? 'Azure Speech' : 'AWS Transcribe',
-                    'Your score: ' + score, 'now');
+                    'Your score: ' + score +
+                        ' (confidence: ' + confidence + ')',
+                    'now');
             } else {
                 showToast(
                     data.azure ? 'Azure Speech' : 'AWS Transcribe',
