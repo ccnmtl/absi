@@ -80,7 +80,14 @@ class PollyAudioView(LoginRequiredMixin, View):
             self.text_type = 'ssml'
             text = """
             <speak>
-                <phoneme alphabet="ipa" ph="ʔamurun">أَمُرٌّ</phoneme>
+                <phoneme alphabet="ipa" ph="ʔamurrun">أَمُرٌّ</phoneme>
+            </speak>
+            """
+        elif normalized == unicodedata.normalize('NFC', 'وَلودٌ'):
+            self.text_type = 'ssml'
+            text = """
+            <speak>
+                <phoneme alphabet="ipa" ph="waluːdun">وَلودٌ</phoneme>
             </speak>
             """
 
