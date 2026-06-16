@@ -64,7 +64,7 @@ django-ga-context==0.1.0
 django-impersonate==1.9.5
 
 django-storages==1.14.6
-ctlsettings==0.4.6
+ctlsettings==0.4.7
 
 text_unidecode==1.3
 
