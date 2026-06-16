@@ -1,6 +1,5 @@
 import boto3
 import uuid
-from urllib.parse import urlparse
 from celery import chain
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
@@ -16,6 +15,8 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from s3sign.views import SignS3View
 from s3sign.utils import s3_config
+import unicodedata
+from urllib.parse import urlparse
 
 from absi.main.tasks import (
     start_transcribe_job, poll_transcription, fetch_transcript,
@@ -67,6 +68,24 @@ class PollyAudioView(LoginRequiredMixin, View):
         }
     }
 
+    # 'text' or 'ssml', for Polly's TextType.
+    text_type = 'text'
+
+    """
+    Apply phoneme overrides for certain words which need it.
+    """
+    def apply_phoneme_overrides(self, text: str) -> str:
+        normalized = unicodedata.normalize('NFC', text.strip())
+        if normalized == unicodedata.normalize('NFC', 'أَمُرٌّ'):
+            self.text_type = 'ssml'
+            text = """
+            <speak>
+                <phoneme alphabet="ipa" ph="ʔamurun">أَمُرٌّ</phoneme>
+            </speak>
+            """
+
+        return text
+
     def get(self, request, *args, **kwargs):
         polly_client = boto3.Session(
             region_name=settings.AWS_REGION,
@@ -84,9 +103,6 @@ class PollyAudioView(LoginRequiredMixin, View):
             if pageblock:
                 text = pageblock.text
 
-        voice_param = request.GET.get('voice', '')
-        audio_format_param = request.GET.get('audio_format', '')
-
         if not text:
             return JsonResponse({'error': 'Text is required'}, status=400)
 
@@ -95,6 +111,11 @@ class PollyAudioView(LoginRequiredMixin, View):
                 'error':
                 f'Text too long. Max length is {MAX_LENGTH} characters.'
             }, status=400)
+
+        text = self.apply_phoneme_overrides(text)
+
+        voice_param = request.GET.get('voice', '')
+        audio_format_param = request.GET.get('audio_format', '')
 
         voice_id = 'Hala'
         if voice_param == 'Zayd':
@@ -109,6 +130,7 @@ class PollyAudioView(LoginRequiredMixin, View):
             OutputFormat=audio_format.get('output_format'),
             SampleRate='44100',
             Text=text,
+            TextType=self.text_type,
             Engine='neural')
 
         audio_stream = response['AudioStream'].read()
