@@ -1,97 +1,127 @@
 {% load markdownify text_filters %}
 
-{% if pageblock.text %}
-<div class="float-anchor" dir="rtl">
-    <p class="fs-2">
-        {{ pageblock.text|wrap_words }}
-    </p>
-</div>
-{% endif %}
-
-{% if pageblock.initial %}
-<p class="fs-3" dir="rtl" title="Initial">
-    {{ pageblock.initial|wrap_words }}
-</p>
-{% endif %}
-
-{% if pageblock.medial %}
-<p class="fs-3" dir="rtl" title="Medial">
-    {{ pageblock.medial|wrap_words }}
-</p>
-{% endif %}
-
-{% if pageblock.final %}
-<p class="fs-3" dir="rtl" title="Final">
-    {{ pageblock.final|wrap_words }}
-</p>
-{% endif %}
-
-{% if pageblock.diacritic %}
-<p class="fs-3" dir="rtl" title="Diacritic">
-    {{ pageblock.diacritic|wrap_words }}
-</p>
-{% endif %}
-
-<div class="float-box border border-5 border-danger">
-</div>
-
-<div id="floating"></div>
-
-<p class="fs-1 d-none" dir="rtl">
-    <a href="#"
-       class="fw-bold link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
-       data-bs-toggle="popover"
-       data-bs-title="Pronunciation"
-       data-bs-content="Test my pronunciation">
-        {{ pageblock.text | markdownify }}
-    </a>
-</p>
-
-<span id="transcribe_text" class="d-none">
-    {{ pageblock.text | markdownify }}
-</span>
-
-<audio controls id="absi-audio">
-    <source src="{% url 'polly-audio' pageblock.pk %}"
-            type="audio/ogg" />
-    <source src="{% url 'polly-audio' pageblock.pk %}?audio_format=mp3"
-            type="audio/mpeg" />
-</audio>
-
-<div class="float-start">
-    Voice:
-    <div class="form-check">
-        <input class="form-check-input" type="radio"
-               name="radioVoice" id="radioVoiceHala" value="Hala" checked>
-        <label class="form-check-label" for="radioVoiceHala">
-            هالة (Hala)
-        </label>
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-underline me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" id="v-pills-listen-tab" data-bs-toggle="tab" data-bs-target="#v-pills-listen" type="button" role="tab" aria-controls="v-pills-listen" aria-selected="true">
+            Listen
+        </button>
+        <button class="nav-link" id="v-pills-practice-tab" data-bs-toggle="tab" data-bs-target="#v-pills-practice" type="button" role="tab" aria-controls="v-pills-practice" aria-selected="false">
+            Practice
+        </button>
+        <button class="nav-link" id="v-pills-review-tab" data-bs-toggle="tab" data-bs-target="#v-pills-review" type="button" role="tab" aria-controls="v-pills-review" aria-selected="false">
+            Review
+        </button>
+        <button class="nav-link" id="v-pills-assess-tab" data-bs-toggle="tab" data-bs-target="#v-pills-assess" type="button" role="tab" aria-controls="v-pills-assess" aria-selected="false">
+            Assess
+        </button>
     </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio"
-               name="radioVoice" id="radioVoiceZayd" value="Zayd">
-        <label class="form-check-label" for="radioVoiceZayd">
-            زايد (Zayd)
-        </label>
-    </div>
-</div>
 
-<div class="container my-2">
-    <div class="row">
-        <div class="col-6">
-            <div class="main-controls p-2 border border-dark rounded">
-                Assess my pronunciation:
-                <canvas class="visualizer inline" height="60"></canvas>
+    <div class="tab-content flex-fill" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-listen" role="tabpanel" aria-labelledby="v-pills-listen-tab" tabindex="0">
+            {% if pageblock.text %}
+            <div class="float-anchor" dir="rtl">
+                <p class="fs-2">
+                    {{ pageblock.text|wrap_words }}
+                </p>
+            </div>
+            {% endif %}
 
-                <div id="buttons">
-                    <button type="button" class="btn btn-primary record">
-                        <i class="bi bi-record"></i> Record
-                    </button>
-                    <button type="button" class="btn btn-secondary stop">
-                        <i class="bi bi-stop"></i> Stop
-                    </button>
+            {% if pageblock.initial %}
+            <p class="fs-3" dir="rtl" title="Initial">
+                {{ pageblock.initial|wrap_words }}
+            </p>
+            {% endif %}
+
+            {% if pageblock.medial %}
+            <p class="fs-3" dir="rtl" title="Medial">
+                {{ pageblock.medial|wrap_words }}
+            </p>
+            {% endif %}
+
+            {% if pageblock.final %}
+            <p class="fs-3" dir="rtl" title="Final">
+                {{ pageblock.final|wrap_words }}
+            </p>
+            {% endif %}
+
+            {% if pageblock.diacritic %}
+            <p class="fs-3" dir="rtl" title="Diacritic">
+                {{ pageblock.diacritic|wrap_words }}
+            </p>
+            {% endif %}
+
+            <div class="float-box border border-5 border-danger">
+            </div>
+
+            <div id="floating"></div>
+
+            <p class="fs-1 d-none" dir="rtl">
+                <a href="#"
+                   class="fw-bold link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                   data-bs-toggle="popover"
+                   data-bs-title="Pronunciation"
+                   data-bs-content="Test my pronunciation">
+                    {{ pageblock.text | markdownify }}
+                </a>
+            </p>
+
+            <span id="transcribe_text" class="d-none">
+                {{ pageblock.text | markdownify }}
+            </span>
+
+            <audio controls id="absi-audio">
+                <source src="{% url 'polly-audio' pageblock.pk %}"
+                        type="audio/ogg" />
+                <source src="{% url 'polly-audio' pageblock.pk %}?audio_format=mp3"
+                        type="audio/mpeg" />
+            </audio>
+
+            <div class="float-start">
+                Voice:
+                <div class="form-check">
+                    <input class="form-check-input" type="radio"
+                           name="radioVoice" id="radioVoiceHala" value="Hala" checked>
+                    <label class="form-check-label" for="radioVoiceHala">
+                        هالة (Hala)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio"
+                           name="radioVoice" id="radioVoiceZayd" value="Zayd">
+                    <label class="form-check-label" for="radioVoiceZayd">
+                        زايد (Zayd)
+                    </label>
                 </div>
             </div>
+
+            <div class="container my-2">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="main-controls p-2 border border-dark rounded">
+                            Assess my pronunciation:
+                            <canvas class="visualizer inline" height="60"></canvas>
+
+                            <div id="buttons">
+                                <button type="button" class="btn btn-primary record">
+                                    <i class="bi bi-record"></i> Record
+                                </button>
+                                <button type="button" class="btn btn-secondary stop">
+                                    <i class="bi bi-stop"></i> Stop
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="v-pills-practice" role="tabpanel" aria-labelledby="v-pills-practice-tab" tabindex="0">
+            ...
+        </div>
+        <div class="tab-pane fade" id="v-pills-review" role="tabpanel" aria-labelledby="v-pills-review-tab" tabindex="0">
+            ...
+        </div>
+        <div class="tab-pane fade" id="v-pills-assess" role="tabpanel" aria-labelledby="v-pills-assess-tab" tabindex="0">
+            ...
         </div>
     </div>
 </div>
