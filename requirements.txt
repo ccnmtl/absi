@@ -115,7 +115,7 @@ service-identity==26.1.0  # Twisted
 twisted[http2,tls,websocket]==26.4.0  # daphne
 txaio==26.6.1  # autobahn
 pycparser==3.0  # autobahn
-autobahn==26.6.1  # daphne
+autobahn==26.6.2  # daphne
 daphne==4.2.2
 
 channels==4.3.2
