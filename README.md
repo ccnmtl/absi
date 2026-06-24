@@ -1,5 +1,5 @@
-# مدربتي (Mudarribatī)
-Mudarribatī is an Arabic pronunciation coach.
+# دبكة (Dabke)
+Dabke is an Arabic pronunciation coach.
 
 ## Requirements
 This project relies on the following technologies:
