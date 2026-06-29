@@ -37,8 +37,13 @@ def enqueue_transcription(job_name: str, media_uri: str):
     ).apply_async()
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
+    login_url = '/login/'
     template_name = 'main/index.html'
+
+
+class LoginSplashView(TemplateView):
+    template_name = 'main/login_splash.html'
 
 
 class TranscribeView(LoginRequiredMixin, TemplateView):

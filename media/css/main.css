@@ -3,6 +3,25 @@ body {
     background-color: #edeae6;
 }
 
+body.login-splash {
+    background-color: #2C5F8A;
+}
+
+body .btn-uni-login {
+    color: #2C5F8A;
+}
+
+.side-text {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+body.login-splash,
+body.login-splash a,
+body.login-splash .nav-link,
+body.login-splash .nav-link:hover {
+    color: white;
+}
+
 .float-box {
     display: none;
     position: absolute;

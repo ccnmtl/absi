@@ -69,61 +69,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet">
 </head>
-<body>
+
+<body class="{% block body-class %}{% endblock %}">
 
 <header>
 {% block topnavbar %}
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-light" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/" title="Home"><span class="lang-ar">دبكة</span> (Dabke)</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar"
-                aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="topNavbar">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/" title="Home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/pages/" title="Pages">Pages</a>
-                </li>
-            </ul>
-            {% block usernav %}
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <span class="nav-link">
-                    {% if request.user.is_anonymous %}
-                    You're not logged in
-                    {% else %}
-                    Logged in as
-                    {% if request.user.last_name %}
-                    {{request.user.first_name}} {{request.user.last_name}}
-                    {% else %}
-                    {{ request.user.username }}
-                    {% endif %}
-                    </span>
-                </li>
-                <li class="nav-item">
-                    <form class="d-flex" action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="nav-link text-white" title="Log out">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span title="Log out">Log out</span>
-                        </button>
-                    </form>
-                    {% endif %}
-                </li>
-            </ul>
-            {% endblock %}
-        </div>
-    </div>
-</nav>
 {% endblock %}
 </header>
-
-
 
 <main role="main" class="pb-4">
 
@@ -143,31 +95,8 @@
 
 </main>
 
-<footer class="text-dark pt-2 pb-5">
-    <ul class="nav d-flex justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link" href="/about/" title="About">About</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/help/" title="Help">Help</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/contact/" title="Contact">Contact</a>
-        </li>
-    </ul>
-
-    <span itemscope itemtype="http://schema.org/EducationalOrganization">
-        <div class="text-center">
-            <a href="https://ctl.columbia.edu" target="_blank" itemprop="url" title="Center for Teaching and Learning at Columbia University" class="d-inline-block">
-                <img src="{{STATIC_URL}}img/logo-ctl-color.png" class="mx-auto d-block mt-3" alt="" itemprop="logo" width="290" />
-                <span class="visually-hidden" itemprop="name">
-                    Center for Teaching and Learning at Columbia University
-                </span>
-            </a>
-        </div>
-    </span>
-
-</footer>
+{% block footer %}
+{% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
