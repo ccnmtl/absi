@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block topnavbar %}
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-light" data-bs-theme="dark">
+<nav class="navbar navbar-expand-sm">
     <div class="container-fluid">
         <a class="navbar-brand" href="/" title="Home"><span class="lang-ar">دبكة</span> (Dabke)</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar"
@@ -33,7 +33,7 @@
                 <li class="nav-item">
                     <form class="d-flex" action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="nav-link text-white" title="Log out">
+                        <button type="submit" class="nav-link" title="Log out">
                             <i class="bi bi-box-arrow-right"></i>
                             <span title="Log out">Log out</span>
                         </button>
