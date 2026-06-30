@@ -45,15 +45,26 @@ class IndexView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        topics = None
+        modules = None
 
         hierarchy = Hierarchy.objects.first()
         root = hierarchy.get_root()
         unit_1 = root.get_children().first()
         if unit_1:
-            topics = unit_1.get_children()
+            modules = unit_1.get_children()
 
-        context['topics'] = topics
+        descriptions = [
+            'Lips',
+            'Tongue to teeth',
+            'Flowing & nasal sounds',
+            'Hissing & shushing sounds',
+            'Back of throat',
+            'Deep throat',
+            'Glottal stop & breath',
+        ]
+
+        context['topics'] = zip(modules, descriptions)
+
         return context
 
 

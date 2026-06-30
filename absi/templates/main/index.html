@@ -10,14 +10,15 @@
 <p>
     {% if topics %}
     <ul class="list-group">
-        {% for child in topics %}
+        {% for topic in topics %}
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-                <div class="fw-bold">
-                    <a href="{{ child.get_absolute_url }}">
-                        {{ child }}
-                    </a>
-                </div>
+                <a class="link-dark" href="{{ topic.0.get_absolute_url }}">
+                    {{ topic.0 }}
+                </a>
+                <p class="text-body-secondary">
+                    <small>{{ topic.1 }}</small>
+                </p>
             </div>
         </li>
         {% endfor %}
