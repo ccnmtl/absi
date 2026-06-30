@@ -8,6 +8,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from pagetree.generic.views import PageView
+from pagetree.models import Hierarchy
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -40,6 +41,20 @@ def enqueue_transcription(job_name: str, media_uri: str):
 class IndexView(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     template_name = 'main/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        topics = None
+
+        hierarchy = Hierarchy.objects.first()
+        root = hierarchy.get_root()
+        unit_1 = root.get_children().first()
+        if unit_1:
+            topics = unit_1.get_children()
+
+        context['topics'] = topics
+        return context
 
 
 class LoginSplashView(TemplateView):
