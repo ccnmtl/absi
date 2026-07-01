@@ -106,6 +106,8 @@ class PollyAudioView(LoginRequiredMixin, View):
     Apply phoneme overrides for certain words which need it.
     """
     def apply_phoneme_overrides(self, text: str) -> str:
+        normalized = unicodedata.normalize('NFC', text.strip())
+
         # For now, override all text to force xml:lang="arb" per AWS
         # recommendation, until they fix some bugs with the "guh"
         # sound.
@@ -116,8 +118,6 @@ class PollyAudioView(LoginRequiredMixin, View):
             <lang xml:lang="arb">{s}</lang>
         </speak>
         """.format(s=text)
-
-        normalized = unicodedata.normalize('NFC', text.strip())
 
         if normalized == unicodedata.normalize('NFC', 'أَمُرٌّ'):
             self.text_type = 'ssml'
