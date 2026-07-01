@@ -3,12 +3,9 @@
 {% block title %}مرحبا{% endblock %}
 
 {% block content %}
-<h1>مرحبا</h1>
-<p>
-    Welcome!
-</p>
 <p>
     {% if topics %}
+    <p class="text-body-secondary">Sound Families</p>
     <ul class="list-group">
         {% for topic in topics %}
         <li class="list-group-item d-flex justify-content-between align-items-start">
