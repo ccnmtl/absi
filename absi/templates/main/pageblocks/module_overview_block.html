@@ -1,0 +1,17 @@
+<div class="text-body-secondary my-2">Base Letters</div>
+
+<div class="container text-center">
+    <div class="row row-cols-2 py-2 g-2">
+        {% for child in section.get_children %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ child.get_absolute_url }}">
+                        {{ child.label }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

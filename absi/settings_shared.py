@@ -41,6 +41,7 @@ PAGEBLOCKS = [
     'pageblocks.TextBlock',
     'pageblocks.HTMLBlock',
     'main.PlayBlock',
+    'main.ModuleOverviewBlock',
 ]
 
 INSTALLED_APPS += [  # noqa

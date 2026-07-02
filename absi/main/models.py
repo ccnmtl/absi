@@ -38,3 +38,25 @@ class PlayBlockForm(forms.ModelForm):
 
 
 PlayBlock.form = PlayBlockForm
+
+
+class ModuleOverviewBlock(BasePageBlock):
+    """
+    Pageblock to display the overview for this content module.
+    """
+    display_name = 'Module Overview Block'
+    template_file = 'main/pageblocks/module_overview_block.html'
+
+    @staticmethod
+    def create(request):
+        form = ModuleOverviewBlockForm(request.POST)
+        return form.save()
+
+
+class ModuleOverviewBlockForm(forms.ModelForm):
+    class Meta:
+        model = ModuleOverviewBlock
+        fields = '__all__'
+
+
+ModuleOverviewBlock.form = ModuleOverviewBlockForm
