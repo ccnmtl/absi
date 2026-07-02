@@ -26,7 +26,8 @@ body.login-splash .nav-link:hover {
     color: white;
 }
 
-.navbar-brand .lang-ar {
+.navbar-brand .lang-ar,
+.dabke-progress .card .card-title {
     color: rgb(44, 95, 138);
 }
 
