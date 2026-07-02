@@ -14,13 +14,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="topNavbar">
-            {% if request.user and request.user.is_staff %}
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/pages/" title="Pages">Pages</a>
-                </li>
-            </ul>
-            {% endif %}
+            <ul class="navbar-nav me-auto"></ul>
 
             {% block usernav %}
             <ul class="navbar-nav">
