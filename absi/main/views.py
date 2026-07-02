@@ -69,7 +69,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
 
 class LoginSplashView(TemplateView):
-    template_name = 'main/login_splash.html'
+    template_name = 'registration/login.html'
 
 
 class TranscribeView(LoginRequiredMixin, TemplateView):
