@@ -1,6 +1,6 @@
 /* Fill custom CSS here */
 body {
-    background-color: #edeae6;
+    background-color: #f7f5f0;
 }
 
 body.login-splash {
@@ -9,6 +9,10 @@ body.login-splash {
 
 body .btn-uni-login {
     color: #2C5F8A;
+}
+
+.navbar {
+    background-color: #ffffff;
 }
 
 .side-text {
@@ -20,6 +24,10 @@ body.login-splash a,
 body.login-splash .nav-link,
 body.login-splash .nav-link:hover {
     color: white;
+}
+
+.navbar-brand .lang-ar {
+    color: rgb(44, 95, 138);
 }
 
 .float-box {
