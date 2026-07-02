@@ -2,9 +2,12 @@
 {% load static %}
 
 {% block topnavbar %}
-<nav class="navbar navbar-expand-sm">
+<nav class="navbar navbar-expand-sm border-bottom" data-bs-theme="light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/" title="Home"><span class="lang-ar">دبكة</span> (Dabke)</a>
+        <a class="navbar-brand lh-1" href="/" title="Home">
+            <div class="lang-ar" dir="rtl">دبكة</div>
+            <div class="fw-semibold"><small>dabke</small></div>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar"
                 aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
