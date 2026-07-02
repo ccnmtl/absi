@@ -4,13 +4,17 @@
     <div class="row row-cols-2 g-2">
         {% for child in section.get_children %}
         <div class="col">
+
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ child.get_absolute_url }}">
+                    <h5 class="card-title">{{ child.label }}</h5>
+                    <a class="stretched-link link-dark link-underline-opacity-0"
+                       href="{{ child.get_absolute_url }}">
                         {{ child.label }}
                     </a>
                 </div>
             </div>
+
         </div>
         {% endfor %}
     </div>
