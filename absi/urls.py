@@ -16,6 +16,8 @@ def trigger_error(request):
 
 urlpatterns = [
     path('', views.IndexView.as_view()),
+    path('progress/', views.ProgressView.as_view()),
+
     path('admin/', admin.site.urls),
 
     path('accounts/', include('django.contrib.auth.urls')),

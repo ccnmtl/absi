@@ -68,6 +68,10 @@ class IndexView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class ProgressView(LoginRequiredMixin, TemplateView):
+    template_name = 'main/progress.html'
+
+
 class LoginSplashView(TemplateView):
     template_name = 'registration/login.html'
 
