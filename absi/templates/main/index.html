@@ -3,24 +3,22 @@
 {% block title %}مرحبا{% endblock %}
 
 {% block content %}
-<p>
-    {% if topics %}
-    <p class="text-body-secondary">Sound Families</p>
-    <ul class="list-group">
-        {% for topic in topics %}
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <a class="stretched-link link-dark link-underline-opacity-0"
-                   href="{{ topic.0.get_absolute_url }}">
-                    {{ topic.0 }}
-                </a>
-                <p class="text-body-secondary">
-                    <small>{{ topic.1 }}</small>
-                </p>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-</p>
+{% if topics %}
+<p class="text-body-secondary">Sound Families</p>
+<ul class="list-group">
+    {% for topic in topics %}
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <a class="stretched-link link-dark link-underline-opacity-0"
+               href="{{ topic.0.get_absolute_url }}">
+                {{ topic.0 }}
+            </a>
+            <p class="text-body-secondary">
+                <small>{{ topic.1 }}</small>
+            </p>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}
