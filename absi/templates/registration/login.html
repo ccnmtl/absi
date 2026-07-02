@@ -1,51 +1,25 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Log in{% endblock %}
+{% block title %}Welcome to Dabke{% endblock %}
+
+{% block body-class %}login-splash{% endblock %}
 
 {% block content %}
-<div class="row justify-content-md-center">
-    <div class="col-md-auto text-center my-5">
-        <h2>
-            Login
-        </h2>
-
-        <p>If you have a Columbia University Network ID (UNI)</p>
-        <form class="text-center" method="get" action="{% url 'cas_ng_login' %}">
-            <input type="hidden" name="next" value="{{ next|default:'/' }}" />
-
-            <input class="btn btn-primary" type="submit" value="Columbia Log In" />
-            <p class="small pt-2"><a href="http://cuit.columbia.edu/cuit/manage-my-uni" title="Learn more about UNI" target="_blank">What is a UNI?</a></p>
-        </form>
-        <hr class="seperator" />
-
-        {% if form.errors %}
-            <div class="alert alert-danger" role="alert">
-                <div><b>Invalid username or password</b></div>
-            </div>
-        {% endif %}
-
-        <p>If you have a guest account</p>
-        <form class="text-center" name="login_local" method="post" action=".">
-            {% csrf_token %}
-            <div class="login-local-form" {% if not form.errors %}style="display: none"{% endif %}>
-                <div class="form-group">
-                    <label for="id_username">Username</label>
-                    <input id="id_username" maxlength="254"
-                           name="username" type="text"
-                           class="form-control" autofocus>
-                </div>
-
-                <div class="form-group">
-                    <label for="id_password">Password</label>
-                    <input id="id_password" name="password" type="password" class="form-control">
-                </div>
-            </div>
-            <input id="guest-login" class="btn btn-primary" type="button" value="Guest Log In" {% if form.errors %}style="display: none"{% endif %}
-                onclick="jQuery('.login-local-form').show(); jQuery(this).hide(); return false;"/>
-            <input class="btn btn-primary login-local-form" type="submit" value="Log In" {% if not form.errors %}style="display: none;"{% endif %} />
-            <input type="hidden" name="next" value="{{ next|urlencode }}" />
-            <p class="small pt-2"><a href="/accounts/password_reset/" title="Reset Password">Forgot Password?</a></p>
-        </form>
+<div id="screen-splash" class="screen active text-center">
+    <div class="splash-logo">
+        <div class="fs-1 lang-ar">دبكة</div>
+        <div class="fs-2">dabke</div>
+        <div class="side-text">Arabic pronunciation coach</div>
     </div>
+    <form class="text-center pt-4" method="get" action="{% url 'cas_ng_login' %}">
+        <input type="hidden" name="next" value="{{ next|default:'/' }}" />
+
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" class="btn btn-light btn-uni-login">
+                <strong>UNI LOGIN</strong>
+            </button>
+        </div>
+    </form>
 </div>
 {% endblock %}
