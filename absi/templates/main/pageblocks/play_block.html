@@ -1,157 +1,163 @@
 {% load markdownify text_filters %}
 
-<div class="d-flex align-items-start">
-    <div class="nav flex-column nav-underline me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <button class="nav-link active" id="v-pills-listen-tab" data-bs-toggle="tab" data-bs-target="#v-pills-listen"
-                type="button" role="tab" aria-controls="v-pills-listen" aria-selected="true">
+<ul class="nav nav-pills nav-fill" id="play-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="listen-tab" data-bs-toggle="tab" data-bs-target="#listen-tab-pane" type="button" role="tab"
+                aria-controls="listen-tab-pane" aria-selected="true">
             Listen
         </button>
-        <button class="nav-link" id="v-pills-practice-tab" data-bs-toggle="tab" data-bs-target="#v-pills-practice"
-                type="button" role="tab" aria-controls="v-pills-practice" aria-selected="false">
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="practice-tab" data-bs-toggle="tab" data-bs-target="#practice-tab-pane" type="button" role="tab"
+                aria-controls="practice-tab-pane" aria-selected="false">
             Practice
         </button>
-        <button class="nav-link" id="v-pills-review-tab" data-bs-toggle="tab" data-bs-target="#v-pills-review"
-                type="button" role="tab" aria-controls="v-pills-review" aria-selected="false">
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review-tab-pane" type="button" role="tab"
+                aria-controls="review-tab-pane" aria-selected="false">
             Review
         </button>
-        <button class="nav-link" id="v-pills-assess-tab" data-bs-toggle="tab" data-bs-target="#v-pills-assess"
-                type="button" role="tab" aria-controls="v-pills-assess" aria-selected="false">
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="assess-tab" data-bs-toggle="tab" data-bs-target="#assess-tab-pane" type="button" role="tab"
+                aria-controls="assess-tab-pane" aria-selected="false">
             Assess
         </button>
-    </div>
+    </li>
+</ul>
 
-    <div class="tab-content flex-fill" id="v-pills-tabContent">
-        <div class="tab-pane fade show active" id="v-pills-listen" role="tabpanel"
-             aria-labelledby="v-pills-listen-tab" tabindex="0">
-            {% if pageblock.text %}
-            <div class="float-anchor" dir="rtl">
-                <p class="fs-2">
-                    {{ pageblock.text|wrap_words }}
-                    {% if pageblock.diacritic %}
-                    <small>({{ pageblock.diacritic }})</small>
-                    {% endif %}
-                </p>
-            </div>
-            {% endif %}
-
-            {% if pageblock.initial %}
-            <p class="fs-3" dir="rtl" title="Initial">
-                {{ pageblock.initial|wrap_words }}
+<div class="tab-content" id="play-tabContent">
+    <div class="tab-pane fade show active" id="listen-tab-pane" role="tabpanel"
+         aria-labelledby="listen-tab" tabindex="0">
+        {% if pageblock.text %}
+        <div class="float-anchor" dir="rtl">
+            <p class="fs-2">
+                {{ pageblock.text|wrap_words }}
+                {% if pageblock.diacritic %}
+                <small>({{ pageblock.diacritic }})</small>
+                {% endif %}
             </p>
-            {% endif %}
-
-            {% if pageblock.medial %}
-            <p class="fs-3" dir="rtl" title="Medial">
-                {{ pageblock.medial|wrap_words }}
-            </p>
-            {% endif %}
-
-            {% if pageblock.final %}
-            <p class="fs-3" dir="rtl" title="Final">
-                {{ pageblock.final|wrap_words }}
-            </p>
-            {% endif %}
-
-            <div class="float-box border border-5 border-danger">
-            </div>
-
-            <div id="floating"></div>
-
-            <p class="fs-1 d-none" dir="rtl">
-                <a href="#"
-                   class="fw-bold link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
-                   data-bs-toggle="popover"
-                   data-bs-title="Pronunciation"
-                   data-bs-content="Test my pronunciation">
-                    {{ pageblock.text | markdownify }}
-                </a>
-            </p>
-
-            <span id="transcribe_text" class="d-none">
-                {{ pageblock.text | markdownify }}
-            </span>
-
-            <div class="d-flex flex-row-reverse">
-                <div>
-                    <audio controls id="absi-audio">
-                        <source src="{% url 'polly-audio' pageblock.pk %}"
-                                type="audio/ogg" />
-                        <source src="{% url 'polly-audio' pageblock.pk %}?audio_format=mp3"
-                                type="audio/mpeg" />
-                    </audio>
-                </div>
-            </div>
-
-            <div class="d-flex flex-row-reverse">
-                <div>
-                    Voice:
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio"
-                               name="radioVoice" id="radioVoiceHala" value="Hala" checked>
-                        <label class="form-check-label" for="radioVoiceHala">
-                            <span class="lang-ar">هالة</span> (Hala)
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio"
-                               name="radioVoice" id="radioVoiceZayd" value="Zayd">
-                        <label class="form-check-label" for="radioVoiceZayd">
-                            <span class="lang-ar">زايد</span> (Zayd)
-                        </label>
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <div class="tab-pane fade" id="v-pills-practice" role="tabpanel"
-             aria-labelledby="v-pills-practice-tab" tabindex="0">
+        {% endif %}
 
-            {% if pageblock.initial %}
-            <p class="fs-3" dir="rtl" title="Initial">
-                {{ pageblock.initial|wrap_words }}
-            </p>
-            {% endif %}
+        {% if pageblock.initial %}
+        <p class="fs-3" dir="rtl" title="Initial">
+            {{ pageblock.initial|wrap_words }}
+        </p>
+        {% endif %}
 
-            {% if pageblock.medial %}
-            <p class="fs-3" dir="rtl" title="Medial">
-                {{ pageblock.medial|wrap_words }}
-            </p>
-            {% endif %}
+        {% if pageblock.medial %}
+        <p class="fs-3" dir="rtl" title="Medial">
+            {{ pageblock.medial|wrap_words }}
+        </p>
+        {% endif %}
 
-            {% if pageblock.final %}
-            <p class="fs-3" dir="rtl" title="Final">
-                {{ pageblock.final|wrap_words }}
-            </p>
-            {% endif %}
+        {% if pageblock.final %}
+        <p class="fs-3" dir="rtl" title="Final">
+            {{ pageblock.final|wrap_words }}
+        </p>
+        {% endif %}
 
-            <div class="container my-2">
-                <div class="d-flex flex-row-reverse">
-                    <div class="col-6">
-                        <div class="main-controls p-2 border border-dark rounded">
-                            Practice my pronunciation:
-                            <canvas class="visualizer inline" height="60"></canvas>
+        <div class="float-box border border-5 border-danger">
+        </div>
 
-                            <div id="buttons">
-                                <button type="button" class="btn btn-primary record">
-                                    <i class="bi bi-record"></i> Record
-                                </button>
-                                <button type="button" class="btn btn-secondary stop">
-                                    <i class="bi bi-stop"></i> Stop
-                                </button>
-                            </div>
+        <div id="floating"></div>
+
+        <p class="fs-1 d-none" dir="rtl">
+            <a href="#"
+               class="fw-bold link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+               data-bs-toggle="popover"
+               data-bs-title="Pronunciation"
+               data-bs-content="Test my pronunciation">
+                {{ pageblock.text | markdownify }}
+            </a>
+        </p>
+
+        <span id="transcribe_text" class="d-none">
+            {{ pageblock.text | markdownify }}
+        </span>
+
+        <div class="d-flex flex-row-reverse">
+            <div>
+                <audio controls id="absi-audio">
+                    <source src="{% url 'polly-audio' pageblock.pk %}"
+                            type="audio/ogg" />
+                    <source src="{% url 'polly-audio' pageblock.pk %}?audio_format=mp3"
+                            type="audio/mpeg" />
+                </audio>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row-reverse">
+            <div>
+                Voice:
+                <div class="form-check">
+                    <input class="form-check-input" type="radio"
+                           name="radioVoice" id="radioVoiceHala" value="Hala" checked>
+                    <label class="form-check-label" for="radioVoiceHala">
+                        <span class="lang-ar">هالة</span> (Hala)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio"
+                           name="radioVoice" id="radioVoiceZayd" value="Zayd">
+                    <label class="form-check-label" for="radioVoiceZayd">
+                        <span class="lang-ar">زايد</span> (Zayd)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane fade" id="practice-tab-pane" role="tabpanel"
+         aria-labelledby="practice-tab" tabindex="0">
+
+        {% if pageblock.initial %}
+        <p class="fs-3" dir="rtl" title="Initial">
+            {{ pageblock.initial|wrap_words }}
+        </p>
+        {% endif %}
+
+        {% if pageblock.medial %}
+        <p class="fs-3" dir="rtl" title="Medial">
+            {{ pageblock.medial|wrap_words }}
+        </p>
+        {% endif %}
+
+        {% if pageblock.final %}
+        <p class="fs-3" dir="rtl" title="Final">
+            {{ pageblock.final|wrap_words }}
+        </p>
+        {% endif %}
+
+        <div class="container my-2">
+            <div class="d-flex flex-row-reverse">
+                <div class="col-6">
+                    <div class="main-controls p-2 border border-dark rounded">
+                        Practice my pronunciation:
+                        <canvas class="visualizer inline" height="60"></canvas>
+
+                        <div id="buttons">
+                            <button type="button" class="btn btn-primary record">
+                                <i class="bi bi-record"></i> Record
+                            </button>
+                            <button type="button" class="btn btn-secondary stop">
+                                <i class="bi bi-stop"></i> Stop
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="v-pills-review" role="tabpanel"
-             aria-labelledby="v-pills-review-tab" tabindex="0">
-            ...
-        </div>
-        <div class="tab-pane fade" id="v-pills-assess" role="tabpanel"
-             aria-labelledby="v-pills-assess-tab" tabindex="0">
-            ...
-        </div>
+    </div>
+    <div class="tab-pane fade" id="review-tab-pane" role="tabpanel"
+         aria-labelledby="review-tab" tabindex="0">
+        ...
+    </div>
+    <div class="tab-pane fade" id="assess-tab-pane" role="tabpanel"
+         aria-labelledby="assess-tab" tabindex="0">
+        ...
     </div>
 </div>
 

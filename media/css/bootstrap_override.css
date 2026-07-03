@@ -1,0 +1,9 @@
+:root,
+[data-bs-theme=light] {
+    --bs-link-color: #2c5f8a;
+    --bs-link-color-rgb: 44, 95, 138;
+}
+
+.nav-pills {
+    --bs-nav-pills-link-active-bg: #2c5f8a;
+}
