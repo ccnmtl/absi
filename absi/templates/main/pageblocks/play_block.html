@@ -1,6 +1,6 @@
 {% load markdownify text_filters %}
 
-<ul class="nav nav-pills nav-fill" id="play-tabs" role="tablist">
+<ul class="nav nav-pills nav-fill mb-2" id="play-tabs" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="listen-tab" data-bs-toggle="tab" data-bs-target="#listen-tab-pane" type="button" role="tab"
                 aria-controls="listen-tab-pane" aria-selected="true">
@@ -30,6 +30,28 @@
 <div class="tab-content" id="play-tabContent">
     <div class="tab-pane fade show active" id="listen-tab-pane" role="tabpanel"
          aria-labelledby="listen-tab" tabindex="0">
+
+        <div class="card mb-2">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-body-secondary">Syllable</h6>
+                <h5 class="card-title lang-ar" dir="rtl">{{ section.label|wrap_words }}</h5>
+                <p class="card-text lang-ar" dir="rtl">
+                    {{ section.label }}
+                </p>
+            </div>
+        </div>
+
+        {% if pageblock.initial %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-body-secondary">Word example</h6>
+                <h5 class="card-title lang-ar" dir="rtl">{{ pageblock.initial|wrap_words }}</h5>
+                <p class="card-text">
+                </p>
+            </div>
+        </div>
+        {% endif %}
+
         {% if pageblock.text %}
         <div class="float-anchor" dir="rtl">
             <p class="fs-2">
@@ -39,12 +61,6 @@
                 {% endif %}
             </p>
         </div>
-        {% endif %}
-
-        {% if pageblock.initial %}
-        <p class="fs-3" dir="rtl" title="Initial">
-            {{ pageblock.initial|wrap_words }}
-        </p>
         {% endif %}
 
         {% if pageblock.medial %}
