@@ -60,3 +60,25 @@ class ModuleOverviewBlockForm(forms.ModelForm):
 
 
 ModuleOverviewBlock.form = ModuleOverviewBlockForm
+
+
+class LetterOverviewBlock(BasePageBlock):
+    """
+    Pageblock to display the overview for this Arabic letter.
+    """
+    display_name = 'Letter Overview Block'
+    template_file = 'main/pageblocks/letter_overview_block.html'
+
+    @staticmethod
+    def create(request):
+        form = LetterOverviewBlockForm(request.POST)
+        return form.save()
+
+
+class LetterOverviewBlockForm(forms.ModelForm):
+    class Meta:
+        model = LetterOverviewBlock
+        fields = '__all__'
+
+
+LetterOverviewBlock.form = LetterOverviewBlockForm
