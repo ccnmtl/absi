@@ -2,7 +2,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 import logging
 
-from absi.main.util import GROUP_NAME
+from absi.main.utils import GROUP_NAME
 
 logger = logging.getLogger(__name__)
 

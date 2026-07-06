@@ -1,7 +1,7 @@
 import logging
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
-from absi.main.util import GROUP_NAME
+from absi.main.utils import GROUP_NAME
 
 logger = logging.getLogger(__name__)
 
