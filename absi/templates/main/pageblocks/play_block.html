@@ -52,29 +52,6 @@
         </div>
         {% endif %}
 
-        {% if pageblock.text %}
-        <div class="float-anchor" dir="rtl">
-            <p class="fs-2">
-                {{ pageblock.text|wrap_words }}
-                {% if pageblock.diacritic %}
-                <small>({{ pageblock.diacritic }})</small>
-                {% endif %}
-            </p>
-        </div>
-        {% endif %}
-
-        {% if pageblock.medial %}
-        <p class="fs-3" dir="rtl" title="Medial">
-            {{ pageblock.medial|wrap_words }}
-        </p>
-        {% endif %}
-
-        {% if pageblock.final %}
-        <p class="fs-3" dir="rtl" title="Final">
-            {{ pageblock.final|wrap_words }}
-        </p>
-        {% endif %}
-
         <div class="float-box border border-5 border-danger">
         </div>
 
@@ -109,39 +86,26 @@
     <div class="tab-pane fade" id="practice-tab-pane" role="tabpanel"
          aria-labelledby="practice-tab" tabindex="0">
 
-        {% if pageblock.initial %}
-        <p class="fs-3" dir="rtl" title="Initial">
-            {{ pageblock.initial|wrap_words }}
-        </p>
-        {% endif %}
-
-        {% if pageblock.medial %}
-        <p class="fs-3" dir="rtl" title="Medial">
-            {{ pageblock.medial|wrap_words }}
-        </p>
-        {% endif %}
-
-        {% if pageblock.final %}
-        <p class="fs-3" dir="rtl" title="Final">
-            {{ pageblock.final|wrap_words }}
-        </p>
-        {% endif %}
-
         <div class="container my-2">
-            <div class="d-flex flex-row-reverse">
-                <div class="col-6">
-                    <div class="main-controls p-2 border border-dark rounded">
-                        Practice my pronunciation:
-                        <canvas class="visualizer inline" height="60"></canvas>
+            <div class="row">
+                <div class="main-controls p-2 border border-dark rounded">
+                    Say this word:
 
-                        <div id="buttons">
-                            <button type="button" class="btn btn-primary record">
-                                <i class="bi bi-record"></i> Record
-                            </button>
-                            <button type="button" class="btn btn-secondary stop">
-                                <i class="bi bi-stop"></i> Stop
-                            </button>
-                        </div>
+                    {% if pageblock.initial %}
+                    <p class="lang-ar" dir="rtl">
+                        {{ pageblock.initial|wrap_words }}
+                    </p>
+                    {% endif %}
+
+                    <canvas class="visualizer inline" height="60"></canvas>
+
+                    <div id="buttons">
+                        <button type="button" class="btn btn-primary record">
+                            <i class="bi bi-record"></i> Record
+                        </button>
+                        <button type="button" class="btn btn-secondary stop">
+                            <i class="bi bi-stop"></i> Stop
+                        </button>
                     </div>
                 </div>
             </div>
