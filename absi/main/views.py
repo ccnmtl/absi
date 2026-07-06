@@ -241,6 +241,10 @@ class AzureAudioView(LoginRequiredMixin, View):
             region=settings.AZURE_SPEECH_REGION,
         )
 
+        voice_param = request.GET.get('voice', '')
+        if voice_param == 'Hamed':
+            self.voice_name = 'ar-SA-HamedNeural'
+
         speech_config.speech_synthesis_voice_name = self.voice_name
         speech_config.set_speech_synthesis_output_format(
             speechsdk.SpeechSynthesisOutputFormat.Audio48Khz192KBitRateMonoMp3
