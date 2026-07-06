@@ -168,12 +168,9 @@ class PollyAudioView(LoginRequiredMixin, View):
 
         text = self.apply_phoneme_overrides(text)
 
-        voice_param = request.GET.get('voice', '')
         audio_format_param = request.GET.get('audio_format', '')
 
-        voice_id = 'Hala'
-        if voice_param == 'Zayd':
-            voice_id = 'Zayd'
+        voice_id = 'Zeina'
 
         audio_format = PollyAudioView.audio_formats.get('ogg')
         if audio_format_param == 'mp3':
@@ -184,8 +181,7 @@ class PollyAudioView(LoginRequiredMixin, View):
             OutputFormat=audio_format.get('output_format'),
             SampleRate='44100',
             Text=text,
-            TextType=self.text_type,
-            Engine='neural')
+            TextType=self.text_type)
 
         audio_stream = response['AudioStream'].read()
         return HttpResponse(
