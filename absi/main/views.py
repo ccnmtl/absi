@@ -90,6 +90,19 @@ class TranscribeView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class AudioView(LoginRequiredMixin, View):
+    """
+    Global audio view which dispatches to PollyAudioView or
+    AzureAudioView based on voice param.
+    """
+    def get(self, request, *args, **kwargs):
+        voice_param = request.GET.get('voice', '')
+        if voice_param == 'Hala' or voice_param == 'Zayd':
+            return PollyAudioView.as_view()(request, *args, **kwargs)
+
+        return AzureAudioView.as_view()(request, *args, **kwargs)
+
+
 class PollyAudioView(LoginRequiredMixin, View):
     audio_formats = {
         'ogg': {
@@ -168,10 +181,12 @@ class PollyAudioView(LoginRequiredMixin, View):
             }, status=400)
 
         text = self.apply_phoneme_overrides(text)
-
+        voice_param = request.GET.get('voice', '')
         audio_format_param = request.GET.get('audio_format', '')
 
-        voice_id = 'Zeina'
+        voice_id = 'Hala'
+        if voice_param == 'Zayd':
+            voice_id = 'Zayd'
 
         audio_format = PollyAudioView.audio_formats.get('ogg')
         if audio_format_param == 'mp3':
@@ -182,7 +197,8 @@ class PollyAudioView(LoginRequiredMixin, View):
             OutputFormat=audio_format.get('output_format'),
             SampleRate='44100',
             Text=text,
-            TextType=self.text_type)
+            TextType=self.text_type,
+            Engine='neural')
 
         audio_stream = response['AudioStream'].read()
         return HttpResponse(
