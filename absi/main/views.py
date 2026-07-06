@@ -90,7 +90,7 @@ class TranscribeView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class AudioView(LoginRequiredMixin, View):
+class AudioDispatchView(LoginRequiredMixin, View):
     """
     Global audio view which dispatches to PollyAudioView or
     AzureAudioView based on voice param.
@@ -103,7 +103,7 @@ class AudioView(LoginRequiredMixin, View):
         return AzureAudioView.as_view()(request, *args, **kwargs)
 
 
-class PollyAudioView(LoginRequiredMixin, View):
+class AudioView(LoginRequiredMixin, View):
     audio_formats = {
         'ogg': {
             'output_format': 'ogg_vorbis',
@@ -117,6 +117,8 @@ class PollyAudioView(LoginRequiredMixin, View):
         }
     }
 
+
+class PollyAudioView(AudioView):
     # 'text' or 'ssml', for Polly's TextType.
     text_type = 'text'
 
@@ -211,11 +213,12 @@ class PollyAudioView(LoginRequiredMixin, View):
             })
 
 
-class AzureAudioView(LoginRequiredMixin, View):
+class AzureAudioView(AudioView):
     voice_name = 'ar-SA-ZariyahNeural'
 
     def get(self, request, *args, **kwargs):
         text = request.GET.get('text', None)
+        audio_format_param = request.GET.get('audio_format', '')
 
         if not text:
             pageblock_id = kwargs.get('pk', '')
@@ -246,9 +249,18 @@ class AzureAudioView(LoginRequiredMixin, View):
             self.voice_name = 'ar-SA-HamedNeural'
 
         speech_config.speech_synthesis_voice_name = self.voice_name
+
+        audio_format = AzureAudioView.audio_formats.get('ogg')
         speech_config.set_speech_synthesis_output_format(
-            speechsdk.SpeechSynthesisOutputFormat.Audio48Khz192KBitRateMonoMp3
+            speechsdk.SpeechSynthesisOutputFormat.Ogg48Khz16BitMonoOpus
         )
+
+        if audio_format_param == 'mp3':
+            audio_format = PollyAudioView.audio_formats.get('mp3')
+            speech_config.set_speech_synthesis_output_format(
+                speechsdk.SpeechSynthesisOutputFormat
+                .Audio48Khz192KBitRateMonoMp3
+            )
 
         synthesizer = speechsdk.SpeechSynthesizer(
             speech_config=speech_config,
@@ -269,10 +281,11 @@ class AzureAudioView(LoginRequiredMixin, View):
 
         return HttpResponse(
             result.audio_data,
-            content_type='audio/mpeg',
+            content_type=audio_format.get('content_type'),
             headers={
                 'Content-Disposition':
-                'inline; filename="speech.mp3"'
+                'inline; filename=speech.{}'.format(
+                    audio_format.get('extension'))
             })
 
 

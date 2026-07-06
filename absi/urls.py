@@ -62,9 +62,8 @@ urlpatterns = [
         views.AuthedPageView.as_view(
             hierarchy_name='main', hierarchy_base='/pages/')),
 
-    path('audio/<int:pk>', views.AudioView.as_view(),
+    path('audio/<int:pk>', views.AudioDispatchView.as_view(),
          name='audio-view'),
-
     path('polly-audio/<int:pk>', views.PollyAudioView.as_view(),
          name='polly-audio'),
     path('azure-audio/<int:pk>', views.AzureAudioView.as_view(),
