@@ -1,9 +1,31 @@
+:root {
+    --dabke-blue: #2c5f8a;
+    --dabke-blue-10: #28567c;
+    --dabke-blue-dark: #234b6e; /* 20% shaded */
+}
+
 :root,
 [data-bs-theme=light] {
-    --bs-link-color: #2c5f8a;
+    --bs-link-color: var(--dabke-blue);
     --bs-link-color-rgb: 44, 95, 138;
 }
 
+.btn-bd-primary {
+    --bs-btn-bg: var(--dabke-blue);
+    --bs-btn-hover-bg: var(--dabke-blue-10);
+    --bs-btn-active-bg: var(--dabke-blue-dark);
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-hover-color: var(--bs-white);
+}
+
+.btn-bd-secondary {
+    --bs-btn-border-color: var(--dabke-blue);
+    --bs-btn-hover-border-color: var(--dabke-blue-10);
+    --bs-btn-color: var(--dabke-blue);
+    --bs-btn-hover-color: var(--dabke-blue);
+}
+
 .nav-pills {
-    --bs-nav-pills-link-active-bg: #2c5f8a;
+    --bs-nav-pills-link-active-bg: var(--dabke-blue);
+    --bs-nav-link-hover-color: var(--dabke-blue);
 }
