@@ -64,4 +64,6 @@ urlpatterns = [
 
     path('polly-audio/<int:pk>', views.PollyAudioView.as_view(),
          name='polly-audio'),
+    path('azure-audio/<int:pk>', views.AzureAudioView.as_view(),
+         name='azure-audio'),
 ]

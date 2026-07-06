@@ -74,9 +74,9 @@
         <div class="d-flex flex-row-reverse">
             <div>
                 <audio controls id="absi-audio">
-                    <source src="{% url 'polly-audio' pageblock.pk %}"
+                    <source src="{% url 'azure-audio' pageblock.pk %}"
                             type="audio/ogg" />
-                    <source src="{% url 'polly-audio' pageblock.pk %}?audio_format=mp3"
+                    <source src="{% url 'azure-audio' pageblock.pk %}?audio_format=mp3"
                             type="audio/mpeg" />
                 </audio>
             </div>
