@@ -1,6 +1,8 @@
 {% load letter_children %}
 
-{% letter_children section.get_children "short vowels" as short_vowels %}
+{% with children=section.get_children %}
+
+{% letter_children children "short vowels" as short_vowels %}
 {% if short_vowels %}
 <div class="text-body-secondary my-2">Short Vowels</div>
 <div class="list-group">
@@ -19,7 +21,7 @@
 </div>
 {% endif %}
 
-{% letter_children section.get_children "long vowels" as long_vowels %}
+{% letter_children children "long vowels" as long_vowels %}
 {% if long_vowels %}
 <div class="text-body-secondary my-2">Long Vowels</div>
 <div class="list-group">
@@ -38,7 +40,7 @@
 </div>
 {% endif %}
 
-{% letter_children section.get_children "diphthongs" as diphthongs %}
+{% letter_children children "diphthongs" as diphthongs %}
 {% if diphthongs %}
 <div class="text-body-secondary my-2">Diphthongs</div>
 <div class="list-group">
@@ -57,7 +59,7 @@
 </div>
 {% endif %}
 
-{% letter_children section.get_children "other" as other %}
+{% letter_children children "other" as other %}
 
 {% if other %}
 <div class="text-body-secondary my-2">Other</div>
@@ -76,3 +78,5 @@
     {% endfor %}
 </div>
 {% endif %}
+
+{% endwith %}
