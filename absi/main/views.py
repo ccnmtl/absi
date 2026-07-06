@@ -1,5 +1,6 @@
 import boto3
 import uuid
+import azure.cognitiveservices.speech as speechsdk
 from celery import chain
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
@@ -191,6 +192,67 @@ class PollyAudioView(LoginRequiredMixin, View):
                 'Content-Disposition':
                 'inline; filename=speech.{}'.format(
                     audio_format.get('extension'))
+            })
+
+
+class AzureAudioView(LoginRequiredMixin, View):
+    voice_name = 'ar-SA-ZariyahNeural'
+
+    def get(self, request, *args, **kwargs):
+        text = request.GET.get('text', None)
+
+        if not text:
+            pageblock_id = kwargs.get('pk', '')
+            pageblock = None
+            if pageblock_id:
+                pageblock = get_object_or_404(PlayBlock, pk=pageblock_id)
+
+            text = None
+            if pageblock:
+                text = pageblock.text
+
+        if not text:
+            return JsonResponse({'error': 'Text is required'}, status=400)
+
+        if len(text) > MAX_LENGTH:
+            return JsonResponse({
+                'error':
+                f'Text too long. Max length is {MAX_LENGTH} characters.'
+            }, status=400)
+
+        speech_config = speechsdk.SpeechConfig(
+            subscription=settings.AZURE_SPEECH_KEY,
+            region=settings.AZURE_SPEECH_REGION,
+        )
+
+        speech_config.speech_synthesis_voice_name = self.voice_name
+        speech_config.set_speech_synthesis_output_format(
+            speechsdk.SpeechSynthesisOutputFormat.Audio48Khz192KBitRateMonoMp3
+        )
+
+        synthesizer = speechsdk.SpeechSynthesizer(
+            speech_config=speech_config,
+            audio_config=None,
+        )
+
+        result = synthesizer.speak_text(text)
+
+        if result.reason != speechsdk.ResultReason.SynthesizingAudioCompleted:
+            details = speechsdk.SpeechSynthesisCancellationDetails.from_result(
+                result)
+
+            return JsonResponse({
+                'error': 'Speech synthesis failed',
+                'reason': str(result.reason),
+                'details': details.error_details,
+            }, status=500)
+
+        return HttpResponse(
+            result.audio_data,
+            content_type='audio/mpeg',
+            headers={
+                'Content-Disposition':
+                'inline; filename="speech.mp3"'
             })
 
 
