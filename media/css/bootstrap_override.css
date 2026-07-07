@@ -1,7 +1,10 @@
 :root {
     --dabke-blue: #2c5f8a;
+    --dabke-blue-clear: rgba(44, 95, 138, 0.3);
     --dabke-blue-10: #28567c;
+    --dabke-blue-clear-10: rgba(40, 86, 124, 0.3);
     --dabke-blue-dark: #234b6e; /* 20% shaded */
+    --dabke-blue-clear-dark: rgba(35, 75, 110, 0.3);
 }
 
 :root,
@@ -16,6 +19,14 @@
     --bs-btn-active-bg: var(--dabke-blue-dark);
     --bs-btn-color: var(--bs-white);
     --bs-btn-hover-color: var(--bs-white);
+}
+
+.btn-bd-primary-light {
+    --bs-btn-bg: var(--dabke-blue-clear);
+    --bs-btn-hover-bg: var(--dabke-blue-clear-10);
+    --bs-btn-hover-border-color: var(--dabke-blue-clear-10);
+    --bs-btn-active-bg: var(--dabke-blue-clear-dark);
+    --bs-btn-active-border-color: var(--dabke-blue-clear-dark);
 }
 
 .btn-bd-secondary {
