@@ -1,1 +1,22 @@
 {% extends 'base_content.html' %}
+
+{% block navbar %}
+{% if section and section.depth > 2 %}
+<nav class="navbar navbar-expand-sm border-bottom" data-bs-theme="light">
+    <div class="container-md justify-content-start">
+        <a class="btn btn-bd-primary-light me-2"
+           {% if section.depth == 3 %}
+           href="{% url 'index_view' %}"
+           {% elif section.depth > 3 %}
+           href="{{ section.get_parent.get_absolute_url }}"
+           {% endif %}
+           role="button">
+            <i class="bi bi-chevron-left"></i>
+        </a>
+        <div class="navbar-brand">{{ section.label }}</div>
+        <div class="navbar-text text-secondary">
+        </div>
+    </div>
+</nav>
+{% endif %}
+{% endblock %}
