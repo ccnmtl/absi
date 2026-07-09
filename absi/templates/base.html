@@ -84,11 +84,13 @@
 
     <section id="content">
         <div class="container mt-2">
-            {% block navrightextra %}{% endblock %}
+            {% if request.user.is_staff %}
+            <div class="d-flex justify-content-end">
+                {% block navrightextra %}{% endblock %}
+            </div>
+            {% endif %}
 
-            {% block pagetitle %}{% endblock %}
             {% block content %}{% endblock %}
-            {% block content-nav %}{% endblock %}
         </div>
     </section>
 

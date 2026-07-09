@@ -107,12 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.getElementById('dabke-practice-next-button')
-        .addEventListener('click', function() {
-            const trigger = document.querySelector(
-                '[data-bs-target="#practice-tab-pane"]');
-            bootstrap.Tab.getOrCreateInstance(trigger).show();
-        });
+    $('.dabke-practice-next-button').on('click', function() {
+        const trigger = document.querySelector(
+            '[data-bs-target="#practice-tab-pane"]');
+        bootstrap.Tab.getOrCreateInstance(trigger).show();
+    });
 
     document.getElementById('dabke-review-next-button')
         .addEventListener('click', function() {
@@ -125,6 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .addEventListener('click', function() {
             const trigger = document.querySelector(
                 '[data-bs-target="#assess-tab-pane"]');
+            bootstrap.Tab.getOrCreateInstance(trigger).show();
+        });
+
+    document.getElementById('dabke-listen-button')
+        .addEventListener('click', function() {
+            const trigger = document.querySelector(
+                '[data-bs-target="#listen-tab-pane"]');
             bootstrap.Tab.getOrCreateInstance(trigger).show();
         });
 });
