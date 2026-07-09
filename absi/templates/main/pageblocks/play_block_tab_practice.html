@@ -1,0 +1,35 @@
+{% load text_filters %}
+
+<div class="container my-2">
+    <div class="row">
+        <div class="main-controls p-2 border border-dark rounded">
+            Say this word:
+
+            {% if pageblock.initial %}
+            <p class="lang-ar text-center" dir="rtl">
+                {{ pageblock.initial|wrap_words }}
+            </p>
+            {% endif %}
+
+            <div class="text-center">
+                <canvas class="visualizer inline" height="60"></canvas>
+
+                <div id="buttons">
+                    <button type="button" class="btn btn-bd-primary record">
+                        <i class="bi bi-record"></i> Record
+                    </button>
+                    <button type="button" class="btn btn-secondary stop">
+                        <i class="bi bi-stop"></i> Stop
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-grid gap-2 m-2">
+    <button type="button" class="btn btn-bd-primary"
+            id="dabke-review-next-button">
+        Next: Review
+    </button>
+</div>

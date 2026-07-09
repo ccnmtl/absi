@@ -1,0 +1,59 @@
+{% load text_filters %}
+
+{% with block=section.pageblock_set.first %}
+{% if block and block.content_object %}
+<h2 class="lang-ar">{{ block.content_object.text }}</h2>
+{% endif %}
+{% endwith %}
+
+<p class="text-secondary">
+    Compare your recording to the example.
+</p>
+
+<div class="card mb-2">
+    <div class="row g-0">
+        <div class="col-2 d-flex justify-content-center align-items-center">
+            <button class="btn btn-bd-primary">
+                <i class="bi bi-play-fill"></i>
+            </button>
+        </div>
+        <div class="col-10">
+            <div class="card-body">
+                <h5 class="card-title">Example</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-2">
+    <div class="row g-0">
+        <div class="col-2 d-flex justify-content-center align-items-center">
+            <button class="btn btn-bd-primary">
+                <i class="bi bi-play-fill"></i>
+            </button>
+        </div>
+        <div class="col-10">
+            <div class="card-body">
+                <h5 class="card-title">Your recording</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-2">
+    <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-body-secondary">Word in Context</h6>
+        <h5 class="card-title lang-ar" dir="rtl">{{ section.label|wrap_words }}</h5>
+    </div>
+</div>
+
+<div class="d-grid gap-2 m-2">
+    <button type="button" class="btn btn-bd-primary"
+            id="dabke-assess-next-button">
+        Get score
+    </button>
+    <button type="button"
+            class="btn btn-bd-secondary dabke-practice-next-button">
+        Record again
+    </button>
+</div>
