@@ -33,6 +33,7 @@ body.login-splash .nav-link:hover {
 
 .float-box {
     display: none;
+    pointer-events: none;
     position: absolute;
     min-width: 120px;
     height: 80px;
