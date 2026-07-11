@@ -23,7 +23,6 @@ document.querySelectorAll('.wrapped-word').forEach((anchor) => {
         });
     }
 
-
     function show() {
         box.style.display = 'block';
         update();
@@ -59,12 +58,6 @@ document.querySelectorAll('.wrapped-word').forEach((anchor) => {
     anchor.addEventListener('click', toggle);
     anchor.addEventListener('focus', show);
     anchor.addEventListener('blur', hide);
-});
-
-document.addEventListener('click', () => {
-    document.querySelectorAll('.float-box').forEach((box) => {
-        box.style.display = 'none';
-    });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -103,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Reload audio
                 $audio[0].load();
+                $audio[0].play();
             }
         });
     }
@@ -133,4 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 '[data-bs-target="#listen-tab-pane"]');
             bootstrap.Tab.getOrCreateInstance(trigger).show();
         });
+
+    $('.dabke-word-play,.dabke-syllable-play').on('click', () => {
+        $audio[0].currentTime = 0;
+        $audio[0].play();
+    });
 });

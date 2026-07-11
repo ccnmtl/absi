@@ -20,52 +20,11 @@ const socket = new WebSocket(
     'wss://' + window.location.host + '/ws/'
 );
 
-const parseAzureResponse = function(obj) {
-    return JSON.stringify(obj);
-};
-
-const refreshToasts = function($toastContainer) {
-    const MAX_TOASTS = 3;
-    if ($toastContainer.find('.toast').length > MAX_TOASTS) {
-        const $toast = $toastContainer.first().find('.toast').first();
-        if ($toast) {
-            $toast.remove();
-        }
-    }
-};
-
 /**
  * showToast for playblock/pagetree view.
  */
 const showToast = function(title, body, time) {
-    const $toastContainer = $('#toast-container-0');
-    const $toast = $(`
-    <div class="toast" role="alert" aria-live="assertive"
-         data-bs-config='{"autohide":false}' aria-atomic="true">
-      <div class="toast-header">
-        <strong class="me-auto"></strong>
-        <small></small>
-        <button type="button" class="btn-close"
-                data-bs-dismiss="toast" aria-label="Close">
-        </button>
-      </div>
-      <div class="toast-body"></div>
-    </div>`);
-
-    $toast.find('.me-auto').text(title);
-    $toast.find('small').text(time);
-
-    if (body && typeof body === 'object') {
-        body = parseAzureResponse(body);
-    }
-
-    $toast.find('.toast-body').text(body);
-    $toastContainer.append($toast);
-
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance($toast[0]);
-    toastBootstrap.show();
-
-    refreshToasts($toastContainer);
+    console.log('showToast:', title, body, time);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
