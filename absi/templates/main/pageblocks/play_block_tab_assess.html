@@ -9,8 +9,8 @@
     {% with next_section=section.get_next %}
     {% if next_section %}
     <a role="button" class="btn btn-bd-primary"
-       href="{{next_section.get_absolute_url}}">
-        Next syllable
+       href="{{ next_section.get_absolute_url }}">
+        Next syllable: {{ next_section.label }}
     </a>
     {% endif %}
     {% endwith %}
