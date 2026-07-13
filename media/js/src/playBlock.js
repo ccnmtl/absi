@@ -128,13 +128,14 @@ document.addEventListener('DOMContentLoaded', () => {
             bootstrap.Tab.getOrCreateInstance(trigger).show();
         });
 
-    const tabEl = document.querySelector('button[data-bs-toggle="tab"]#listen-tab')
+    const tabEl = document.querySelector(
+        'button[data-bs-toggle="tab"]#listen-tab');
     if (tabEl) {
         tabEl.addEventListener('shown.bs.tab', event => {
             document.querySelectorAll('.float-box').forEach((box) => {
                 box.style.display = 'none';
             });
-        })
+        });
     }
 
     $('.dabke-word-play,.dabke-syllable-play').on('click', () => {
