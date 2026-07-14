@@ -61,20 +61,6 @@ document.querySelectorAll('.wrapped-word').forEach((anchor) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const floating = document.getElementById('floating');
-
-    document.addEventListener('mousemove', ({ clientX, clientY }) => {
-        if (!floating) return;
-
-        Object.assign(floating.style, {
-            position: 'fixed',
-            left: `${clientX}px`,
-            top: `${clientY}px`,
-            transform: 'translate(-50%, -50%)',
-            pointerEvents: 'none',
-        });
-    });
-
     // https://getbootstrap.com/docs/5.3/getting-started/javascript/#sanitizer
     const myDefaultAllowList = bootstrap.Tooltip.Default.allowList;
     myDefaultAllowList.audio = ['controls'];
