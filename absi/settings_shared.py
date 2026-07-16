@@ -25,6 +25,12 @@ if 'test' not in sys.argv and 'jenkins' not in sys.argv:
             'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
             'HOST': os.environ.get('DATABASE_HOST'),
             'PORT': os.environ.get('DATABASE_PORT'),
+            'ATOMIC_REQUESTS': False,
+            'CONN_MAX_AGE': 0,
+            'CONN_HEALTH_CHECKS': False,
+            'OPTIONS': {
+                'connect_timeout': 10,
+            },
         }
     }
 
