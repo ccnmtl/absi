@@ -216,8 +216,9 @@ class PollyAudioView(AudioView):
 class AzureAudioView(AudioView):
     voice_name = 'ar-SA-ZariyahNeural'
 
-    @staticmethod
-    def get_voice_from_param(voice_param: str) -> str:
+    def get_voice_from_param(self, voice_param: str) -> str:
+        if voice_param == 'Zariyah':
+            return 'ar-SA-ZariyahNeural'
         if voice_param == 'Hamed':
             return 'ar-SA-HamedNeural'
         if voice_param == 'Shakir':
@@ -229,7 +230,7 @@ class AzureAudioView(AudioView):
         if voice_param == 'Jamal':
             return 'ar-MA-JamalNeural'
 
-        return voice_param
+        return self.voice_name
 
     def get(self, request, *args, **kwargs):
         text = request.GET.get('text', None)
@@ -260,8 +261,10 @@ class AzureAudioView(AudioView):
         )
 
         voice_param = request.GET.get('voice', '')
-        voice_name = AzureAudioView.get_voice_from_param(voice_param)
-        self.voice_name = voice_name
+        voice_name = self.get_voice_from_param(voice_param)
+
+        if voice_name != self.voice_name:
+            self.voice_name = voice_name
 
         speech_config.speech_synthesis_voice_name = self.voice_name
 
