@@ -83,6 +83,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Reload audio
                 $audio[0].load();
                 $audio[0].play();
+
+                // Save this voice to user's profile.
+                (async() => {
+                    await fetch('/api/userprofile/update/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken,
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify({
+                            voice: voice
+                        }),
+                    });
+                })();
             }
         });
     }

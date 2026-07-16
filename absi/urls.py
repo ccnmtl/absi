@@ -4,7 +4,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from django.views.static import serve
 from django_cas_ng import views as cas_views
-from absi.main import views
+from absi.main import views, apiviews
 from pagetree.generic.views import EditView, InstructorView
 
 admin.autodiscover()
@@ -43,6 +43,10 @@ urlpatterns = [
 
     path('api/azure_transcribe/', views.AzureTranscribeJobView.as_view(),
          name='api_azure_transcribe_job_view'),
+
+    path('api/userprofile/update/',
+         apiviews.UpdateUserProfileView.as_view(),
+         name='api_update_userprofile'),
 
     path('s3sign/', views.SignS3ECSView.as_view()),
 
