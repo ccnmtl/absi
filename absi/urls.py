@@ -16,6 +16,7 @@ def trigger_error(request):
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index_view'),
+
     path('progress/', views.ProgressView.as_view()),
 
     path('admin/', admin.site.urls),
@@ -68,4 +69,6 @@ urlpatterns = [
          name='polly-audio'),
     path('azure-audio/<int:pk>', views.AzureAudioView.as_view(),
          name='azure-audio'),
+
+    path('', include('django.contrib.flatpages.urls')),
 ]
