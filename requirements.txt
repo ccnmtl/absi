@@ -51,7 +51,7 @@ python-dateutil==2.9.0.post0
 python-cas==1.7.2
 django-cas-ng==5.1.1
 django-appconf==1.2.0
-sentry-sdk[django]==2.65.0
+sentry-sdk[django]==2.66.0
 django-bootstrap5==26.2
 
 django-debug-toolbar==7.0.0
