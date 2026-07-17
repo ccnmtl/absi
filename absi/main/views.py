@@ -6,8 +6,10 @@ from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.views import View
 from django.views.generic.base import TemplateView
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
 from pagetree.generic.views import PageView
 from pagetree.models import Hierarchy
 from rest_framework.views import APIView
@@ -25,7 +27,7 @@ from absi.main.tasks import (
 
     start_azure_transcribe_job
 )
-from absi.main.models import PlayBlock
+from absi.main.models import PlayBlock, UserProfile
 
 
 MAX_LENGTH = 512
@@ -307,6 +309,7 @@ class AzureAudioView(AudioView):
             })
 
 
+@method_decorator(ensure_csrf_cookie, name='dispatch')
 class AuthedPageView(LoginRequiredMixin, PageView):
     def get_extra_context(self):
         context = super().get_extra_context()
@@ -314,6 +317,10 @@ class AuthedPageView(LoginRequiredMixin, PageView):
         if self.request and self.request.user:
             token, _ = Token.objects.get_or_create(user=self.request.user)
             context['token'] = token
+
+            up, _ = UserProfile.objects.get_or_create(user=self.request.user)
+            if up.voice:
+                context['voice'] = up.voice
 
         return context
 
