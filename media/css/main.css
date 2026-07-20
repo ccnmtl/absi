@@ -85,3 +85,7 @@ body.login-splash .nav-link:hover {
 .card .card-img-top {
     max-height: 300pt;
 }
+
+.pageblock>h3 {
+    display: none;
+}
