@@ -116,7 +116,7 @@ twisted[http2,tls,websocket]==26.4.0  # daphne
 txaio==26.6.1  # autobahn
 pycparser==3.0  # autobahn
 autobahn==26.7.1  # daphne
-daphne==4.2.2
+daphne==4.2.3
 
 channels==4.3.2
 redis[hiredis]==7.4.1
