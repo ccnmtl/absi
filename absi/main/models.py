@@ -28,9 +28,27 @@ class PlayBlock(BasePageBlock):
 
     text = models.TextField(help_text='Arabic text to play and evaluate')
 
-    initial = models.CharField(null=True, blank=True)
-    medial = models.CharField(null=True, blank=True)
-    final = models.CharField(null=True, blank=True)
+    initial = models.CharField(
+        null=True, blank=True,
+        help_text='Word examples for initial position')
+    initial_ipa = models.CharField(
+        null=True, blank=True,
+        help_text='IPA notation for initial examples')
+
+    medial = models.CharField(
+        null=True, blank=True,
+        help_text='Word examples for medial position')
+    medial_ipa = models.CharField(
+        null=True, blank=True,
+        help_text='IPA notation for medial examples')
+
+    final = models.CharField(
+        null=True, blank=True,
+        help_text='Word examples for final position')
+    final_ipa = models.CharField(
+        null=True, blank=True,
+        help_text='IPA notation for final examples')
+
     diacritic = models.CharField(null=True, blank=True)
 
     @staticmethod
