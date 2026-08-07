@@ -5,7 +5,7 @@
         <div class="col-10">
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-body-secondary">Syllable</h6>
-                <h5 class="card-title lang-ar" dir="rtl">{{ section.label|wrap_words }}</h5>
+                <h5 class="card-title lang-ar" dir="rtl">{{ section.label }}</h5>
                 <p class="card-text lang-ar" dir="rtl">
                     {{ section.label }}
                 </p>
@@ -27,51 +27,123 @@
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-body-secondary">Word examples</h6>
 
-                <ul class="nav nav-tabs justify-content-end" id="myTab" role="tablist">
+                <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+                        <button class="nav-link active" id="initial-tab" data-bs-toggle="tab" data-bs-target="#initial-tab-pane" type="button" role="tab" aria-controls="initial-tab-pane" aria-selected="true">
                             Initial
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                        <button class="nav-link" id="medial-tab" data-bs-toggle="tab" data-bs-target="#medial-tab-pane" type="button" role="tab" aria-controls="medial-tab-pane" aria-selected="false">
                             Medial
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+                        <button class="nav-link" id="final-tab" data-bs-toggle="tab" data-bs-target="#final-tab-pane" type="button" role="tab" aria-controls="final-tab-pane" aria-selected="false">
                             Final
                         </button>
                     </li>
                 </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <div class="tab-content" id="listenTabContent">
+                    <div class="tab-pane fade show active" id="initial-tab-pane" role="tabpanel" aria-labelledby="initial-tab" tabindex="0">
                         <div class="card-body">
                             {% if pageblock.initial %}
-                            <h5 class="card-title lang-ar" dir="rtl">{{ pageblock.initial|wrap_words }}</h5>
-                            {% endif %}
-                            {% if pageblock.initial_ipa %}
-                            <p class="card-text">{{ pageblock.initial_ipa }}</p>
+                            <div id="carouselInitial" class="carousel slide carousel-dark">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselInitial" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselInitial" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="text-center d-block w-100">
+                                            <span class="dabke-text">{{ pageblock.initial_first }}</span>
+                                            <span class="dabke-ipa">{{ pageblock.initial_ipa_first }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="text-center">
+                                            <span class="dabke-text">{{ pageblock.initial_second }}</span>
+                                            <span class="dabke-ipa">{{ pageblock.initial_ipa_second }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselInitial" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselInitial" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                             {% endif %}
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                    <div class="tab-pane fade" id="medial-tab-pane" role="tabpanel" aria-labelledby="medial-tab" tabindex="0">
                         <div class="card-body">
                             {% if pageblock.medial %}
-                            <h5 class="card-title lang-ar" dir="rtl">{{ pageblock.medial|wrap_words }}</h5>
-                            {% endif %}
-                            {% if pageblock.medial_ipa %}
-                            <p class="card-text">{{ pageblock.medial_ipa }}</p>
+                            <div id="carouselMedial" class="carousel slide carousel-dark">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselMedial" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselMedial" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="text-center d-block w-100">
+                                            <span class="dabke-text">{{ pageblock.medial_first }}</span>
+                                            <span class="dabke-ipa">{{ pageblock.medial_ipa_first }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="text-center">
+                                            <span class="dabke-text">{{ pageblock.medial_second }}</span>
+                                            <span class="dabke-ipa"{{ pageblock.medial_ipa_second }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselMedial" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselMedial" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                             {% endif %}
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                    <div class="tab-pane fade" id="final-tab-pane" role="tabpanel" aria-labelledby="final-tab" tabindex="0">
                         <div class="card-body">
                             {% if pageblock.final %}
-                            <h5 class="card-title lang-ar" dir="rtl">{{ pageblock.final|wrap_words }}</h5>
-                            {% endif %}
-                            {% if pageblock.final_ipa %}
-                            <p class="card-text">{{ pageblock.final_ipa }}</p>
+                            <div id="carouselFinal" class="carousel slide carousel-dark">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselFinal" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselFinal" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="text-center d-block w-100">
+                                            <span class="dabke-text">{{ pageblock.final_first }}</span>
+                                            <span class="dabke-ipa">{{ pageblock.final_ipa_first }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="text-center">
+                                            <span class="dabke-text">{{ pageblock.final_second }}</span>
+                                            <span class="dabke-ipa">{{ pageblock.final_ipa_second }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselFinal" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselFinal" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                             {% endif %}
                         </div>
                     </div>
