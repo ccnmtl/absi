@@ -273,7 +273,7 @@
         <div class="form-check form-check-reverse">
             <input class="form-check-input" type="radio"
                    name="radioVoice" id="radioVoiceZariyah"
-                   {% if not voice or voice == 'Zariyah' %}
+                   {% if voice == 'Zariyah' %}
                    checked
                    {% endif %}
                    value="Zariyah">
@@ -296,7 +296,7 @@
         <div class="form-check form-check-reverse">
             <input class="form-check-input" type="radio"
                    name="radioVoice" id="radioVoiceHala"
-                   {% if voice == 'Hala' %}
+                   {% if not voice or voice == 'Hala' %}
                    checked
                    {% endif %}
                    value="Hala">
@@ -318,9 +318,9 @@
     </div>
 
     <audio controls id="absi-audio" class="d-none">
-        <source src="{% url 'audio-view' pageblock.pk %}"
+        <source src="{% url 'audio-view' pageblock.pk %}?voice={{ voice }}"
                 type="audio/ogg" />
-        <source src="{% url 'audio-view' pageblock.pk %}?audio_format=mp3"
+        <source src="{% url 'audio-view' pageblock.pk %}?audio_format=mp3&voice={{ voice }}"
                 type="audio/mpeg" />
     </audio>
 </div>
