@@ -36,21 +36,37 @@ class PlayBlock(BasePageBlock):
         help_text='IPA notation for initial examples')
 
     @property
-    def initial_first(self):
-        return self.initial.split()[0]
+    def initial_first(self) -> str:
+        if self.initial is None:
+            return None
+
+        pair = self.initial.split()
+        if len(pair) > 0:
+            return pair[0]
 
     @property
-    def initial_ipa_first(self):
-        return self.initial_ipa.split()[0]
+    def initial_ipa_first(self) -> str:
+        if self.initial_ipa is None:
+            return None
+
+        pair = self.initial_ipa.split()
+        if len(pair) > 0:
+            return pair[0]
 
     @property
     def initial_second(self) -> str:
+        if self.initial is None:
+            return None
+
         pair = self.initial.split()
         if len(pair) > 1:
             return pair[1]
 
     @property
     def initial_ipa_second(self) -> str:
+        if self.initial_ipa is None:
+            return None
+
         pair = self.initial_ipa.split()
         if len(pair) > 1:
             return pair[1]
@@ -63,21 +79,37 @@ class PlayBlock(BasePageBlock):
         help_text='IPA notation for medial examples')
 
     @property
-    def medial_first(self):
-        return self.medial.split()[0]
+    def medial_first(self) -> str:
+        if self.medial is None:
+            return None
+
+        pair = self.medial.split()
+        if len(pair) > 0:
+            return pair[0]
 
     @property
-    def medial_ipa_first(self):
-        return self.medial_ipa.split()[0]
+    def medial_ipa_first(self) -> str:
+        if self.medial_ipa is None:
+            return None
+
+        pair = self.medial_ipa.split()
+        if len(pair) > 0:
+            return pair[0]
 
     @property
     def medial_second(self) -> str:
+        if self.medial is None:
+            return None
+
         pair = self.medial.split()
         if len(pair) > 1:
             return pair[1]
 
     @property
-    def medial_ipa_second(self):
+    def medial_ipa_second(self) -> str:
+        if self.medial_ipa is None:
+            return None
+
         pair = self.medial_ipa.split()
         if len(pair) > 1:
             return pair[1]
@@ -91,20 +123,36 @@ class PlayBlock(BasePageBlock):
 
     @property
     def final_first(self) -> str:
-        return self.final.split()[0]
+        if self.final is None:
+            return None
+
+        pair = self.final.split()
+        if len(pair) > 0:
+            return pair[0]
 
     @property
     def final_ipa_first(self) -> str:
-        return self.final_ipa.split()[0]
+        if self.final_ipa is None:
+            return None
+
+        pair = self.final_ipa.split()
+        if len(pair) > 0:
+            return pair[0]
 
     @property
     def final_second(self) -> str:
+        if self.final is None:
+            return None
+
         pair = self.final.split()
         if len(pair) > 1:
             return pair[1]
 
     @property
     def final_ipa_second(self) -> str:
+        if self.final_ipa is None:
+            return None
+
         pair = self.final_ipa.split()
         if len(pair) > 1:
             return pair[1]
