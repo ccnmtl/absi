@@ -20,7 +20,6 @@ phases:
       - GITHUB_BRANCH_NAME="${CODEBUILD_WEBHOOK_HEAD_REF#refs/heads/}"
       # - GITHUB_REPO_URL="https://${GITHUB_PERSONAL_ACCESS_TOKEN}@${CODEBUILD_SOURCE_REPO_URL#https://}"
       - GITHUB_REPO_URL="${CODEBUILD_SOURCE_REPO_URL}"
-      - echo $GITHUB_REPO_URL
       - echo $IMAGE_TAG
       - echo $GITHUB_BRANCH_NAME
       - docker pull $ECR_REPOSITORY_URI:latest || true
@@ -97,7 +96,7 @@ phases:
       - jq --arg image "$ECR_REPOSITORY_URI:$IMAGE_TAG" '.containerDefinitions[0].image = $image' previous-task-definition.json > task-definition.json
       - echo "Run aws ecs register task definition..."
       - WORKER_TASK_DEFINITION_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json --query "taskDefinition.taskDefinitionArn" --output text)
-      - echo "Registered new task definition - WORKER_$TASK_DEFINITION_ARN"
+      - echo "Registered new task definition - $WORKER_TASK_DEFINITION_ARN"
       - echo "Updating Staging worker ECS service"
       - |
         aws ecs update-service --cluster $ECS_CLUSTER_NAME \
