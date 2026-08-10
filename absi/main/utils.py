@@ -52,6 +52,12 @@ def get_ssml_azure(arabic_word: str, ipa: str, voice: str) -> str:
     """
     Given an Arabic word, and optionally its IPA notation, return an
     SSML string which can be passed to speech systems.
+
+    ar-SA refers to Saudi Arabian Arabic, not Modern Standard Arabic
+    (MSA). But I am using this instead of lang="arb" because Microsoft
+    only supports these regional voices. In Amazon Polly above, all
+    voices are regional as well, but the lang="arb" denotation is
+    supported.
     """
     if ipa:
         # Strip surrounding slashes in IPA notation.
