@@ -17,7 +17,6 @@ phases:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
 
       - GITHUB_REPO_URL="https://${GITHUB_PERSONAL_ACCESS_TOKEN}@${CODEBUILD_SOURCE_REPO_URL#https://}"
-      - echo $GITHUB_REPO_URL
       - echo ${CODEBUILD_SOURCE_REPO_URL}
 
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
@@ -106,7 +105,7 @@ phases:
       - jq --arg image "$ECR_REPOSITORY_URI:$IMAGE_TAG" '.containerDefinitions[0].image = $image' previous-task-definition.json > task-definition.json
       - echo "Run aws ecs register task definition..."
       - WORKER_TASK_DEFINITION_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json --query "taskDefinition.taskDefinitionArn" --output text)
-      - echo "Registered new task definition - WORKER_$TASK_DEFINITION_ARN"
+      - echo "Registered new task definition - $WORKER_TASK_DEFINITION_ARN"
       - echo "Updating Staging worker ECS service"
       - |
         aws ecs update-service --cluster $ECS_CLUSTER_NAME \
