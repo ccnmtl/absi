@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from pagetree.generic.models import BasePageBlock
+from absi.main.utils import get_word
 
 
 class UserProfile(models.Model):
@@ -37,39 +38,19 @@ class PlayBlock(BasePageBlock):
 
     @property
     def initial_first(self) -> str:
-        if self.initial is None:
-            return None
-
-        pair = self.initial.split()
-        if len(pair) > 0:
-            return pair[0]
+        return get_word(self.initial, 0)
 
     @property
     def initial_ipa_first(self) -> str:
-        if self.initial_ipa is None:
-            return None
-
-        pair = self.initial_ipa.split()
-        if len(pair) > 0:
-            return pair[0]
+        return get_word(self.initial_ipa, 0)
 
     @property
     def initial_second(self) -> str:
-        if self.initial is None:
-            return None
-
-        pair = self.initial.split()
-        if len(pair) > 1:
-            return pair[1]
+        return get_word(self.initial, 1)
 
     @property
     def initial_ipa_second(self) -> str:
-        if self.initial_ipa is None:
-            return None
-
-        pair = self.initial_ipa.split()
-        if len(pair) > 1:
-            return pair[1]
+        return get_word(self.initial_ipa, 1)
 
     medial = models.CharField(
         null=True, blank=True,
@@ -80,39 +61,19 @@ class PlayBlock(BasePageBlock):
 
     @property
     def medial_first(self) -> str:
-        if self.medial is None:
-            return None
-
-        pair = self.medial.split()
-        if len(pair) > 0:
-            return pair[0]
+        return get_word(self.medial, 0)
 
     @property
     def medial_ipa_first(self) -> str:
-        if self.medial_ipa is None:
-            return None
-
-        pair = self.medial_ipa.split()
-        if len(pair) > 0:
-            return pair[0]
+        return get_word(self.medial_ipa, 0)
 
     @property
     def medial_second(self) -> str:
-        if self.medial is None:
-            return None
-
-        pair = self.medial.split()
-        if len(pair) > 1:
-            return pair[1]
+        return get_word(self.medial, 1)
 
     @property
     def medial_ipa_second(self) -> str:
-        if self.medial_ipa is None:
-            return None
-
-        pair = self.medial_ipa.split()
-        if len(pair) > 1:
-            return pair[1]
+        return get_word(self.medial_ipa, 1)
 
     final = models.CharField(
         null=True, blank=True,
@@ -123,39 +84,19 @@ class PlayBlock(BasePageBlock):
 
     @property
     def final_first(self) -> str:
-        if self.final is None:
-            return None
-
-        pair = self.final.split()
-        if len(pair) > 0:
-            return pair[0]
+        return get_word(self.final, 0)
 
     @property
     def final_ipa_first(self) -> str:
-        if self.final_ipa is None:
-            return None
-
-        pair = self.final_ipa.split()
-        if len(pair) > 0:
-            return pair[0]
+        return get_word(self.final_ipa, 0)
 
     @property
     def final_second(self) -> str:
-        if self.final is None:
-            return None
-
-        pair = self.final.split()
-        if len(pair) > 1:
-            return pair[1]
+        return get_word(self.final, 1)
 
     @property
     def final_ipa_second(self) -> str:
-        if self.final_ipa is None:
-            return None
-
-        pair = self.final_ipa.split()
-        if len(pair) > 1:
-            return pair[1]
+        return get_word(self.final_ipa, 1)
 
     diacritic = models.CharField(null=True, blank=True)
 
