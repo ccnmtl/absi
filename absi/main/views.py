@@ -322,7 +322,7 @@ class AuthedPageView(LoginRequiredMixin, PageView):
 
             up, _ = UserProfile.objects.get_or_create(user=self.request.user)
             if up.voice:
-                context['voice'] = up.voice
+                context['voice'] = up.voice or 'Hala'
 
         return context
 
