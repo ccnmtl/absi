@@ -164,6 +164,8 @@ class PollyAudioView(AudioView):
         ).client('polly')
 
         text = request.GET.get('text', None)
+        # TODO:
+        # ipa = request.GET.get('ipa', None)
 
         if not text:
             pageblock_id = kwargs.get('pk', '')
@@ -329,8 +331,6 @@ class QueueAWSTranscribeJobView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        print('transcribe post')
-
         s3_uri = request.data['s3_uri']
         job_name = 'absi-transcribe-' + str(uuid.uuid4())
         enqueue_transcription(s3_uri, job_name)
@@ -348,8 +348,6 @@ class AzureTranscribeJobView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        print('azure transcribe post')
-
         s3_uri = request.data.get('s3_uri')
         transcribe_text = request.data.get('transcribe_text')
         url = urlparse(s3_uri)

@@ -65,12 +65,7 @@ body.login-splash .nav-link:hover {
     z-index: 1;
 }
 
-.wrapped-word {
-    cursor: pointer;
-}
-
 .lang-ar,
-.wrapped-word,
 .container>h1,
 .container h3,
 .table-of-contents {
@@ -88,4 +83,12 @@ body.login-splash .nav-link:hover {
 
 .pageblock>h3 {
     display: none;
+}
+
+.carousel {
+    margin-bottom: 2rem;
+}
+
+.carousel .carousel-indicators {
+    bottom: -2.5rem;
 }

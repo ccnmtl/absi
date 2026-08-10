@@ -35,6 +35,26 @@ class PlayBlock(BasePageBlock):
         null=True, blank=True,
         help_text='IPA notation for initial examples')
 
+    @property
+    def initial_first(self):
+        return self.initial.split()[0]
+
+    @property
+    def initial_ipa_first(self):
+        return self.initial_ipa.split()[0]
+
+    @property
+    def initial_second(self) -> str:
+        pair = self.initial.split()
+        if len(pair) > 1:
+            return pair[1]
+
+    @property
+    def initial_ipa_second(self) -> str:
+        pair = self.initial_ipa.split()
+        if len(pair) > 1:
+            return pair[1]
+
     medial = models.CharField(
         null=True, blank=True,
         help_text='Word examples for medial position')
@@ -42,12 +62,52 @@ class PlayBlock(BasePageBlock):
         null=True, blank=True,
         help_text='IPA notation for medial examples')
 
+    @property
+    def medial_first(self):
+        return self.medial.split()[0]
+
+    @property
+    def medial_ipa_first(self):
+        return self.medial_ipa.split()[0]
+
+    @property
+    def medial_second(self) -> str:
+        pair = self.medial.split()
+        if len(pair) > 1:
+            return pair[1]
+
+    @property
+    def medial_ipa_second(self):
+        pair = self.medial_ipa.split()
+        if len(pair) > 1:
+            return pair[1]
+
     final = models.CharField(
         null=True, blank=True,
         help_text='Word examples for final position')
     final_ipa = models.CharField(
         null=True, blank=True,
         help_text='IPA notation for final examples')
+
+    @property
+    def final_first(self) -> str:
+        return self.final.split()[0]
+
+    @property
+    def final_ipa_first(self) -> str:
+        return self.final_ipa.split()[0]
+
+    @property
+    def final_second(self) -> str:
+        pair = self.final.split()
+        if len(pair) > 1:
+            return pair[1]
+
+    @property
+    def final_ipa_second(self) -> str:
+        pair = self.final_ipa.split()
+        if len(pair) > 1:
+            return pair[1]
 
     diacritic = models.CharField(null=True, blank=True)
 
