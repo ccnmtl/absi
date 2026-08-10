@@ -1,5 +1,3 @@
-{% load text_filters %}
-
 {% with block=section.pageblock_set.first %}
 {% if block and block.content_object %}
 <h2 class="lang-ar">{{ block.content_object.text }}</h2>
