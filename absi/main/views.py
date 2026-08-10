@@ -127,36 +127,45 @@ class PollyAudioView(AudioView):
     """
     Apply phoneme overrides for certain words which need it.
     """
-    def apply_phoneme_overrides(self, text: str) -> str:
+    def apply_phoneme_overrides(self, text: str, ipa: str) -> str:
         normalized = unicodedata.normalize('NFC', text.strip())
 
-        # For now, override all text to force xml:lang="arb" per AWS
-        # recommendation, until they fix some bugs with the "guh"
-        # sound.
-        # Ideally, we remove this later.
         self.text_type = 'ssml'
-        text = """
-        <speak>
-            <lang xml:lang="arb">{s}</lang>
-        </speak>
-        """.format(s=text)
+        if ipa:
+            # Strip surrounding slashes in IPA notation.
+            ipa = ipa.strip('/')
+            ssml = """
+            <speak>
+                <lang xml:lang="arb">
+                    <phoneme alphabet="ipa" ph="{ipa}">
+                        {s}
+                    </phoneme>
+                </lang>
+            </speak>
+            """.format(s=text, ipa=ipa)
+        else:
+            ssml = """
+            <speak>
+                <lang xml:lang="arb">{s}</lang>
+            </speak>
+            """.format(s=text)
 
         if normalized == unicodedata.normalize('NFC', 'أَمُرٌّ'):
             self.text_type = 'ssml'
-            text = """
+            ssml = """
             <speak>
                 <phoneme alphabet="ipa" ph="ʔamurrun">أَمُرٌّ</phoneme>
             </speak>
             """
         elif normalized == unicodedata.normalize('NFC', 'وَلودٌ'):
             self.text_type = 'ssml'
-            text = """
+            ssml = """
             <speak>
                 <phoneme alphabet="ipa" ph="waluːdun">وَلودٌ</phoneme>
             </speak>
             """
 
-        return text
+        return ssml
 
     def get(self, request, *args, **kwargs):
         polly_client = boto3.Session(
@@ -164,8 +173,7 @@ class PollyAudioView(AudioView):
         ).client('polly')
 
         text = request.GET.get('text', None)
-        # TODO:
-        # ipa = request.GET.get('ipa', None)
+        ipa = request.GET.get('ipa', None)
 
         if not text:
             pageblock_id = kwargs.get('pk', '')
@@ -186,7 +194,7 @@ class PollyAudioView(AudioView):
                 f'Text too long. Max length is {MAX_LENGTH} characters.'
             }, status=400)
 
-        text = self.apply_phoneme_overrides(text)
+        text = self.apply_phoneme_overrides(text, ipa)
         voice_param = request.GET.get('voice', '')
         audio_format_param = request.GET.get('audio_format', '')
 
