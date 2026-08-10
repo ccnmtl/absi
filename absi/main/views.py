@@ -19,7 +19,6 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from s3sign.views import SignS3View
 from s3sign.utils import s3_config
-import unicodedata
 from urllib.parse import urlparse
 
 from absi.main.tasks import (
@@ -28,6 +27,7 @@ from absi.main.tasks import (
     start_azure_transcribe_job
 )
 from absi.main.models import PlayBlock, UserProfile
+from absi.main.utils import get_ssml_polly, get_ssml_azure
 
 
 MAX_LENGTH = 512
@@ -121,52 +121,6 @@ class AudioView(LoginRequiredMixin, View):
 
 
 class PollyAudioView(AudioView):
-    # 'text' or 'ssml', for Polly's TextType.
-    text_type = 'text'
-
-    """
-    Apply phoneme overrides for certain words which need it.
-    """
-    def apply_phoneme_overrides(self, text: str, ipa: str) -> str:
-        normalized = unicodedata.normalize('NFC', text.strip())
-
-        self.text_type = 'ssml'
-        if ipa:
-            # Strip surrounding slashes in IPA notation.
-            ipa = ipa.strip('/')
-            ssml = """
-            <speak>
-                <lang xml:lang="arb">
-                    <phoneme alphabet="ipa" ph="{ipa}">
-                        {s}
-                    </phoneme>
-                </lang>
-            </speak>
-            """.format(s=text, ipa=ipa)
-        else:
-            ssml = """
-            <speak>
-                <lang xml:lang="arb">{s}</lang>
-            </speak>
-            """.format(s=text)
-
-        if normalized == unicodedata.normalize('NFC', 'أَمُرٌّ'):
-            self.text_type = 'ssml'
-            ssml = """
-            <speak>
-                <phoneme alphabet="ipa" ph="ʔamurrun">أَمُرٌّ</phoneme>
-            </speak>
-            """
-        elif normalized == unicodedata.normalize('NFC', 'وَلودٌ'):
-            self.text_type = 'ssml'
-            ssml = """
-            <speak>
-                <phoneme alphabet="ipa" ph="waluːdun">وَلودٌ</phoneme>
-            </speak>
-            """
-
-        return ssml
-
     def get(self, request, *args, **kwargs):
         polly_client = boto3.Session(
             region_name=settings.AWS_REGION,
@@ -194,7 +148,7 @@ class PollyAudioView(AudioView):
                 f'Text too long. Max length is {MAX_LENGTH} characters.'
             }, status=400)
 
-        text = self.apply_phoneme_overrides(text, ipa)
+        text = get_ssml_polly(text, ipa)
         voice_param = request.GET.get('voice', '')
         audio_format_param = request.GET.get('audio_format', '')
 
@@ -211,7 +165,7 @@ class PollyAudioView(AudioView):
             OutputFormat=audio_format.get('output_format'),
             SampleRate='44100',
             Text=text,
-            TextType=self.text_type,
+            TextType='ssml',
             Engine='neural')
 
         audio_stream = response['AudioStream'].read()
@@ -246,6 +200,7 @@ class AzureAudioView(AudioView):
 
     def get(self, request, *args, **kwargs):
         text = request.GET.get('text', None)
+        ipa = request.GET.get('ipa', None)
         audio_format_param = request.GET.get('audio_format', '')
 
         if not text:
@@ -278,6 +233,8 @@ class AzureAudioView(AudioView):
         if voice_name != self.voice_name:
             self.voice_name = voice_name
 
+        ssml = get_ssml_azure(text, ipa, self.voice_name)
+
         speech_config.speech_synthesis_voice_name = self.voice_name
 
         audio_format = AzureAudioView.audio_formats.get('ogg')
@@ -297,16 +254,15 @@ class AzureAudioView(AudioView):
             audio_config=None,
         )
 
-        result = synthesizer.speak_text(text)
+        result = synthesizer.speak_ssml(ssml)
 
         if result.reason != speechsdk.ResultReason.SynthesizingAudioCompleted:
-            details = speechsdk.SpeechSynthesisCancellationDetails.from_result(
-                result)
+            details = result.cancellation_details
 
             return JsonResponse({
                 'error': 'Speech synthesis failed',
                 'reason': str(result.reason),
-                'details': details.error_details,
+                'details': details.error_details if details else None,
             }, status=500)
 
         return HttpResponse(
