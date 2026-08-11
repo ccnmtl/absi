@@ -1,4 +1,4 @@
-Django>=6.0.7,<6.1
+Django>=6.1,<6.2
 pytz==2026.3.post1
 asgiref==3.12.1
 httplib2==0.32.0
@@ -101,7 +101,7 @@ billiard==4.2.4  # celery
 tzlocal==5.4.4  # celery
 celery[sqs]==5.6.3
 
-djangorestframework==3.17.1
+djangorestframework==3.18.0
 
 gunicorn==26.0.0
 Incremental==24.11.0  # Twisted
