@@ -1,17 +1,29 @@
+import Word from './Word.js';
+
+const word = new Word();
+
+/**
+ * reloadWord()
+ *
+ * Load selected word to <audio> tag source for playback.
+ */
 const reloadWord = () => {
-    const word = $(
+    const arbText = $(
         '#listenTabContent .tab-pane.active .carousel-item.active .dabke-text'
     ).text().trim();
     const ipa = $(
         '#listenTabContent .tab-pane.active .carousel-item.active .dabke-ipa'
     ).text().trim();
-    $('#transcribe_text').text(word);
+
+    word.selectWord(arbText, ipa);
+
+    $('#transcribe_text').text(word.text);
 
     const audioEl = document.getElementById('absi-audio');
     audioEl.querySelectorAll('source').forEach((source) => {
         const url = new URL(source.src);
-        url.searchParams.set('text', word);
-        url.searchParams.set('ipa', ipa);
+        url.searchParams.set('text', word.text);
+        url.searchParams.set('ipa', word.ipa);
         source.src = url.toString();
     });
     audioEl.load();
@@ -86,13 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
             bootstrap.Tab.getOrCreateInstance(trigger).show();
         });
 
-    const tabEl = document.querySelector(
-        'button[data-bs-toggle="tab"]#listen-tab');
-    if (tabEl) {
-        tabEl.addEventListener('shown.bs.tab', event => {
-            document.querySelectorAll('.float-box').forEach((box) => {
-                box.style.display = 'none';
-            });
+    const practiceTab = document.querySelector(
+        'button[data-bs-toggle="tab"]#practice-tab');
+    if (practiceTab) {
+        practiceTab.addEventListener('shown.bs.tab', event => {
+            const practiceTab = $('#practice-tab-pane');
+            practiceTab.find('.dabke-text').text(word.text);
+            practiceTab.find('.dabke-ipa').text(word.ipa);
         });
     }
 
@@ -105,5 +117,32 @@ document.addEventListener('DOMContentLoaded', () => {
         reloadWord();
         $audio[0].currentTime = 0;
         $audio[0].play();
+    });
+
+    $('.carousel').each((_, carousel) => {
+        carousel.addEventListener('slid.bs.carousel', event => {
+            const selectedIndex = event.to;
+            const selected = $(carousel).find(
+                '.carousel-inner .carousel-item')[selectedIndex];
+
+            const text = $(selected).find('.dabke-text').text();
+            const ipa = $(selected).find('.dabke-ipa').text();
+            word.selectWord(text, ipa);
+        });
+    });
+
+    const wordTabs = document.querySelectorAll(
+        '#word-example-tabs button[data-bs-toggle="tab"]');
+    wordTabs.forEach(tabEl => {
+        tabEl.addEventListener('shown.bs.tab', event => {
+            const targetTab = event.target.getAttribute('data-bs-target');
+            const targetTabEl = $(targetTab);
+            const text = targetTabEl.find(
+                '.carousel-inner .carousel-item.active .dabke-text').text();
+            const ipa = targetTabEl.find(
+                '.carousel-inner .carousel-item.active .dabke-ipa').text();
+
+            word.selectWord(text, ipa);
+        });
     });
 });

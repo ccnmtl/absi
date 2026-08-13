@@ -3,11 +3,10 @@
         <div class="main-controls p-2 border border-dark rounded">
             Say this word:
 
-            {% if pageblock.initial %}
-            <p class="lang-ar text-center" dir="rtl">
-                {{ pageblock.initial }}
-            </p>
-            {% endif %}
+            <div class="text-center d-block mb-2">
+                <div class="dabke-text fs-3">{{ pageblock.initial_first }}</div>
+                <div class="dabke-ipa">{{ pageblock.initial_ipa_first }}</div>
+            </div>
 
             <div class="text-center">
                 <canvas class="visualizer inline" height="60"></canvas>
