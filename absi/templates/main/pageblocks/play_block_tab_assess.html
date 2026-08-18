@@ -1,9 +1,13 @@
-<p class="text-secondary">
-    Your pronunciation of <span class="lang-ar">بَ</span>
-    closely matches the example. Focus on keeping your lips
-    fully together before the release.  Compare your recording
-    to the example.
-</p>
+<div class="card my-2">
+    <div class="card-body">
+        <h5 class="card-title dabke-text">{{ pageblock.initial_first }}</h5>
+        <p class="card-text">
+            Your score:
+            <span class="dabke-score fw-bold"></span>
+            <span class="dabke-confidence"></span>
+        </p>
+    </div>
+</div>
 
 <div class="d-grid gap-2">
     {% with next_section=section.get_next %}
