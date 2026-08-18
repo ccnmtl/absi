@@ -1,3 +1,9 @@
+import { state } from './state.js';
+import WordAssessment from './WordAssessment.js';
+
+const assessment = new WordAssessment();
+state.assessment = assessment;
+
 /**
  * displayMessage for transcribe view.
  */
@@ -59,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayMessage(data.message, data.azure);
 
             if (typeof score === 'number') {
+                state.assessment.assess(score, confidence);
                 showToast(
                     data.azure ? 'Azure Speech' : 'AWS Transcribe',
                     'Your score: ' + score +

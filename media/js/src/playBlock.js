@@ -1,6 +1,8 @@
+import { state } from './state.js';
 import Word from './Word.js';
 
 const word = new Word();
+state.word = word;
 
 /**
  * reloadWord()
