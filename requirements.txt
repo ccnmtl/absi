@@ -54,7 +54,7 @@ django-appconf==1.2.0
 sentry-sdk[django]==2.67.1
 django-bootstrap5==26.2
 
-django-debug-toolbar==7.1.0
+django-debug-toolbar==7.1.1
 
 django-smoketest==1.2.1
 # For django-extensions
