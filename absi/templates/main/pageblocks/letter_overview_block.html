@@ -1,82 +1,14 @@
-{% load letter_children %}
-
 {% with children=section.get_children %}
 
-{% letter_children children "short vowels" as short_vowels %}
-{% if short_vowels %}
-<div class="text-body-secondary my-2">Short Vowels</div>
 <div class="list-group">
-    {% for child in short_vowels %}
+    {% for child in children %}
     <a href="{{ child.get_absolute_url }}"
        class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ child.label }}</h5>
+        <div dir="rtl" class="d-flex w-100 justify-content-between">
+            <h3 class="mb-1 lang-ar">{{ child.label }}</h3>
         </div>
-        <p class="mb-1">
-            Short a (fatha)
-        </p>
-        <small class="text-body-secondary">a</small>
     </a>
     {% endfor %}
 </div>
-{% endif %}
-
-{% letter_children children "long vowels" as long_vowels %}
-{% if long_vowels %}
-<div class="text-body-secondary my-2">Long Vowels</div>
-<div class="list-group">
-    {% for child in long_vowels %}
-    <a href="{{ child.get_absolute_url }}"
-       class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ child.label }}</h5>
-        </div>
-        <p class="mb-1">
-            Long aa (alif madd)
-        </p>
-        <small class="text-body-secondary">aa</small>
-    </a>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% letter_children children "diphthongs" as diphthongs %}
-{% if diphthongs %}
-<div class="text-body-secondary my-2">Diphthongs</div>
-<div class="list-group">
-    {% for child in diphthongs %}
-    <a href="{{ child.get_absolute_url }}"
-       class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ child.label }}</h5>
-        </div>
-        <p class="mb-1">
-            Diphthong aw
-        </p>
-        <small class="text-body-secondary">aw</small>
-    </a>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% letter_children children "other" as other %}
-
-{% if other %}
-<div class="text-body-secondary my-2">Other</div>
-<div class="list-group">
-    {% for child in other %}
-    <a href="{{ child.get_absolute_url }}"
-       class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ child.label }}</h5>
-        </div>
-        <p class="mb-1">
-            Doubled (shadda)
-        </p>
-        <small class="text-body-secondary">-</small>
-    </a>
-    {% endfor %}
-</div>
-{% endif %}
 
 {% endwith %}
