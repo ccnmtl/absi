@@ -109,6 +109,7 @@ if REDIS_HOST == '127.0.0.1':
 redis_address = '{}://{}:{}'.format(REDIS_PROTO, REDIS_HOST, REDIS_PORT)
 redis_host_obj = {
     'address': f'{redis_address}/0',
+    'socket_timeout': None,
 }
 
 if REDIS_PROTO == 'rediss':
