@@ -3,11 +3,8 @@
 
 {% block title %}{{ flatpage.title }}{% endblock %}
 
-
-{% block pagetitle %}
-<h1 class="pageheader">{{ flatpage.title }}</h1>
-{% endblock %}
-
 {% block content %}
-{{ flatpage.content|markdownify}}
+<h1 class="pageheader">{{ flatpage.title }}</h1>
+
+{{ flatpage.content|markdownify }}
 {% endblock %}
