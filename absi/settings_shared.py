@@ -63,6 +63,26 @@ INSTALLED_APPS += [  # noqa
     'absi.main',
 ]
 
+MARKDOWNIFY = {
+    'default': {
+        'WHITELIST_TAGS': [
+            'a',
+            'abbr',
+            'acronym',
+            'b',
+            'blockquote',
+            'em',
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'i',
+            'li',
+            'ol',
+            'p',
+            'strong',
+            'ul'
+        ]
+    }
+}
+
 ALLOWED_HOSTS += [  # noqa
     '*',
 ]
