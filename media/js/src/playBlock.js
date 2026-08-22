@@ -110,6 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const assessTab = document.querySelector(
+        'button[data-bs-toggle="tab"]#assess-tab');
+    if (assessTab) {
+        assessTab.addEventListener('shown.bs.tab', event => {
+            const assessTab = $('#assess-tab-pane');
+            assessTab.find('.dabke-text').text(word.text);
+            assessTab.find('.dabke-ipa').text(word.ipa);
+        });
+    }
+
     $('.dabke-word-play').on('click', () => {
         reloadWord();
         $audio[0].currentTime = 0;
