@@ -110,11 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    $('.dabke-syllable-play').on('click', () => {
-        $audio[0].currentTime = 0;
-        $audio[0].play();
-    });
-
     $('.dabke-word-play').on('click', () => {
         reloadWord();
         $audio[0].currentTime = 0;
