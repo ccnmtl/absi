@@ -2,15 +2,9 @@ const MAX_SECONDS = 5;
 
 // Set up basic variables for app
 const record = document.querySelector('.record');
-const stop = document.querySelector('.stop');
 const soundClips = document.querySelector('.sound-clips');
 const canvas = document.querySelector('.visualizer');
 const mainSection = document.querySelector('.main-controls');
-
-// Disable stop button while not recording
-if (stop) {
-    stop.disabled = true;
-}
 
 // Visualiser setup - create web audio api context and canvas
 let audioCtx;
@@ -71,13 +65,7 @@ if (navigator.mediaDevices.getUserMedia) {
         if (record) {
             record.style.background = '';
             record.style.color = '';
-            record.disabled = false;
         }
-
-        if (stop) {
-            stop.disabled = true;
-        }
-
     };
 
     let onSuccess = function(stream) {
@@ -87,25 +75,21 @@ if (navigator.mediaDevices.getUserMedia) {
 
         if (record) {
             record.onclick = function() {
+                if (mediaRecorder.state === 'recording') {
+                    stopRecording(mediaRecorder);
+                    return;
+                }
+
                 mediaRecorder.start();
                 console.log(mediaRecorder.state);
                 console.log('Recorder started.');
                 record.style.background = 'red';
-
-                stop.disabled = false;
-                record.disabled = true;
 
                 setTimeout(() => {
                     if (mediaRecorder.state === 'recording') {
                         stopRecording(mediaRecorder);
                     }
                 }, MAX_SECONDS * 1000);
-            };
-        }
-
-        if (stop) {
-            stop.onclick = function() {
-                stopRecording(mediaRecorder);
             };
         }
 
