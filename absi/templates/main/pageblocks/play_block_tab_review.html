@@ -1,9 +1,3 @@
-{% with block=section.pageblock_set.first %}
-{% if block and block.content_object %}
-<h2 class="lang-ar">{{ block.content_object.text }}</h2>
-{% endif %}
-{% endwith %}
-
 <p class="text-secondary">
     Compare your recording to the example.
 </p>
@@ -35,13 +29,6 @@
                 <h5 class="card-title">Your recording</h5>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="card mb-2">
-    <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-body-secondary">Word in Context</h6>
-        <h5 class="card-title lang-ar" dir="rtl">{{ section.label }}</h5>
     </div>
 </div>
 
