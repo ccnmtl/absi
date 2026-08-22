@@ -9,6 +9,7 @@ export default class WordAssessment {
         this.confidence = confidence;
 
         if ($) {
+            $('.dabke-score-summary').removeClass('d-none');
             $('.dabke-score').text(score);
         }
     }
