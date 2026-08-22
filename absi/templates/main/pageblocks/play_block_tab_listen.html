@@ -21,21 +21,27 @@
                 <h6 class="card-subtitle mb-2 text-body-secondary">Word examples</h6>
 
                 <ul class="nav nav-tabs justify-content-center" id="word-example-tabs" role="tablist">
+                    {% if pageblock.initial %}
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="initial-tab" data-bs-toggle="tab" data-bs-target="#initial-tab-pane" type="button" role="tab" aria-controls="initial-tab-pane" aria-selected="true">
                             Initial
                         </button>
                     </li>
+                    {% endif %}
+                    {% if pageblock.medial %}
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="medial-tab" data-bs-toggle="tab" data-bs-target="#medial-tab-pane" type="button" role="tab" aria-controls="medial-tab-pane" aria-selected="false">
                             Medial
                         </button>
                     </li>
+                    {% endif %}
+                    {% if pageblock.final %}
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="final-tab" data-bs-toggle="tab" data-bs-target="#final-tab-pane" type="button" role="tab" aria-controls="final-tab-pane" aria-selected="false">
                             Final
                         </button>
                     </li>
+                    {% endif %}
                 </ul>
                 <div class="tab-content" id="listenTabContent">
                     <div class="tab-pane fade show active" id="initial-tab-pane" role="tabpanel" aria-labelledby="initial-tab" tabindex="0">
