@@ -110,6 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const reviewTab = document.querySelector(
+        'button[data-bs-toggle="tab"]#review-tab');
+    if (reviewTab) {
+        reviewTab.addEventListener('shown.bs.tab', event => {
+            const reviewTab = $('#review-tab-pane');
+            reviewTab.find('.dabke-text').text(word.text);
+            reviewTab.find('.dabke-ipa').text(word.ipa);
+        });
+    }
+
     const assessTab = document.querySelector(
         'button[data-bs-toggle="tab"]#assess-tab');
     if (assessTab) {

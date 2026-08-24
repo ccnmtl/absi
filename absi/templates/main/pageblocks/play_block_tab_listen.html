@@ -274,6 +274,11 @@
         <source src="{% url 'audio-view' pageblock.pk %}?audio_format=mp3&voice={{ voice }}"
                 type="audio/mpeg" />
     </audio>
+
+    <audio controls id="absi-audio-recording" class="d-none">
+        <source src=""
+                type="audio/mpeg" />
+    </audio>
 </div>
 
 <div class="d-grid gap-2">

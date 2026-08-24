@@ -1,3 +1,5 @@
+import { state } from './state.js';
+
 const MAX_SECONDS = 5;
 
 // Set up basic variables for app
@@ -50,6 +52,19 @@ const queueAzureTranscribeJob = function(uri) {
     });
 };
 
+let mimeType = '';
+for (const candidate of [
+    'audio/webm;codecs=opus',
+    'audio/ogg;codecs=opus',
+    'audio/webm',
+    'audio/ogg'
+]) {
+    if (MediaRecorder.isTypeSupported(candidate)) {
+        mimeType = candidate;
+        break;
+    }
+}
+
 // Main block for doing the audio recording
 if (navigator.mediaDevices.getUserMedia) {
     console.log('The mediaDevices.getUserMedia() method is supported.');
@@ -69,7 +84,9 @@ if (navigator.mediaDevices.getUserMedia) {
     };
 
     let onSuccess = function(stream) {
-        const mediaRecorder = new MediaRecorder(stream);
+        const mediaRecorder = new MediaRecorder(stream, {
+            mimeType: mimeType
+        });
 
         // Stop recorder when in new tab
         const playTabs = document.querySelectorAll(
@@ -135,7 +152,9 @@ if (navigator.mediaDevices.getUserMedia) {
             }
 
             audio.controls = true;
-            const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
+            const blob = new Blob(chunks, {
+                type: mimeType
+            });
             chunks = [];
             const audioURL = window.URL.createObjectURL(blob);
             audio.src = audioURL;
@@ -149,6 +168,8 @@ if (navigator.mediaDevices.getUserMedia) {
                 file_dom_selector: null,
                 s3_sign_put_url: '/s3sign/',
                 onFinishS3Put: function(publicUrl) {
+                    state.assessment.recordingUrl = publicUrl;
+
                     // Submit to django view queueing transcribe job
                     queueTranscribeJob(publicUrl);
 
