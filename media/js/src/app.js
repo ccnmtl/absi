@@ -57,7 +57,8 @@ for (const candidate of [
     'audio/webm;codecs=opus',
     'audio/ogg;codecs=opus',
     'audio/webm',
-    'audio/ogg'
+    'audio/ogg',
+    'audio/mp4'
 ]) {
     if (MediaRecorder.isTypeSupported(candidate)) {
         mimeType = candidate;
