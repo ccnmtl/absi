@@ -71,6 +71,17 @@ if (navigator.mediaDevices.getUserMedia) {
     let onSuccess = function(stream) {
         const mediaRecorder = new MediaRecorder(stream);
 
+        // Stop recorder when in new tab
+        const playTabs = document.querySelectorAll(
+            '#play-tabs button[data-bs-toggle="tab"]');
+        playTabs.forEach(tabEl => {
+            tabEl.addEventListener('shown.bs.tab', event => {
+                if (mediaRecorder.state === 'recording') {
+                    stopRecording(mediaRecorder);
+                }
+            });
+        });
+
         visualize(stream);
 
         if (record) {
