@@ -1,4 +1,5 @@
 import { state } from './state.js';
+import { toggleSpinnerState } from './utils.js';
 import WordAssessment from './WordAssessment.js';
 
 const assessment = new WordAssessment();
@@ -65,6 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
             displayMessage(data.message, data.azure);
 
             if (typeof score === 'number') {
+                const recordButton = document.querySelector('.dabke-record');
+                toggleSpinnerState(recordButton, false);
+                $('.dabke-success-text').removeClass('d-none');
+
                 state.assessment.assess(score, confidence);
                 showToast(
                     data.azure ? 'Azure Speech' : 'AWS Transcribe',

@@ -1,9 +1,10 @@
 import { state } from './state.js';
+import { toggleSpinnerState } from './utils.js';
 
 const MAX_SECONDS = 5;
 
 // Set up basic variables for app
-const record = document.querySelector('.record');
+const recordButton = document.querySelector('.dabke-record');
 const soundClips = document.querySelector('.sound-clips');
 const canvas = document.querySelector('.visualizer');
 const mainSection = document.querySelector('.main-controls');
@@ -78,9 +79,9 @@ if (navigator.mediaDevices.getUserMedia) {
         console.log(media.state);
         console.log('Recorder stopped.');
 
-        if (record) {
-            record.style.background = '';
-            record.style.color = '';
+        if (recordButton) {
+            recordButton.style.background = '';
+            recordButton.style.color = '';
         }
     };
 
@@ -102,8 +103,8 @@ if (navigator.mediaDevices.getUserMedia) {
 
         visualize(stream);
 
-        if (record) {
-            record.onclick = function() {
+        if (recordButton) {
+            recordButton.onclick = function() {
                 if (mediaRecorder.state === 'recording') {
                     stopRecording(mediaRecorder);
                     return;
@@ -112,7 +113,7 @@ if (navigator.mediaDevices.getUserMedia) {
                 mediaRecorder.start();
                 console.log(mediaRecorder.state);
                 console.log('Recorder started.');
-                record.style.background = 'red';
+                recordButton.style.background = 'red';
 
                 setTimeout(() => {
                     if (mediaRecorder.state === 'recording') {
@@ -125,6 +126,9 @@ if (navigator.mediaDevices.getUserMedia) {
         mediaRecorder.onstop = function(e) {
             console.log(
                 'Last data to read (after MediaRecorder.stop() called).');
+
+            toggleSpinnerState(recordButton, true);
+            $('.dabke-success-text').addClass('d-none');
 
             const d = new Date();
             const clipName = d.toISOString();

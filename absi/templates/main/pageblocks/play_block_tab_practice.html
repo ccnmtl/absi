@@ -22,9 +22,21 @@
                     <canvas class="visualizer inline" height="60"></canvas>
 
                     <div id="buttons">
-                        <button type="button" class="btn btn-bd-primary record">
-                            <i class="bi bi-record"></i> Record
+                        <button type="button" class="btn btn-bd-primary dabke-record">
+                            <span class="button-spinner d-none">
+                                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                <span class="visually-hidden" role="status">Loading...</span>
+                            </span>
+                            <span class="button-text">
+                                <i class="bi bi-record"></i> Record
+                            </span>
                         </button>
+                        <p class="dabke-success-text d-none">
+                            Analysis complete.
+                            <span class="fs-2 align-middle text-success d-inline">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
