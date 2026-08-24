@@ -2,6 +2,7 @@ export default class WordAssessment {
     constructor(score, confidence) {
         this.score = score;
         this.confidence = confidence;
+        this.recordingUrl = null;
     }
 
     assess(score, confidence) {
