@@ -1,4 +1,11 @@
-GROUP_NAME = 'transcribe_updates'
+GROUP_NAME_PREFIX = 'transcribe_job'
+
+
+def get_group_name(job_id: str) -> str:
+    """
+    Get group name based on job id.
+    """
+    return f'{GROUP_NAME_PREFIX}_{job_id}'
 
 
 def get_word(text: str, idx: int = 0) -> str:

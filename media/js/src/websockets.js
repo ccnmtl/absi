@@ -41,6 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let confidence = null;
         console.log('onmessage', data);
 
+        // If this is a connection message, save the job id.
+        if (data.connect) {
+            state.job_id = data.job_id;
+            console.log('set job id', state.job_id);
+        }
+
         if (data && data.message) {
             if (
                 typeof data?.message?.['NBest']?.[0]?.[

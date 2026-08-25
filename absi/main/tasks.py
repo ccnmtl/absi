@@ -85,7 +85,8 @@ def fetch_transcript(transcript_uri):
     retry_kwargs={'max_retries': 3}
 )
 def start_azure_transcribe_job(
-        self, s3_path: str, transcribe_text: str) -> dict:
+        self, s3_path: str, transcribe_text: str, job_id: str
+) -> dict:
     print('start_azure_transcribe_job', s3_path, transcribe_text)
     # TODO: limit audio length before starting job.
 
@@ -96,5 +97,5 @@ def start_azure_transcribe_job(
     print('azure_result', azure_result)
     os.remove(wav_filepath)
 
-    notify_ws(azure_result, True)
+    notify_ws(azure_result, True, job_id)
     return azure_result
