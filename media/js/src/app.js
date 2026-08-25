@@ -35,9 +35,9 @@ const queueTranscribeJob = function(uri) {
     */
 
 const queueAzureAssessJob = function(uri) {
-    const transcribeText = $('#practice-tab-pane .dabke-text').text().trim();
-    console.log('queueAzureAssessJob', uri, state, transcribeText);
-    return fetch('/api/azure_transcribe/', {
+    const referenceText = $('#practice-tab-pane .dabke-text').text().trim();
+    console.log('queueAzureAssessJob', uri, state, referenceText);
+    return fetch('/api/azure_assess/', {
         method: 'POST',
         headers: {
             'X-CSRFToken': csrftoken,
@@ -47,7 +47,7 @@ const queueAzureAssessJob = function(uri) {
         mode: 'same-origin',
         body: JSON.stringify({
             s3_uri: uri,
-            transcribe_text: transcribeText,
+            reference_text: referenceText,
             job_id: state.job_id,
         })
     });
