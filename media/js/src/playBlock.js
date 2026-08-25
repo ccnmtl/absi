@@ -136,6 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
         $audio[0].play();
     });
 
+    $('.dabke-recording-play').on('click', () => {
+        const audioTag = document.getElementById('dabke-audio-recording');
+        audioTag.load();
+        audioTag.currentTime = 0;
+        audioTag.play();
+    });
+
     $('.carousel').each((_, carousel) => {
         carousel.addEventListener('slid.bs.carousel', event => {
             const selectedIndex = event.to;

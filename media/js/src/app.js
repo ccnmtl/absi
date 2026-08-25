@@ -1,5 +1,5 @@
 import { state } from './state.js';
-import { toggleSpinnerState } from './utils.js';
+import { toggleSpinnerState, updateRecordingSource } from './utils.js';
 
 const MAX_SECONDS = 5;
 
@@ -175,6 +175,7 @@ if (navigator.mediaDevices.getUserMedia) {
                 s3_sign_put_url: '/s3sign/',
                 onFinishS3Put: function(publicUrl) {
                     state.assessment.recordingUrl = publicUrl;
+                    updateRecordingSource(publicUrl);
 
                     // Submit to django view queueing transcribe job
                     // queueTranscribeJob(publicUrl);
