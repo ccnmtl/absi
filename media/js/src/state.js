@@ -1,4 +1,7 @@
 export const state = {
     word: null,
-    assessment: null
+    assessment: null,
+
+    // websockets job id
+    job_id: null
 };

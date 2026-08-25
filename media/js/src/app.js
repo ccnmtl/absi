@@ -16,6 +16,7 @@ if (canvas) {
     canvasCtx = canvas.getContext('2d');
 }
 
+/*
 const queueTranscribeJob = function(uri) {
     console.log('queueTranscribeJob', uri);
     return fetch('/api/transcribe/', {
@@ -30,14 +31,12 @@ const queueTranscribeJob = function(uri) {
             s3_uri: uri
         })
     });
-};
+    };
+    */
 
-const queueAzureTranscribeJob = function(uri) {
-    const $transcribeEl = jQuery('#transcribe_text');
-    const transcribeText = $transcribeEl.val().trim() ||
-          $transcribeEl.text().trim();
-
-    console.log('queueAzureTranscribeJob', uri, transcribeText);
+const queueAzureAssessJob = function(uri) {
+    const transcribeText = $('#practice-tab-pane .dabke-text').text().trim();
+    console.log('queueAzureAssessJob', uri, state, transcribeText);
     return fetch('/api/azure_transcribe/', {
         method: 'POST',
         headers: {
@@ -48,7 +47,8 @@ const queueAzureTranscribeJob = function(uri) {
         mode: 'same-origin',
         body: JSON.stringify({
             s3_uri: uri,
-            transcribe_text: transcribeText
+            transcribe_text: transcribeText,
+            job_id: state.job_id,
         })
     });
 };
@@ -177,10 +177,10 @@ if (navigator.mediaDevices.getUserMedia) {
                     state.assessment.recordingUrl = publicUrl;
 
                     // Submit to django view queueing transcribe job
-                    queueTranscribeJob(publicUrl);
+                    // queueTranscribeJob(publicUrl);
 
-                    // Transcribe in Azure as well.
-                    queueAzureTranscribeJob(publicUrl);
+                    // Assess in Azure.
+                    queueAzureAssessJob(publicUrl);
                 }
             });
 

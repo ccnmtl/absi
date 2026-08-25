@@ -313,14 +313,16 @@ class AzureTranscribeJobView(APIView):
 
     def post(self, request):
         s3_uri = request.data.get('s3_uri')
+        job_id = request.data.get('job_id')
         transcribe_text = request.data.get('transcribe_text')
         url = urlparse(s3_uri)
         s3_path = url.path
         s3_path = s3_path.lstrip('/')
         print(s3_path)
 
-        task = start_azure_transcribe_job.delay(s3_path, transcribe_text)
-        print('AzureTranscribeJobView task', task)
+        task = start_azure_transcribe_job.delay(
+            s3_path, transcribe_text, job_id)
+        print('AzureTranscribeJobView task', task, job_id)
 
         return Response(
             {
