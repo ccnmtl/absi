@@ -2,6 +2,7 @@ import { state } from './state.js';
 import { toggleSpinnerState, updateRecordingSource } from './utils.js';
 
 const MAX_SECONDS = 5;
+const START_DELAY_MS = 300;
 
 // Set up basic variables for app
 const recordButton = document.querySelector('.dabke-record');
@@ -110,16 +111,27 @@ if (navigator.mediaDevices.getUserMedia) {
                     return;
                 }
 
-                mediaRecorder.start();
-                console.log(mediaRecorder.state);
-                console.log('Recorder started.');
+                if (mediaRecorder.state !== 'inactive') {
+                    return;
+                }
+
                 recordButton.style.background = 'red';
 
                 setTimeout(() => {
-                    if (mediaRecorder.state === 'recording') {
-                        stopRecording(mediaRecorder);
+                    if (mediaRecorder.state !== 'inactive') {
+                        return;
                     }
-                }, MAX_SECONDS * 1000);
+
+                    mediaRecorder.start();
+                    console.log(mediaRecorder.state);
+                    console.log('Recorder started.');
+
+                    setTimeout(() => {
+                        if (mediaRecorder.state === 'recording') {
+                            stopRecording(mediaRecorder);
+                        }
+                    }, MAX_SECONDS * 1000);
+                }, START_DELAY_MS);
             };
         }
 
