@@ -84,16 +84,16 @@ def fetch_transcript(transcript_uri):
     retry_backoff=2,
     retry_kwargs={'max_retries': 3}
 )
-def start_azure_transcribe_job(
-        self, s3_path: str, transcribe_text: str, job_id: str
+def start_azure_assess_job(
+        self, s3_path: str, reference_text: str, job_id: str
 ) -> dict:
-    print('start_azure_transcribe_job', s3_path, transcribe_text)
+    print('start_azure_assess_job', s3_path, reference_text)
     # TODO: limit audio length before starting job.
 
     wav_filepath = download_and_transcode_s3_audio(
         settings.AWS_UPLOAD_BUCKET, s3_path)
     print('azure transcode result', wav_filepath)
-    azure_result = submit_audio_to_azure(wav_filepath, transcribe_text)
+    azure_result = submit_audio_to_azure(wav_filepath, reference_text)
     print('azure_result', azure_result)
     os.remove(wav_filepath)
 

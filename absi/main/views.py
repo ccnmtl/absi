@@ -24,7 +24,7 @@ from urllib.parse import urlparse
 from absi.main.tasks import (
     start_transcribe_job, poll_transcription, fetch_transcript,
 
-    start_azure_transcribe_job
+    start_azure_assess_job
 )
 from absi.main.models import PlayBlock, UserProfile
 from absi.main.utils import get_ssml_polly, get_ssml_azure
@@ -308,21 +308,20 @@ class QueueAWSTranscribeJobView(APIView):
         )
 
 
-class AzureTranscribeJobView(APIView):
+class AzureAssessJobView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
         s3_uri = request.data.get('s3_uri')
         job_id = request.data.get('job_id')
-        transcribe_text = request.data.get('transcribe_text')
+        reference_text = request.data.get('reference_text')
         url = urlparse(s3_uri)
         s3_path = url.path
         s3_path = s3_path.lstrip('/')
         print(s3_path)
 
-        task = start_azure_transcribe_job.delay(
-            s3_path, transcribe_text, job_id)
-        print('AzureTranscribeJobView task', task, job_id)
+        task = start_azure_assess_job.delay(s3_path, reference_text, job_id)
+        print('AzureAssessJobView task', task, job_id)
 
         return Response(
             {

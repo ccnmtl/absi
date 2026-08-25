@@ -47,7 +47,7 @@ def download_and_transcode_s3_audio(bucket: str, key: str) -> str:
             os.remove(input_path)
 
 
-def submit_audio_to_azure(path: str, transcribe_text: str) -> dict | None:
+def submit_audio_to_azure(path: str, reference_text: str) -> dict | None:
     speech_config = speechsdk.SpeechConfig(
         subscription=settings.AZURE_SPEECH_KEY,
         region=settings.AZURE_SPEECH_REGION,
@@ -62,7 +62,7 @@ def submit_audio_to_azure(path: str, transcribe_text: str) -> dict | None:
     )
 
     pronunciation_config = speechsdk.PronunciationAssessmentConfig(
-        reference_text=transcribe_text,
+        reference_text=reference_text,
         grading_system=(
             speechsdk.PronunciationAssessmentGradingSystem.HundredMark
         ),

@@ -41,8 +41,8 @@ urlpatterns = [
     path('api/transcribe/', views.QueueAWSTranscribeJobView.as_view(),
          name='api_transcribe_job_view'),
 
-    path('api/azure_transcribe/', views.AzureTranscribeJobView.as_view(),
-         name='api_azure_transcribe_job_view'),
+    path('api/azure_assess/', views.AzureAssessJobView.as_view(),
+         name='api_azure_assess_job_view'),
 
     path('api/userprofile/update/',
          apiviews.UpdateUserProfileView.as_view(),
