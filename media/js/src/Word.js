@@ -13,5 +13,6 @@ export default class Word {
 
         // Reset success display state when new word is selected.
         $('.dabke-success-text').addClass('d-none');
+        $('.dabke-error-text').addClass('d-none');
     }
 };

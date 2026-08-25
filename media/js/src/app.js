@@ -129,6 +129,7 @@ if (navigator.mediaDevices.getUserMedia) {
 
             toggleSpinnerState(recordButton, true);
             $('.dabke-success-text').addClass('d-none');
+            $('.dabke-error-text').addClass('d-none');
 
             const d = new Date();
             const clipName = d.toISOString();

@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const recordButton = document.querySelector('.dabke-record');
                 toggleSpinnerState(recordButton, false);
                 $('.dabke-success-text').removeClass('d-none');
+                $('.dabke-error-text').addClass('d-none');
 
                 state.assessment.assess(score, confidence);
                 showToast(
@@ -76,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Your score: ' + score +
                         ' (confidence: ' + confidence + ')',
                     'now');
+            } else if (data.message.status === 'no_match') {
+                toggleSpinnerState(recordButton, false);
+                $('.dabke-error-text').removeClass('d-none');
             } else {
                 showToast(
                     data.azure ? 'Azure Speech' : 'AWS Transcribe',
