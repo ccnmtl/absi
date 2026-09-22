@@ -70,7 +70,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
             'ب م ف و',
             'ت د ط ث ذ ظ ',
             'ل ر ن يَ',
-            'س  ش  ص  ض  ز ج ي',
+            'س  ش  ص  ض  ز ج',
             'ك ق خ غ',
             'ح ع',
             'ء ھ',
