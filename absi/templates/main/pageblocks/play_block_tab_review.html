@@ -33,10 +33,18 @@
 </div>
 
 <div class="d-grid gap-2">
-    <button type="button" class="btn btn-bd-primary"
+    <!--<button type="button" class="btn btn-bd-primary"
             id="dabke-assess-next-button">
         Get score
-    </button>
+    </button>-->
+    {% with next_section=section.get_next %}
+    {% if next_section %}
+    <a role="button" class="btn btn-bd-primary"
+       href="{{ next_section.get_absolute_url }}">
+        Next syllable: {{ next_section.label }}
+    </a>
+    {% endif %}
+    {% endwith %}
     <button type="button"
             class="btn btn-bd-secondary dabke-practice-next-button">
         Record again
