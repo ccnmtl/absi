@@ -86,12 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
             bootstrap.Tab.getOrCreateInstance(trigger).show();
         });
 
-    document.getElementById('dabke-assess-next-button')
+    /*document.getElementById('dabke-assess-next-button')
         .addEventListener('click', function() {
             const trigger = document.querySelector(
                 '[data-bs-target="#assess-tab-pane"]');
             bootstrap.Tab.getOrCreateInstance(trigger).show();
-        });
+        });*/
 
     document.getElementById('dabke-listen-button')
         .addEventListener('click', function() {
