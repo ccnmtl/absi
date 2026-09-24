@@ -35,7 +35,7 @@ const queueTranscribeJob = function(uri) {
     };
     */
 
-const queueAzureAssessJob = function(uri) {
+/*const queueAzureAssessJob = function(uri) {
     const referenceText = $('#practice-tab-pane .dabke-text').text().trim();
     console.log('queueAzureAssessJob', uri, state, referenceText);
     return fetch('/api/azure_assess/', {
@@ -52,7 +52,7 @@ const queueAzureAssessJob = function(uri) {
             job_id: state.job_id,
         })
     });
-};
+};*/
 
 let mimeType = '';
 for (const candidate of [
@@ -193,7 +193,7 @@ if (navigator.mediaDevices.getUserMedia) {
                     // queueTranscribeJob(publicUrl);
 
                     // Assess in Azure.
-                    queueAzureAssessJob(publicUrl);
+                    // queueAzureAssessJob(publicUrl);
                 }
             });
 
