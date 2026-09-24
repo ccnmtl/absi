@@ -50,7 +50,9 @@
                             <div id="carouselInitial" class="carousel slide carousel-dark">
                                 <div class="carousel-indicators">
                                     <button type="button" data-bs-target="#carouselInitial" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    {% if pageblock.initial_second %}
                                     <button type="button" data-bs-target="#carouselInitial" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    {% endif %}
                                 </div>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -59,12 +61,14 @@
                                             <div class="dabke-ipa">{{ pageblock.initial_ipa_first }}</div>
                                         </div>
                                     </div>
+                                    {% if pageblock.initial_second %}
                                     <div class="carousel-item">
                                         <div class="text-center">
                                             <div class="dabke-text fs-3">{{ pageblock.initial_second }}</div>
                                             <div class="dabke-ipa">{{ pageblock.initial_ipa_second }}</div>
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselInitial" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -85,7 +89,9 @@
                             <div id="carouselMedial" class="carousel slide carousel-dark">
                                 <div class="carousel-indicators">
                                     <button type="button" data-bs-target="#carouselMedial" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    {% if pageblock.medial_second %}
                                     <button type="button" data-bs-target="#carouselMedial" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    {% endif %}
                                 </div>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -94,12 +100,14 @@
                                             <div class="dabke-ipa">{{ pageblock.medial_ipa_first }}</div>
                                         </div>
                                     </div>
+                                    {% if pageblock.medial_second %}
                                     <div class="carousel-item">
                                         <div class="text-center">
                                             <div class="dabke-text fs-3">{{ pageblock.medial_second }}</div>
                                             <div class="dabke-ipa">{{ pageblock.medial_ipa_second }}</div>
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselMedial" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -121,7 +129,9 @@
                             <div id="carouselFinal" class="carousel slide carousel-dark">
                                 <div class="carousel-indicators">
                                     <button type="button" data-bs-target="#carouselFinal" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    {% if pageblock.final_second %}
                                     <button type="button" data-bs-target="#carouselFinal" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    {% endif %}
                                 </div>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -130,12 +140,14 @@
                                             <div class="dabke-ipa">{{ pageblock.final_ipa_first }}</div>
                                         </div>
                                     </div>
+                                    {% if pageblock.final_second %}
                                     <div class="carousel-item">
                                         <div class="text-center">
                                             <div class="dabke-text fs-3">{{ pageblock.final_second }}</div>
                                             <div class="dabke-ipa">{{ pageblock.final_ipa_second }}</div>
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselFinal" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
