@@ -43,3 +43,19 @@ export const updateRecordingSource = (url) => {
 
     audioTag.appendChild(source);
 };
+
+/**
+ * Given a list of tabs and an active tab, return the next tab as a
+ * dom element. Cycles to the first tab at the end.
+ */
+export const getNextTab = ($tabList, $activeTab) => {
+    const activeIdx = $tabList.index($activeTab);
+    const nextIdx = (activeIdx + 1) % $tabList.length;
+    return $tabList[nextIdx];
+};
+
+export const getPrevTab = ($tabList, $activeTab) => {
+    const activeIdx = $tabList.index($activeTab);
+    let prevIdx = (activeIdx - 1 + $tabList.length) % $tabList.length;
+    return $tabList[prevIdx];
+};

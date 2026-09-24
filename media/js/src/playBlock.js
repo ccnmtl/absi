@@ -1,4 +1,5 @@
 import { state } from './state.js';
+import { getNextTab, getPrevTab } from './utils.js';
 import Word from './Word.js';
 
 const word = new Word();
@@ -144,6 +145,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $('.carousel').each((_, carousel) => {
+        carousel.addEventListener('slide.bs.carousel', event => {
+            if (event.direction === 'left' && event.to === 0) {
+                // Show next tab
+                event.preventDefault();
+                const $wordExampleTabs = $('#word-example-tabs');
+                const nextTab = getNextTab(
+                    $wordExampleTabs.find('.nav-item>.nav-link'),
+                    $wordExampleTabs.find('.nav-item>.nav-link.active'));
+
+                const bsTab = new bootstrap.Tab(nextTab);
+                bsTab.show();
+            }
+
+            if (event.direction === 'right' && event.to === 1) {
+                // Show prev tab
+                event.preventDefault();
+                const $wordExampleTabs = $('#word-example-tabs');
+                const prevTab = getPrevTab(
+                    $wordExampleTabs.find('.nav-item>.nav-link'),
+                    $wordExampleTabs.find('.nav-item>.nav-link.active'));
+
+                const bsTab = new bootstrap.Tab(prevTab);
+                bsTab.show();
+            }
+        });
+
         carousel.addEventListener('slid.bs.carousel', event => {
             const selectedIndex = event.to;
             const selected = $(carousel).find(
