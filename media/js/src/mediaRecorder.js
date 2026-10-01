@@ -194,6 +194,8 @@ if (navigator.mediaDevices.getUserMedia) {
 
                     // Assess in Azure.
                     // queueAzureAssessJob(publicUrl);
+
+                    toggleSpinnerState(recordButton, false);
                 }
             });
 
