@@ -82,7 +82,7 @@ django-s3sign==0.6.5
 six==1.17.0  # django-s3sign
 
 azure-core==1.41.0
-azure-cognitiveservices-speech==1.51.2
+azure-cognitiveservices-speech==1.52.0
 
 vine==5.1.0  # amqp
 amqp==5.4.0  # kombu
