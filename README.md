@@ -10,6 +10,7 @@ This project relies on the following technologies:
 * [celery](https://docs.celeryq.dev/en/stable/index.html) - for defining async tasks in Django
   * Currently using Amazon SQS as queueing back-end (broker), but any
     other back-end such as RabbitMQ can work as well.
+  * Celery startup command: `./ve/bin/celery -A absi worker -l INFO`
 
 Audio services:
 * [Amazon Polly](https://aws.amazon.com/polly/) - provides Arabic text-to-speech synthesis
