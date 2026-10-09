@@ -35,6 +35,9 @@ class PlayBlock(BasePageBlock):
     initial_ipa = models.CharField(
         null=True, blank=True,
         help_text='IPA notation for initial examples')
+    initial_english = models.CharField(
+        null=True, blank=True,
+        help_text='English translations for initial examples')
 
     @property
     def initial_first(self) -> str:
@@ -45,6 +48,10 @@ class PlayBlock(BasePageBlock):
         return get_word(self.initial_ipa, 0)
 
     @property
+    def initial_english_first(self) -> str:
+        return get_word(self.initial_english, 0)
+
+    @property
     def initial_second(self) -> str:
         return get_word(self.initial, 1)
 
@@ -52,12 +59,19 @@ class PlayBlock(BasePageBlock):
     def initial_ipa_second(self) -> str:
         return get_word(self.initial_ipa, 1)
 
+    @property
+    def initial_english_second(self) -> str:
+        return get_word(self.initial_english, 1)
+
     medial = models.CharField(
         null=True, blank=True,
         help_text='Word examples for medial position')
     medial_ipa = models.CharField(
         null=True, blank=True,
         help_text='IPA notation for medial examples')
+    medial_english = models.CharField(
+        null=True, blank=True,
+        help_text='English translations for medial examples')
 
     @property
     def medial_first(self) -> str:
@@ -68,6 +82,10 @@ class PlayBlock(BasePageBlock):
         return get_word(self.medial_ipa, 0)
 
     @property
+    def medial_english_first(self) -> str:
+        return get_word(self.medial_english, 0)
+
+    @property
     def medial_second(self) -> str:
         return get_word(self.medial, 1)
 
@@ -75,12 +93,19 @@ class PlayBlock(BasePageBlock):
     def medial_ipa_second(self) -> str:
         return get_word(self.medial_ipa, 1)
 
+    @property
+    def medial_english_second(self) -> str:
+        return get_word(self.medial_english, 1)
+
     final = models.CharField(
         null=True, blank=True,
         help_text='Word examples for final position')
     final_ipa = models.CharField(
         null=True, blank=True,
         help_text='IPA notation for final examples')
+    final_english = models.CharField(
+        null=True, blank=True,
+        help_text='English translations for final examples')
 
     @property
     def final_first(self) -> str:
@@ -91,12 +116,20 @@ class PlayBlock(BasePageBlock):
         return get_word(self.final_ipa, 0)
 
     @property
+    def final_english_first(self) -> str:
+        return get_word(self.final_english, 0)
+
+    @property
     def final_second(self) -> str:
         return get_word(self.final, 1)
 
     @property
     def final_ipa_second(self) -> str:
         return get_word(self.final_ipa, 1)
+
+    @property
+    def final_english_second(self) -> str:
+        return get_word(self.final_english, 1)
 
     diacritic = models.CharField(null=True, blank=True)
 
