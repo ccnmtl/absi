@@ -57,14 +57,32 @@
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <div class="text-center d-block w-100">
-                                            <div class="dabke-text fs-3">{{ pageblock.initial_first }}</div>
+                                            <div class="dabke-text fs-3">
+                                                {% if pageblock.initial_english_first %}
+                                                <span data-bs-toggle="tooltip"
+                                                      data-bs-title="{{ pageblock.initial_english_first }}">
+                                                    {{ pageblock.initial_first }}
+                                                </span>
+                                                {% else %}
+                                                {{ pageblock.initial_first }}
+                                                {% endif %}
+                                            </div>
                                             <div class="dabke-ipa">{{ pageblock.initial_ipa_first }}</div>
                                         </div>
                                     </div>
                                     {% if pageblock.initial_second %}
                                     <div class="carousel-item">
                                         <div class="text-center">
-                                            <div class="dabke-text fs-3">{{ pageblock.initial_second }}</div>
+                                            <div class="dabke-text fs-3">
+                                                {% if pageblock.initial_english_second %}
+                                                <span data-bs-toggle="tooltip"
+                                                      data-bs-title="{{ pageblock.initial_english_second }}">
+                                                    {{ pageblock.initial_second }}
+                                                </span>
+                                                {% else %}
+                                                {{ pageblock.initial_second }}
+                                                {% endif %}
+                                            </div>
                                             <div class="dabke-ipa">{{ pageblock.initial_ipa_second }}</div>
                                         </div>
                                     </div>
@@ -96,14 +114,32 @@
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <div class="text-center d-block w-100">
-                                            <div class="dabke-text fs-3">{{ pageblock.medial_first }}</div>
+                                            <div class="dabke-text fs-3">
+                                                {% if pageblock.medial_english_first %}
+                                                <span data-bs-toggle="tooltip"
+                                                      data-bs-title="{{ pageblock.medial_english_first }}">
+                                                    {{ pageblock.medial_first }}
+                                                </span>
+                                                {% else %}
+                                                {{ pageblock.medial_first }}
+                                                {% endif %}
+                                            </div>
                                             <div class="dabke-ipa">{{ pageblock.medial_ipa_first }}</div>
                                         </div>
                                     </div>
                                     {% if pageblock.medial_second %}
                                     <div class="carousel-item">
                                         <div class="text-center">
-                                            <div class="dabke-text fs-3">{{ pageblock.medial_second }}</div>
+                                            <div class="dabke-text fs-3">
+                                                {% if pageblock.medial_english_second %}
+                                                <span data-bs-toggle="tooltip"
+                                                      data-bs-title="{{ pageblock.medial_english_second }}">
+                                                    {{ pageblock.medial_second }}
+                                                </span>
+                                                {% else %}
+                                                {{ pageblock.medial_second }}
+                                                {% endif %}
+                                            </div>
                                             <div class="dabke-ipa">{{ pageblock.medial_ipa_second }}</div>
                                         </div>
                                     </div>
@@ -136,14 +172,32 @@
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <div class="text-center d-block w-100">
-                                            <div class="dabke-text fs-3">{{ pageblock.final_first }}</div>
+                                            <div class="dabke-text fs-3">
+                                                {% if pageblock.final_english_first %}
+                                                <span data-bs-toggle="tooltip"
+                                                      data-bs-title="{{ pageblock.final_english_first }}">
+                                                    {{ pageblock.final_first }}
+                                                </span>
+                                                {% else %}
+                                                {{ pageblock.final_first }}
+                                                {% endif %}
+                                            </div>
                                             <div class="dabke-ipa">{{ pageblock.final_ipa_first }}</div>
                                         </div>
                                     </div>
                                     {% if pageblock.final_second %}
                                     <div class="carousel-item">
                                         <div class="text-center">
-                                            <div class="dabke-text fs-3">{{ pageblock.final_second }}</div>
+                                            <div class="dabke-text fs-3">
+                                                {% if pageblock.final_english_second %}
+                                                <span data-bs-toggle="tooltip"
+                                                      data-bs-title="{{ pageblock.final_english_second }}">
+                                                    {{ pageblock.final_second }}
+                                                </span>
+                                                {% else %}
+                                                {{ pageblock.final_second }}
+                                                {% endif %}
+                                            </div>
                                             <div class="dabke-ipa">{{ pageblock.final_ipa_second }}</div>
                                         </div>
                                     </div>
