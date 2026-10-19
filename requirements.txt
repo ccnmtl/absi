@@ -28,6 +28,10 @@ chardet==7.6.0  # requests
 idna==3.20  # requests
 certifi==2026.7.22  # requests, sentry-sdk
 requests==2.34.2
+django-user-visit==2.3
+user-agents-ng==3.0.0  # django-user-visit
+ua-parser==1.0.2  # user-agents-ng
+ua-parser-builtins==202610  # ua-parser
 
 ipaddress==1.0.23  # faker
 faker==40.43.0  # factory_boy
