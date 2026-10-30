@@ -111,7 +111,7 @@ typing-extensions==4.16.0  # Twisted
 service-identity==26.1.0  # Twisted
 twisted[http2,tls,websocket]==26.4.0  # daphne
 txaio==26.6.1  # autobahn
-pycparser==3.11  # autobahn
+pycparser==3.12  # autobahn
 autobahn==26.10.2  # daphne
 daphne==4.2.3
 
