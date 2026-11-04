@@ -4,7 +4,7 @@
 FROM public.ecr.aws/docker/library/python:3.14-slim-trixie
 
 RUN apt-get update && \
-     apt-get install -y ffmpeg
+     apt-get install -y ffmpeg git
 
 # Set the working directory in the container
 WORKDIR /app
