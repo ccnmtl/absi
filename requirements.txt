@@ -34,7 +34,7 @@ ua-parser==1.0.2  # user-agents-ng
 ua-parser-builtins==202610  # ua-parser
 
 ipaddress==1.0.23  # faker
-faker==40.43.0  # factory_boy
+faker==40.44.0  # factory_boy
 factory_boy==3.3.3
 
 ldap3==2.9.1
