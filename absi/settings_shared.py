@@ -36,13 +36,11 @@ if 'test' not in sys.argv and 'jenkins' not in sys.argv:
 
 MIDDLEWARE += [  # noqa
     'django.middleware.csrf.CsrfViewMiddleware',
-    'user_visit.middleware.UserVisitMiddleware',
 ]
 
 INSTALLED_APPS = ['daphne'] + INSTALLED_APPS + [  # noqa
     'pagetree',
     'pageblocks',
-    'user_visit',
 ]
 
 PAGEBLOCKS = [
